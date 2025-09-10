@@ -46,4 +46,35 @@ document.addEventListener("DOMContentLoaded", () => {
             stockAlert.classList.remove("d-none");
         }
     }
+    // Actualizar breadcrumb con la categoría
+    const breadcrumbCategoria = document.getElementById("breadcrumb-categoria");
+    if (breadcrumbCategoria) {
+        breadcrumbCategoria.textContent = categorias[producto.categoria] || producto.categoria || "Categoría";
+    }
+
+    // Elementos para cantidad
+    const btnMas = document.getElementById("btn-incrementar");
+    const btnMenos = document.getElementById("btn-decrementar");
+    const inputCantidad = document.getElementById("cantidad");
+
+    // Inicializamos cantidad en 1
+    let cantidad = 1;
+    inputCantidad.value = cantidad;
+
+    // Botón +
+    btnMas.addEventListener("click", () => {
+        cantidad++;
+        inputCantidad.value = cantidad;
+    });
+
+    // Botón -
+    btnMenos.addEventListener("click", () => {
+        if (cantidad > 1) cantidad--;
+        inputCantidad.value = cantidad;
+    });
+
+    // Botón agregar al carrito
+    document.getElementById("btn-agregar-carrito").addEventListener("click", () => {
+        alert(`Función de carrito deshabilitada. Producto: ${producto.nombre} (Cantidad: ${cantidad})`);
+    });
 });
