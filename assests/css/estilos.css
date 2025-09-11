@@ -331,6 +331,10 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--accent-blue) !important;
 }
 
+.navbar {
+    background-color: #0f0f0f !important; /* Elige el gris que prefieras */
+}
+
 /* =========================
    Footer Personalizado
    ========================= */
