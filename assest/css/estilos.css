@@ -1,179 +1,190 @@
-
 /* =========================
-   Variables CSS
+   Variables CSS - Configuración de colores y fuentes
    ========================= */
 :root {
-    --primary-bg: #000000;
-    --accent-blue: #1E90FF;
-    --accent-green: #39FF14;
-    --text-primary: #FFFFFF;
-    --text-secondary: #D3D3D3;
-    --font-primary: 'Roboto', sans-serif;
-    --font-heading: 'Orbitron', sans-serif;
+    /* Colores principales del tema gaming */
+    --primary-bg: #000000;        /* Fondo principal negro */
+    --accent-blue: #1E90FF;       /* Azul gaming para botones y enlaces */
+    --accent-green: #39FF14;      /* Verde neón para precios y elementos destacados */
+    --text-primary: #FFFFFF;      /* Texto principal blanco */
+    --text-secondary: #D3D3D3;    /* Texto secundario gris claro */
+    
+    /* Fuentes del sitio */
+    --font-primary: 'Roboto', sans-serif;      /* Fuente principal para texto */
+    --font-heading: 'Orbitron', sans-serif;    /* Fuente futurista para títulos */
 }
 
 /* =========================
-   Reset y Base
+   Reset y Base - Configuración inicial del sitio
    ========================= */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin: 0;              /* Elimina márgenes por defecto de todos los elementos */
+    padding: 0;             /* Elimina padding por defecto de todos los elementos */
+    box-sizing: border-box; /* Incluye padding y border en el cálculo del ancho */
 }
 
 body {
-    font-family: var(--font-primary);
-    background-color: var(--primary-bg);
-    color: var(--text-primary);
-    line-height: 1.6;
+    font-family: var(--font-primary);    /* Aplica la fuente principal Roboto */
+    background-color: var(--primary-bg); /* Fondo negro del sitio */
+    color: var(--text-primary);          /* Texto blanco por defecto */
+    line-height: 1.6;                    /* Espaciado entre líneas para mejor legibilidad */
 }
 
 /* =========================
-   Tipografías
+   Tipografías - Estilos para títulos y texto
    ========================= */
 h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
-    font-weight: 700;
+    font-family: var(--font-heading);  /* Usa la fuente futurista Orbitron para títulos */
+    font-weight: 700;                  /* Peso de fuente bold para títulos */
 }
 
 .display-4 {
-    font-family: var(--font-heading);
-    font-weight: 900;
+    font-family: var(--font-heading);  /* Fuente especial para títulos grandes */
+    font-weight: 900;                  /* Peso extra bold para títulos principales */
 }
 
 /* =========================
-   Logo
+   Logo - Estilos para el logo de Level-Up
    ========================= */
 .levelup-logo {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-    vertical-align: middle;
+    width: 40px;                    /* Ancho fijo del logo */
+    height: 40px;                   /* Alto fijo del logo */
+    margin-right: 10px;             /* Espacio a la derecha del logo */
+    vertical-align: middle;         /* Alinea verticalmente el logo con el texto */
 }
 
 /* =========================
-   Hero Section
+   Hero Section - Sección principal de la página de inicio
    ========================= */
 .hero-section {
-    background: linear-gradient(135deg, var(--primary-bg) 0%, #1a1a1a 100%);
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
+    background: linear-gradient(135deg, var(--primary-bg) 0%, #1a1a1a 100%); /* Gradiente diagonal de negro a gris oscuro */
+    min-height: 80vh;              /* Altura mínima del 80% de la ventana */
+    display: flex;                 /* Usa flexbox para centrar contenido */
+    align-items: center;           /* Centra verticalmente el contenido */
 }
 
 /* =========================
-   Productos Destacados
+   Productos Destacados - Sección de productos principales
    ========================= */
 #productos-destacados {
-    position: relative;
+    position: relative;  /* Permite posicionar elementos hijos de forma absoluta */
 }
 
+/* Línea decorativa superior con gradiente */
 #productos-destacados::before {
-    content: '';
-    position: absolute;
-    top: -50px;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+    content: '';                                                                    /* Crea un elemento vacío */
+    position: absolute;                                                             /* Posiciona de forma absoluta */
+    top: -50px;                                                                    /* 50px arriba del contenedor */
+    left: 0;                                                                       /* Desde el borde izquierdo */
+    right: 0;                                                                      /* Hasta el borde derecho */
+    height: 1px;                                                                   /* Altura de 1 pixel */
+    background: linear-gradient(90deg, transparent, var(--accent-blue), transparent); /* Gradiente horizontal azul */
 }
 
+/* Título de la sección de productos */
 #productos-destacados h2 {
-    color: var(--text-primary);
-    font-family: var(--font-heading);
-    font-weight: 700;
-    margin-bottom: 3rem;
-    position: relative;
+    color: var(--text-primary);      /* Color blanco para el título */
+    font-family: var(--font-heading); /* Fuente futurista */
+    font-weight: 700;                /* Peso bold */
+    margin-bottom: 3rem;             /* Espacio inferior grande */
+    position: relative;              /* Para posicionar la línea decorativa */
 }
 
+/* Línea decorativa debajo del título */
 #productos-destacados h2::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
-    border-radius: 2px;
+    content: '';                                                                    /* Crea un elemento vacío */
+    position: absolute;                                                             /* Posiciona de forma absoluta */
+    bottom: -10px;                                                                 /* 10px debajo del título */
+    left: 50%;                                                                     /* Centra horizontalmente */
+    transform: translateX(-50%);                                                   /* Ajusta el centrado */
+    width: 60px;                                                                   /* Ancho de la línea */
+    height: 3px;                                                                   /* Altura de la línea */
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));  /* Gradiente azul a verde */
+    border-radius: 2px;                                                            /* Bordes redondeados */
 }
 
 /* Animación de entrada para productos destacados */
 .producto-card {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;                     /* Inicia invisible */
+    transform: translateY(30px);    /* Inicia 30px abajo de su posición final */
+    animation: fadeInUp 0.6s ease forwards; /* Aplica animación de aparición */
 }
 
-.producto-card:nth-child(1) { animation-delay: 0.1s; }
-.producto-card:nth-child(2) { animation-delay: 0.2s; }
-.producto-card:nth-child(3) { animation-delay: 0.3s; }
-.producto-card:nth-child(4) { animation-delay: 0.4s; }
+/* Delays escalonados para crear efecto de cascada */
+.producto-card:nth-child(1) { animation-delay: 0.1s; }  /* Primer producto aparece primero */
+.producto-card:nth-child(2) { animation-delay: 0.2s; }  /* Segundo producto con 0.1s de retraso */
+.producto-card:nth-child(3) { animation-delay: 0.3s; }  /* Tercer producto con 0.2s de retraso */
+.producto-card:nth-child(4) { animation-delay: 0.4s; }  /* Cuarto producto con 0.3s de retraso */
 
 /* =========================
-   Botones Personalizados
+   Botones Personalizados - Estilos para botones del sitio
    ========================= */
 .btn-primary {
-    background-color: var(--accent-blue);
-    border-color: var(--accent-blue);
-    font-weight: 500;
-    transition: all 0.3s ease;
+    background-color: var(--accent-blue);    /* Fondo azul gaming */
+    border-color: var(--accent-blue);        /* Borde azul */
+    font-weight: 500;                        /* Peso de fuente medio */
+    transition: all 0.3s ease;               /* Transición suave de 0.3s para todos los cambios */
 }
 
+/* Efecto hover para botones primarios */
 .btn-primary:hover {
-    background-color: #0066CC;
-    border-color: #0066CC;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(30, 144, 255, 0.3);
+    background-color: #0066CC;               /* Azul más oscuro al pasar el mouse */
+    border-color: #0066CC;                   /* Borde más oscuro */
+    transform: translateY(-2px);             /* Eleva el botón 2px hacia arriba */
+    box-shadow: 0 4px 8px rgba(30, 144, 255, 0.3); /* Sombra azul suave */
 }
 
 .btn-success {
-    background-color: var(--accent-green);
-    border-color: var(--accent-green);
-    color: var(--primary-bg);
-    font-weight: 500;
+    background-color: var(--accent-green);   /* Fondo verde neón */
+    border-color: var(--accent-green);       /* Borde verde */
+    color: var(--primary-bg);                /* Texto negro para contraste */
+    font-weight: 500;                        /* Peso de fuente medio */
 }
 
+/* Efecto hover para botones de éxito */
 .btn-success:hover {
-    background-color: #2ECC40;
-    border-color: #2ECC40;
-    color: var(--primary-bg);
+    background-color: #2ECC40;               /* Verde más oscuro al pasar el mouse */
+    border-color: #2ECC40;                   /* Borde más oscuro */
+    color: var(--primary-bg);                /* Mantiene texto negro */
 }
 
 /* =========================
-   Cards de Productos
+   Cards de Productos - Contenedores de productos con efectos visuales
    ========================= */
 .producto-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 1.5rem;
-    transition: all 0.3s ease;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);    /* Fondo semi-transparente blanco */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde semi-transparente */
+    border-radius: 15px;                       /* Bordes redondeados */
+    padding: 1.5rem;                           /* Espaciado interno */
+    transition: all 0.3s ease;                 /* Transición suave para todos los cambios */
+    height: 100%;                              /* Altura completa del contenedor padre */
+    position: relative;                        /* Para posicionar elementos hijos */
+    overflow: hidden;                          /* Oculta contenido que se salga del contenedor */
 }
 
+/* Efecto de brillo que se desliza por la card */
 .producto-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transition: left 0.5s ease;
+    content: '';                                                                    /* Crea un elemento vacío */
+    position: absolute;                                                             /* Posiciona de forma absoluta */
+    top: 0;                                                                        /* Desde la parte superior */
+    left: -100%;                                                                   /* Inicia fuera del lado izquierdo */
+    width: 100%;                                                                   /* Ancho completo de la card */
+    height: 100%;                                                                  /* Alto completo de la card */
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent); /* Gradiente de brillo */
+    transition: left 0.5s ease;                                                   /* Transición suave del movimiento */
 }
 
+/* Mueve el efecto de brillo de izquierda a derecha al hacer hover */
 .producto-card:hover::before {
-    left: 100%;
+    left: 100%;                                                                    /* Termina fuera del lado derecho */
 }
 
+/* Efectos al pasar el mouse sobre la card */
 .producto-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(30, 144, 255, 0.3);
-    border-color: var(--accent-blue);
-    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-8px);                                                   /* Eleva la card 8px */
+    box-shadow: 0 15px 35px rgba(30, 144, 255, 0.3);                             /* Sombra azul suave */
+    border-color: var(--accent-blue);                                              /* Borde azul */
+    background: rgba(255, 255, 255, 0.08);                                        /* Fondo más brillante */
 }
 
 .producto-card img {
@@ -192,19 +203,6 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 1rem;
-}
-
-/* Placeholder para productos sin imagen */
-.producto-placeholder {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-    border: 2px dashed rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
-}
-
-.producto-card:hover .producto-placeholder {
-    background: linear-gradient(135deg, rgba(30, 144, 255, 0.1) 0%, rgba(30, 144, 255, 0.05) 100%);
-    border-color: var(--accent-blue);
-    transform: scale(1.02);
 }
 
 /* Estilos para productos simplificados */
@@ -458,560 +456,6 @@ footer a:hover {
 }
 
 /* =========================
-   Responsive
-   ========================= */
-@media (max-width: 768px) {
-    .hero-section {
-        min-height: 60vh;
-        text-align: center;
-    }
-    
-    .display-4 {
-        font-size: 2.5rem;
-    }
-    
-    .producto-card {
-        margin-bottom: 2rem;
-    }
-    
-    /* Carrito responsive */
-    .producto-carrito {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
-    }
-    
-    .info-producto {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    
-    .foto-producto {
-        width: 100px;
-        height: 100px;
-    }
-    
-    /* Productos responsive */
-    .producto {
-        margin-bottom: 1rem;
-        padding: 1rem;
-    }
-    
-    .producto h3 {
-        font-size: 1.1rem;
-    }
-    
-    .producto p {
-        font-size: 1.2rem;
-    }
-    
-    /* Filtros responsive */
-    .filtro-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
-        margin: 0.1rem;
-    }
-    
-    /* Detalle responsive */
-    #detalle-producto {
-        padding: 1rem;
-        margin: 1rem 0;
-    }
-    
-    #nombre-producto {
-        font-size: 1.5rem;
-    }
-    
-    #precio-producto {
-        font-size: 1.4rem;
-    }
-    
-    #descripcion-producto {
-        font-size: 1rem;
-    }
-    
-    /* Controles de cantidad responsive */
-    #cantidad {
-        width: 60px;
-        font-size: 1rem;
-    }
-    
-    #mas, #menos {
-        width: 35px;
-        height: 35px;
-        font-size: 1rem;
-    }
-    
-    #btn-agregar {
-        padding: 0.8rem 1.5rem;
-        font-size: 1rem;
-    }
-}
-
-/* =========================
-   Animaciones
-   ========================= */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.fade-in-up {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-/* =========================
-   Perfil de Cliente
-   ========================= */
-.profile-header {
-    background: linear-gradient(135deg, var(--accent-blue) 0%, #764ba2 100%);
-    color: white;
-    padding: 3rem 0;
-    position: relative;
-    overflow: hidden;
-}
-
-.profile-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    opacity: 0.3;
-}
-
-.profile-avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 4px solid white;
-    object-fit: cover;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease;
-}
-
-.profile-avatar:hover {
-    transform: scale(1.05);
-}
-
-.profile-card {
-    border: none;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-.profile-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
-}
-
-/* Stats Cards Mejoradas */
-.stats-card {
-    background: linear-gradient(135deg, var(--accent-blue) 0%, #667eea 100%);
-    color: white;
-    border-radius: 20px;
-    border: none;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.stats-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.stats-card:hover::before {
-    opacity: 1;
-}
-
-.stats-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
-}
-
-.stats-card .card-body {
-    position: relative;
-    z-index: 2;
-}
-
-.stats-card i {
-    transition: transform 0.3s ease;
-}
-
-.stats-card:hover i {
-    transform: scale(1.1) rotate(5deg);
-}
-
-/* Order Status Mejorado */
-.order-status {
-    padding: 0.5rem 1rem;
-    border-radius: 25px;
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-.status-pending { 
-    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-    color: #856404;
-    border: 1px solid #f39c12;
-}
-
-.status-processing { 
-    background: linear-gradient(135deg, #d1ecf1 0%, #74b9ff 100%);
-    color: #0c5460;
-    border: 1px solid #0984e3;
-}
-
-.status-shipped { 
-    background: linear-gradient(135deg, #d4edda 0%, #55efc4 100%);
-    color: #155724;
-    border: 1px solid #00b894;
-}
-
-.status-delivered { 
-    background: linear-gradient(135deg, #cce5ff 0%, #a29bfe 100%);
-    color: #004085;
-    border: 1px solid #6c5ce7;
-}
-
-/* Navigation Pills Mejoradas */
-.nav-pills .nav-link {
-    color: var(--accent-blue);
-    border-radius: 25px;
-    margin: 0 0.25rem;
-    padding: 0.75rem 1.5rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-    position: relative;
-    overflow: hidden;
-}
-
-.nav-pills .nav-link::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s ease;
-}
-
-.nav-pills .nav-link:hover::before {
-    left: 100%;
-}
-
-.nav-pills .nav-link:hover {
-    background-color: rgba(30, 144, 255, 0.1);
-    border-color: var(--accent-blue);
-    transform: translateY(-2px);
-}
-
-.nav-pills .nav-link.active {
-    background: linear-gradient(135deg, var(--accent-blue) 0%, #667eea 100%);
-    color: white;
-    border-color: var(--accent-blue);
-    box-shadow: 0 4px 15px rgba(30, 144, 255, 0.3);
-}
-
-/* Wishlist Items Mejoradas */
-.wishlist-item {
-    border: 1px solid #e9ecef;
-    border-radius: 15px;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    transition: all 0.3s ease;
-    background: white;
-    position: relative;
-    overflow: hidden;
-}
-
-.wishlist-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(135deg, var(--accent-blue), var(--accent-green));
-    transform: scaleY(0);
-    transition: transform 0.3s ease;
-}
-
-.wishlist-item:hover::before {
-    transform: scaleY(1);
-}
-
-.wishlist-item:hover {
-    border-color: var(--accent-blue);
-    box-shadow: 0 8px 25px rgba(30, 144, 255, 0.15);
-    transform: translateY(-3px);
-}
-
-/* Tab Content Mejorado */
-.tab-content {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-    border-radius: 20px;
-    padding: 2rem;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(30, 144, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
-
-/* Cards de Contenido */
-.card {
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-}
-
-.card:hover {
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-}
-
-/* Dashboard Cliente */
-.client-dashboard {
-    background: linear-gradient(135deg, #0a0a0a 0%, var(--primary-bg) 100%);
-    min-height: 100vh;
-}
-
-.client-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-    border: 1px solid rgba(30, 144, 255, 0.2);
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-}
-
-.client-card:hover {
-    border-color: var(--accent-blue);
-    box-shadow: 0 8px 32px rgba(30, 144, 255, 0.2);
-    transform: translateY(-2px);
-}
-
-.card-header {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 15px 15px 0 0 !important;
-    font-weight: 600;
-}
-
-/* Botones Mejorados */
-.btn {
-    border-radius: 10px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
-
-.btn:hover::before {
-    width: 300px;
-    height: 300px;
-}
-
-/* Formularios Mejorados */
-.form-control {
-    border-radius: 10px;
-    border: 2px solid #e9ecef;
-    transition: all 0.3s ease;
-    padding: 0.75rem 1rem;
-}
-
-.form-control:focus {
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
-    transform: translateY(-2px);
-}
-
-/* Animaciones */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideInRight {
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.fade-in-up {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-.slide-in-right {
-    animation: slideInRight 0.6s ease-out;
-}
-
-/* Responsive Mejorado */
-@media (max-width: 768px) {
-    .profile-header {
-        padding: 2rem 0;
-    }
-    
-    .profile-avatar {
-        width: 100px;
-        height: 100px;
-    }
-    
-    .stats-card {
-        margin-bottom: 1rem;
-    }
-    
-    .nav-pills .nav-link {
-        margin-bottom: 0.5rem;
-        text-align: center;
-    }
-    
-    .wishlist-item {
-        padding: 1rem;
-    }
-}
-
-/* =========================
-   Dashboard Administrador
-   ========================= */
-.admin-icon {
-    font-size: 2rem;
-}
-
-.admin-sidebar {
-    background: linear-gradient(135deg, var(--primary-bg) 0%, #1a1a1a 100%);
-    min-height: 100vh;
-    border-right: 2px solid var(--accent-blue);
-}
-
-.admin-sidebar .nav-link {
-    color: var(--text-secondary);
-    transition: all 0.3s ease;
-    border-radius: 8px;
-    margin: 0.25rem 0;
-}
-
-.admin-sidebar .nav-link:hover {
-    color: var(--accent-blue);
-    background-color: rgba(30, 144, 255, 0.1);
-    transform: translateX(5px);
-}
-
-.admin-sidebar .nav-link.active {
-    color: var(--accent-green);
-    background-color: rgba(57, 255, 20, 0.1);
-    border-left: 3px solid var(--accent-green);
-}
-
-.admin-main-content {
-    background: linear-gradient(135deg, #0a0a0a 0%, var(--primary-bg) 100%);
-    min-height: 100vh;
-}
-
-.admin-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-    border: 1px solid rgba(30, 144, 255, 0.2);
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-}
-
-.admin-card:hover {
-    border-color: var(--accent-blue);
-    box-shadow: 0 8px 32px rgba(30, 144, 255, 0.2);
-    transform: translateY(-2px);
-}
-
-.admin-stats-card {
-    background: linear-gradient(135deg, var(--accent-blue) 0%, #667eea 100%);
-    color: white;
-    border-radius: 15px;
-    border: none;
-    position: relative;
-    overflow: hidden;
-}
-
-.admin-stats-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.admin-stats-card:hover::before {
-    opacity: 1;
-}
-
-.admin-stats-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(30, 144, 255, 0.3);
-}
-
-.admin-stats-card .card-body {
-    position: relative;
-    z-index: 2;
-}
-
-.admin-stats-card i {
-    transition: transform 0.3s ease;
-}
-
-.admin-stats-card:hover i {
-    transform: scale(1.1) rotate(5deg);
-}
-
-/* =========================
    Detalle de Producto
    ========================= */
 .quantity-input-group {
@@ -1111,14 +555,6 @@ footer a:hover {
 }
 
 /* =========================
-   Wishlist Items
-   ========================= */
-.wishlist-image {
-    height: 80px;
-    object-fit: cover;
-}
-
-/* =========================
    Error Messages
    ========================= */
 .error-icon {
@@ -1126,70 +562,154 @@ footer a:hover {
 }
 
 /* =========================
-   Notifications
-   ========================= */
-.notification-alert {
-    top: 100px;
-    right: 20px;
-    z-index: 9999;
-    min-width: 300px;
-}
-
-/* =========================
-   Utilidades
+   Utilidades - Clases auxiliares para uso rápido
    ========================= */
 .text-gaming {
-    color: var(--accent-green);
+    color: var(--accent-green);    /* Aplica color verde neón al texto */
 }
 
 .bg-gaming {
-    background-color: var(--accent-green);
-    color: var(--primary-bg);
+    background-color: var(--accent-green);  /* Fondo verde neón */
+    color: var(--primary-bg);               /* Texto negro para contraste */
 }
 
 .border-gaming {
-    border-color: var(--accent-blue) !important;
+    border-color: var(--accent-blue) !important;  /* Borde azul gaming (importante para sobrescribir otros estilos) */
 }
 
 .d-none {
-    display: none !important;
+    display: none !important;      /* Oculta elementos completamente */
 }
 
 .d-block {
-    display: block !important;
+    display: block !important;     /* Muestra elementos como bloque */
 }
 
 /* =========================
-   Animaciones con Delay
-   ========================= */
-.animation-delay-1 { animation-delay: 0.1s; }
-.animation-delay-2 { animation-delay: 0.2s; }
-.animation-delay-3 { animation-delay: 0.3s; }
-.animation-delay-4 { animation-delay: 0.4s; }
-.animation-delay-5 { animation-delay: 0.5s; }
-
-.nav-delay-1 { animation-delay: 0.05s; }
-.nav-delay-2 { animation-delay: 0.1s; }
-.nav-delay-3 { animation-delay: 0.15s; }
-.nav-delay-4 { animation-delay: 0.2s; }
-
-/* =========================
-   Imágenes Responsivas
+   Imágenes Responsivas - Control de tamaño de imágenes
    ========================= */
 .img-webpay {
-    max-width: 150px;
+    max-width: 150px;    /* Ancho máximo para la imagen de WebPay */
 }
-
 
 /* Smooth scrolling para toda la página */
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: smooth;    /* Hace que el scroll sea suave al hacer clic en enlaces internos */
 }
 
-/* Mejorar el scroll en dispositivos móviles */
+/* =========================
+   Responsive Design - Adaptación para dispositivos móviles
+   ========================= */
 @media (max-width: 768px) {
+    /* Hero section más compacta en móviles */
+    .hero-section {
+        min-height: 60vh;        /* Reduce altura en móviles */
+        text-align: center;      /* Centra el contenido */
+    }
+    
+    /* Títulos más pequeños en móviles */
+    .display-4 {
+        font-size: 2.5rem;       /* Reduce tamaño del título principal */
+    }
+    
+    /* Más espacio entre cards de productos */
+    .producto-card {
+        margin-bottom: 2rem;     /* Aumenta espacio inferior */
+    }
+    
+    /* Carrito responsive */
+    .producto-carrito {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .info-producto {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .foto-producto {
+        width: 100px;
+        height: 100px;
+    }
+    
+    /* Productos responsive */
+    .producto {
+        margin-bottom: 1rem;
+        padding: 1rem;
+    }
+    
+    .producto h3 {
+        font-size: 1.1rem;
+    }
+    
+    .producto p {
+        font-size: 1.2rem;
+    }
+    
+    /* Filtros responsive */
+    .filtro-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+        margin: 0.1rem;
+    }
+    
+    /* Detalle responsive */
+    #detalle-producto {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    
+    #nombre-producto {
+        font-size: 1.5rem;
+    }
+    
+    #precio-producto {
+        font-size: 1.4rem;
+    }
+    
+    #descripcion-producto {
+        font-size: 1rem;
+    }
+    
+    /* Controles de cantidad responsive */
+    #cantidad {
+        width: 60px;
+        font-size: 1rem;
+    }
+    
+    #mas, #menos {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    #btn-agregar {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+    
     input[type="date"] {
         font-size: 16px; /* Evita zoom en iOS */
         padding: 14px 16px;
     }
+}
+
+/* =========================
+   Animaciones - Efectos de movimiento y transiciones
+   ========================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;                 /* Inicia invisible */
+        transform: translateY(30px); /* Inicia 30px abajo */
+    }
+    to {
+        opacity: 1;                 /* Termina visible */
+        transform: translateY(0);   /* Termina en su posición normal */
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;  /* Aplica la animación de aparición desde abajo */
 }
