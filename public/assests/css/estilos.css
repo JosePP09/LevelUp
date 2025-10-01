@@ -1,0 +1,719 @@
+/* =========================
+   Variables CSS - Configuración de colores y fuentes
+   ========================= */
+:root {
+    /* Colores principales del tema gaming */
+    --primary-bg: #000000;        /* Fondo principal negro */
+    --accent-blue: #1E90FF;       /* Azul gaming para botones y enlaces */
+    --accent-green: #39FF14;      /* Verde neón para precios y elementos destacados */
+    --text-primary: #FFFFFF;      /* Texto principal blanco */
+    --text-secondary: #D3D3D3;    /* Texto secundario gris claro */
+    
+    /* Fuentes del sitio */
+    --font-primary: 'Roboto', sans-serif;      /* Fuente principal para texto */
+    --font-heading: 'Orbitron', sans-serif;    /* Fuente futurista para títulos */
+}
+
+/* =========================
+   Reset y Base - Configuración inicial del sitio
+   ========================= */
+* {
+    margin: 0;              /* Elimina márgenes por defecto de todos los elementos */
+    padding: 0;             /* Elimina padding por defecto de todos los elementos */
+    box-sizing: border-box; /* Incluye padding y border en el cálculo del ancho */
+}
+
+body {
+    font-family: var(--font-primary);    /* Aplica la fuente principal Roboto */
+    background-color: var(--primary-bg); /* Fondo negro del sitio */
+    color: var(--text-primary);          /* Texto blanco por defecto */
+    line-height: 1.6;                    /* Espaciado entre líneas para mejor legibilidad */
+}
+
+/* =========================
+   Tipografías - Estilos para títulos y texto
+   ========================= */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);  /* Usa la fuente futurista Orbitron para títulos */
+    font-weight: 700;                  /* Peso de fuente bold para títulos */
+}
+
+.display-4 {
+    font-family: var(--font-heading);  /* Fuente especial para títulos grandes */
+    font-weight: 900;                  /* Peso extra bold para títulos principales */
+}
+
+/* =========================
+   Logo - Estilos para el logo de Level-Up
+   ========================= */
+.levelup-logo {
+    width: 40px;                    /* Ancho fijo del logo */
+    height: 40px;                   /* Alto fijo del logo */
+    margin-right: 10px;             /* Espacio a la derecha del logo */
+    vertical-align: middle;         /* Alinea verticalmente el logo con el texto */
+}
+
+/* =========================
+   Hero Section - Sección principal de la página de inicio
+   ========================= */
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-bg) 0%, #1a1a1a 100%); /* Gradiente diagonal de negro a gris oscuro */
+    min-height: 80vh;              /* Altura mínima del 80% de la ventana */
+    display: flex;                 /* Usa flexbox para centrar contenido */
+    align-items: center;           /* Centra verticalmente el contenido */
+}
+
+/* =========================
+   Productos Destacados - Sección de productos principales
+   ========================= */
+#productos-destacados {
+    position: relative;  /* Permite posicionar elementos hijos de forma absoluta */
+}
+
+/* Línea decorativa superior con gradiente */
+#productos-destacados::before {
+    content: '';                                                                    /* Crea un elemento vacío */
+    position: absolute;                                                             /* Posiciona de forma absoluta */
+    top: -50px;                                                                    /* 50px arriba del contenedor */
+    left: 0;                                                                       /* Desde el borde izquierdo */
+    right: 0;                                                                      /* Hasta el borde derecho */
+    height: 1px;                                                                   /* Altura de 1 pixel */
+    background: linear-gradient(90deg, transparent, var(--accent-blue), transparent); /* Gradiente horizontal azul */
+}
+
+/* Título de la sección de productos */
+#productos-destacados h2 {
+    color: var(--text-primary);      /* Color blanco para el título */
+    font-family: var(--font-heading); /* Fuente futurista */
+    font-weight: 700;                /* Peso bold */
+    margin-bottom: 3rem;             /* Espacio inferior grande */
+    position: relative;              /* Para posicionar la línea decorativa */
+}
+
+/* Línea decorativa debajo del título */
+#productos-destacados h2::after {
+    content: '';                                                                    /* Crea un elemento vacío */
+    position: absolute;                                                             /* Posiciona de forma absoluta */
+    bottom: -10px;                                                                 /* 10px debajo del título */
+    left: 50%;                                                                     /* Centra horizontalmente */
+    transform: translateX(-50%);                                                   /* Ajusta el centrado */
+    width: 60px;                                                                   /* Ancho de la línea */
+    height: 3px;                                                                   /* Altura de la línea */
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));  /* Gradiente azul a verde */
+    border-radius: 2px;                                                            /* Bordes redondeados */
+}
+
+/* Animación de entrada para productos destacados */
+.producto-card {
+    opacity: 0;                     /* Inicia invisible */
+    transform: translateY(30px);    /* Inicia 30px abajo de su posición final */
+    animation: fadeInUp 0.6s ease forwards; /* Aplica animación de aparición */
+}
+
+/* Delays escalonados para crear efecto de cascada */
+.producto-card:nth-child(1) { animation-delay: 0.1s; }  /* Primer producto aparece primero */
+.producto-card:nth-child(2) { animation-delay: 0.2s; }  /* Segundo producto con 0.1s de retraso */
+.producto-card:nth-child(3) { animation-delay: 0.3s; }  /* Tercer producto con 0.2s de retraso */
+.producto-card:nth-child(4) { animation-delay: 0.4s; }  /* Cuarto producto con 0.3s de retraso */
+
+/* =========================
+   Botones Personalizados - Estilos para botones del sitio
+   ========================= */
+.btn-primary {
+    background-color: var(--accent-blue);    /* Fondo azul gaming */
+    border-color: var(--accent-blue);        /* Borde azul */
+    font-weight: 500;                        /* Peso de fuente medio */
+    transition: all 0.3s ease;               /* Transición suave de 0.3s para todos los cambios */
+}
+
+/* Efecto hover para botones primarios */
+.btn-primary:hover {
+    background-color: #0066CC;               /* Azul más oscuro al pasar el mouse */
+    border-color: #0066CC;                   /* Borde más oscuro */
+    transform: translateY(-2px);             /* Eleva el botón 2px hacia arriba */
+    box-shadow: 0 4px 8px rgba(30, 144, 255, 0.3); /* Sombra azul suave */
+}
+
+.btn-success {
+    background-color: var(--accent-green);   /* Fondo verde neón */
+    border-color: var(--accent-green);       /* Borde verde */
+    color: var(--primary-bg);                /* Texto negro para contraste */
+    font-weight: 500;                        /* Peso de fuente medio */
+}
+
+/* Efecto hover para botones de éxito */
+.btn-success:hover {
+    background-color: #2ECC40;               /* Verde más oscuro al pasar el mouse */
+    border-color: #2ECC40;                   /* Borde más oscuro */
+    color: var(--primary-bg);                /* Mantiene texto negro */
+}
+
+/* =========================
+   Cards de Productos - Contenedores de productos con efectos visuales
+   ========================= */
+.producto-card {
+    background: rgba(255, 255, 255, 0.05);    /* Fondo semi-transparente blanco */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde semi-transparente */
+    border-radius: 15px;                       /* Bordes redondeados */
+    padding: 1.5rem;                           /* Espaciado interno */
+    transition: all 0.3s ease;                 /* Transición suave para todos los cambios */
+    height: 100%;                              /* Altura completa del contenedor padre */
+    position: relative;                        /* Para posicionar elementos hijos */
+    overflow: hidden;                          /* Oculta contenido que se salga del contenedor */
+}
+
+/* Efecto de brillo que se desliza por la card */
+.producto-card::before {
+    content: '';                                                                    /* Crea un elemento vacío */
+    position: absolute;                                                             /* Posiciona de forma absoluta */
+    top: 0;                                                                        /* Desde la parte superior */
+    left: -100%;                                                                   /* Inicia fuera del lado izquierdo */
+    width: 100%;                                                                   /* Ancho completo de la card */
+    height: 100%;                                                                  /* Alto completo de la card */
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent); /* Gradiente de brillo */
+    transition: left 0.5s ease;                                                   /* Transición suave del movimiento */
+}
+
+/* Mueve el efecto de brillo de izquierda a derecha al hacer hover */
+.producto-card:hover::before {
+    left: 100%;                                                                    /* Termina fuera del lado derecho */
+}
+
+/* Efectos al pasar el mouse sobre la card */
+.producto-card:hover {
+    transform: translateY(-8px);                                                   /* Eleva la card 8px */
+    box-shadow: 0 15px 35px rgba(30, 144, 255, 0.3);                             /* Sombra azul suave */
+    border-color: var(--accent-blue);                                              /* Borde azul */
+    background: rgba(255, 255, 255, 0.08);                                        /* Fondo más brillante */
+}
+
+.producto-card img {
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.producto-card h5 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.producto-card .precio {
+    color: var(--accent-green);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+/* Estilos para productos simplificados */
+.producto {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.producto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(30, 144, 255, 0.2);
+    border-color: var(--accent-blue);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.producto a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.producto h3 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.producto p {
+    color: var(--accent-green);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.btn-agregar-producto {
+    background: var(--accent-green);
+    color: var(--primary-bg);
+    border: none;
+    border-radius: 25px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.btn-agregar-producto:hover {
+    background: #2ECC40;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(57, 255, 20, 0.3);
+}
+
+/* Filtros de productos */
+.filtro-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    margin: 0.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.filtro-btn:hover {
+    background: rgba(30, 144, 255, 0.2);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    transform: translateY(-2px);
+}
+
+.filtro-btn.active {
+    background: var(--accent-blue);
+    color: white;
+    border-color: var(--accent-blue);
+    box-shadow: 0 4px 15px rgba(30, 144, 255, 0.3);
+}
+
+/* =========================
+   Formularios
+   ========================= */
+.form-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: var(--accent-blue);
+    color: var(--text-primary);
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+}
+
+.form-control::placeholder {
+    color: var(--text-secondary);
+}
+
+.form-label {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* =========================
+   Navbar Personalizada
+   ========================= */
+.navbar-brand {
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent-blue) !important;
+}
+
+.navbar {
+    background-color: #0f0f0f !important; /* Elige el gris que prefieras */
+}
+
+/* =========================
+   Footer Personalizado
+   ========================= */
+footer {
+    background: linear-gradient(135deg, #1a1a1a 0%, var(--primary-bg) 100%);
+}
+
+footer h4, footer h5 {
+    color: var(--accent-blue);
+    margin-bottom: 1rem;
+}
+
+footer a {
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--accent-green) !important;
+}
+
+/* =========================
+   Carrito
+   ========================= */
+.cart-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.cart-total {
+    background: var(--accent-blue);
+    color: var(--text-primary);
+    padding: 1rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+/* Estilos para el carrito simplificado */
+.producto-carrito {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+}
+
+.producto-carrito:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(30, 144, 255, 0.15);
+}
+
+.info-producto {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.foto-producto {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-producto h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.info-producto p {
+    color: var(--accent-green);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.cantidad {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+.cantidad button {
+    background: var(--accent-blue);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.cantidad button:hover {
+    background: #0066CC;
+    transform: scale(1.1);
+}
+
+.cantidad input {
+    width: 60px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    border-radius: 8px;
+    padding: 0.25rem;
+}
+
+/* =========================
+   Detalle de Producto
+   ========================= */
+.quantity-input-group {
+    max-width: 200px;
+}
+
+/* Estilos para detalle simplificado */
+#detalle-producto {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+#nombre-producto {
+    color: var(--text-primary);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    font-family: var(--font-heading);
+}
+
+#precio-producto {
+    color: var(--accent-green);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+#descripcion-producto {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+/* Controles de cantidad */
+#cantidad {
+    width: 80px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    border-radius: 8px;
+    padding: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+#mas, #menos {
+    background: var(--accent-blue);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+#mas:hover, #menos:hover {
+    background: #0066CC;
+    transform: scale(1.1);
+}
+
+#btn-agregar {
+    background: var(--accent-green);
+    color: var(--primary-bg);
+    border: none;
+    border-radius: 25px;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+#btn-agregar:hover {
+    background: #2ECC40;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(57, 255, 20, 0.3);
+}
+
+/* =========================
+   Login
+   ========================= */
+.login-logo {
+    width: 120px;
+    height: auto;
+}
+
+/* =========================
+   Error Messages
+   ========================= */
+.error-icon {
+    font-size: 3rem;
+}
+
+/* =========================
+   Utilidades - Clases auxiliares para uso rápido
+   ========================= */
+.text-gaming {
+    color: var(--accent-green);    /* Aplica color verde neón al texto */
+}
+
+.bg-gaming {
+    background-color: var(--accent-green);  /* Fondo verde neón */
+    color: var(--primary-bg);               /* Texto negro para contraste */
+}
+
+.border-gaming {
+    border-color: var(--accent-blue) !important;  /* Borde azul gaming (importante para sobrescribir otros estilos) */
+}
+
+.d-none {
+    display: none !important;      /* Oculta elementos completamente */
+}
+
+.d-block {
+    display: block !important;     /* Muestra elementos como bloque */
+}
+
+/* =========================
+   Imágenes Responsivas - Control de tamaño de imágenes
+   ========================= */
+.img-webpay {
+    max-width: 150px;    /* Ancho máximo para la imagen de WebPay */
+}
+
+/* Smooth scrolling para toda la página */
+html {
+    scroll-behavior: smooth;    /* Hace que el scroll sea suave al hacer clic en enlaces internos */
+}
+
+/* =========================
+   Responsive Design - Adaptación para dispositivos móviles
+   ========================= */
+@media (max-width: 768px) {
+    /* Hero section más compacta en móviles */
+    .hero-section {
+        min-height: 60vh;        /* Reduce altura en móviles */
+        text-align: center;      /* Centra el contenido */
+    }
+    
+    /* Títulos más pequeños en móviles */
+    .display-4 {
+        font-size: 2.5rem;       /* Reduce tamaño del título principal */
+    }
+    
+    /* Más espacio entre cards de productos */
+    .producto-card {
+        margin-bottom: 2rem;     /* Aumenta espacio inferior */
+    }
+    
+    /* Carrito responsive */
+    .producto-carrito {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .info-producto {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .foto-producto {
+        width: 100px;
+        height: 100px;
+    }
+    
+    /* Productos responsive */
+    .producto {
+        margin-bottom: 1rem;
+        padding: 1rem;
+    }
+    
+    .producto h3 {
+        font-size: 1.1rem;
+    }
+    
+    .producto p {
+        font-size: 1.2rem;
+    }
+    
+    /* Filtros responsive */
+    .filtro-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+        margin: 0.1rem;
+    }
+    
+    /* Detalle responsive */
+    #detalle-producto {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    
+    #nombre-producto {
+        font-size: 1.5rem;
+    }
+    
+    #precio-producto {
+        font-size: 1.4rem;
+    }
+    
+    #descripcion-producto {
+        font-size: 1rem;
+    }
+    
+    /* Controles de cantidad responsive */
+    #cantidad {
+        width: 60px;
+        font-size: 1rem;
+    }
+    
+    #mas, #menos {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    #btn-agregar {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    input[type="date"] {
+        font-size: 16px; /* Evita zoom en iOS */
+        padding: 14px 16px;
+    }
+}
+
+/* =========================
+   Animaciones - Efectos de movimiento y transiciones
+   ========================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;                 /* Inicia invisible */
+        transform: translateY(30px); /* Inicia 30px abajo */
+    }
+    to {
+        opacity: 1;                 /* Termina visible */
+        transform: translateY(0);   /* Termina en su posición normal */
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;  /* Aplica la animación de aparición desde abajo */
+}
