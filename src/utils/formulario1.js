@@ -5,7 +5,7 @@
 }
 
 export function validarRun(run) {
-    const regex = /^[0-9]{7,8}[0-9Kk]$/; 
+    const regex = /^[0-9]{8}[0-9K]$/;
     return regex.test(run);
 }
 

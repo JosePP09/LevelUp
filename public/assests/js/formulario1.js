@@ -5,7 +5,7 @@ function validarCorreo(correo) {
 }
 
 function validarRun(run) {
-    const regex = /^[0-9]{7,8}[0-9Kk]$/; 
+    const regex = /^[0-9]{8}[0-9K]$/;
     return regex.test(run);
 }
 
@@ -86,8 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
         //Redirección a las paginas del perfil para el Admin o Cliente
         const destino = correo.toLowerCase() === "admin@duoc.cl" ?
-            `assets/page/perfilAdmin.html?nombre=${encodeURIComponent(nombreUsuario)}` :
-            `../../index.html?nombre=${encodeURIComponent(nombreUsuario)}`;
+            `perfilAdmin.html?nombre=${encodeURIComponent(nombreUsuario)}` :
+            `perfilCliente.html?nombre=${encodeURIComponent(nombreUsuario)}`;
     
         //Tiempo de reacción al redirigir
         setTimeout(() => {

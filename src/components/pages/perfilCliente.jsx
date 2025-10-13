@@ -1,6 +1,6 @@
 import {userLocation} from "react-router-dom";
 
-const PerfilAdmin = () => {
+const PerfilCliente = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const nombre = queryParams.get("nombre");
@@ -12,4 +12,4 @@ const PerfilAdmin = () => {
     );
 };
 
-export default PerfilAdmin;
+export default PerfilCliente;
