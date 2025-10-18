@@ -19,76 +19,35 @@ const FormUsuario = () => {
         comuna: "",
         direccion: ""
     });
-    const [msg, setMsg] = useState();
+    const [msg, setMsg] = useState("");
     const history = useHistory();
 
-    const handleChange = (e) => {
+    const handleChange = e => {
         setForm({
             ...form,
             [e.target.id]: e.target.value
         });
     };
-    const handleSubmit = async (e) => {
+    const handleSubmit = async e => {
         e.preventDefault();
-        const {run, nombre, apellido, correo, fecha, codigoReferido, clave, confirmarClave, region, comuna, direccion} = form;
-        
-        // Limpiar mensajes
-        setMsg("");
+        const { run, nombre, correo, clave, fecha} = form;
+        if (!validarRun(run)) return setMsg("RUN es incorrecto");
+        if (!nombre) return setMsg("Nombre en blanco");
+        if (!validarCorreo(correo)) return setMsg("Correo incorrecto");
+        if (!clave) return setMsg("Clave en blanco");
+        if (!esMayorEdad(fecha)) return setMsg("Debe ser mayor de 18 años");
 
-        // Validación Run (mejorada)
-        const runLimpio = run.trim().toUpperCase();
-        if(!validarRun(runLimpio)) {
-            return setMsg("El RUN es incorrecto. Debe tener 8 dígitos + número o K verificador");
-        }
+        await addUser(form);
+        setMsg("Formularío de envió correctamente");
+        setTimeout(() => {
+            history.push(correo === "admin@duoc.cl" ? "/perfil-admin?nombre="+nombre : "/perfil-cliente?nombre="+nombre);
 
-        // Validación Nombre
-        const nombreLimpio = nombre.trim();
-        if (nombreLimpio === "") {
-            return setMsg("El nombre es obligatorio");
-        }
-
-        // Validación correo
-        const correoLimpio = correo.trim();
-        if (!validarCorreo(correoLimpio)) {
-            return setMsg("El correo debe ser '@duoc.cl', '@profesor.duoc.cl' o '@gmail.com'");
-        }
-
-        // Validación de Edad
-        if (!esMayorEdad(fecha)) {
-            return setMsg("Debe ser mayor a 18 años para registrarse");
-        }
-
-        // Validación contraseña
-        if(!clave) 
-            return setMsg("Clave es obligatoria");
-
-        try {
-            // Actualizar el form con los valores limpios
-            const formLimpio = {
-                ...form,
-                run: runLimpio,
-                nombre: nombreLimpio,
-                correo: correoLimpio
-            };
-
-            await addUser(formLimpio);
-            setMsg("Formulario enviado correctamente");
+        }, 1000);
             
-            // Redirección mejorada
-            setTimeout(() => {
-                const destino = correoLimpio.toLowerCase() === "admin@duoc.cl" 
-                    ? `/perfil-admin?nombre=${encodeURIComponent(nombreLimpio)}`
-                    : `/perfil-cliente?nombre=${encodeURIComponent(nombreLimpio)}`;
-                history.push(destino);
-            }, 1000);
-        } catch (error) {
-            setMsg("Error al enviar formulario");
-        }
     };
 
     return (
         <div>
-            <h2>Registro de Usuario</h2>
             <form onSubmit={handleSubmit}>
                 <Input id="run" label="RUN" value={form.run} onChange={handleChange} required />
                 <Input id="nombre" label="Nombre" value={form.nombre} onChange={handleChange} required />

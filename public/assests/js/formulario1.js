@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let nombreUsuario = nombre;
         mensaje.innerText = `Formulario enviado correctamente` //alt gr + tecla }]`
     
-        //Redirección a las paginas del perfil para el Admin o Cliente
+       /*  //Redirección a las paginas del perfil para el Admin o Cliente
         const destino = correo.toLowerCase() === "admin@duoc.cl" ?
             `perfilAdmin.html?nombre=${encodeURIComponent(nombreUsuario)}` :
             `perfilCliente.html?nombre=${encodeURIComponent(nombreUsuario)}`;
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             window.location.href = destino;
         }, 1000);
-        
+         */
     
     });
 });

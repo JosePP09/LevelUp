@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "../components/pages/Home";
+import Home from "../components/pages/Registro";
 import PerfilAdmin from "../components/pages/PerfilAdmin";
 import PerfilCliente from "../components/pages/perfilCliente";
 

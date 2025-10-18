@@ -1,12 +1,16 @@
-import {db} from "../config/firebase";
-import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc, query, where } from "firebase/firestore";
+import  { db } from "../config/firebase";
+import { collection, addDoc } from "firebase/firestore";
 
-export async function addUser(user) {
-    return await addDoc(collection(db, "usuario"), user);
-    
-}
-
-export async function getProduct() {
-    const snap = await getDocs(collection(db, "producto"));
-    return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+export async function addUser(usuario) {
+    try {
+        const docRef = await addDoc(collection(db, "usuario"), {
+        ...usuario, //usuario = { nombre, correo, clave }
+        createdAt: new Date(),
+        });
+        console.log("Usuario agregado con ID:", docRef.id);
+        return docRef;
+    } catch (error) {
+        console.error("Error al guardar usuario:", error);
+        throw error;// Propagar el error para manejarlo en el frontend
+    }
 }
