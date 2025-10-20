@@ -1,8 +1,15 @@
 import { addUser } from './services/firestoreService';
 import { validarCorreo, validarRun, esMayorEdad } from './utils/formulario1';
 
+function esPaginaEstatica() {
+  return window.location.pathname.includes('.html') || 
+         window.location.pathname.includes('/assets/');
+}
+
 // Espera que el DOM esté listo
 document.addEventListener("DOMContentLoaded", () => {
+  
+
     const form = document.getElementById("formUsuario");
     const runInput = document.getElementById("run");
     const nombreInput = document.getElementById("nombre");
@@ -11,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const fechaInput = document.getElementById("fecha");
     const mensaje = document.getElementById("mensaje");
 
-    if (!form) return console.error("No se encontró #formUsuario");
+    if (!form) return;// Si no estamos en la página de registro, salir
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -33,19 +40,20 @@ document.addEventListener("DOMContentLoaded", () => {
             await addUser({ run, nombre, correo, clave, fecha });
             mensaje.innerText = "Formulario enviado correctamente";
 
-            // Redirección según correo
             setTimeout(() => {
-                window.location.href =
-                    correo.toLowerCase() === "admin@levelup.cl"
-                        ? `assests/page/perfilAdmin.html?nombre=${encodeURIComponent(nombre)}`
-                        : `assests/page/perfilCliente.html?nombre=${encodeURIComponent(nombre)}`;
+                window.location.href = "login.html";
             }, 1000);
+
+            // Redirección según correo
+            //setTimeout(() => {
+            //    window.location.href =
+            //        correo.toLowerCase() === "admin@duoc.cl"
+            //            ? `assets/page/perfilAdmin.html?nombre=${encodeURIComponent(nombre)}`
+            //            : `assets/page/perfilCliente.html?nombre=${encodeURIComponent(nombre)}`;
+            //}, 1000);
         } catch (error) {
             console.error("Error al guardar usuario:", error);
             mensaje.innerText = "Error al guardar usuario en Firebase";
         }
     });
 });
-
-
-
