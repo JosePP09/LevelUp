@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
             mensaje.style.color = "green";
             mensaje.innerText = "Bienvenido Administrador, redirigiendo...";
             setTimeout(() => {
-                window.location.href = `perfilAdmin.html`;
+                window.location.href = "../page/perfilAdmin.html";
             }, 1000);
         } catch (error) {
             console.error("Error login admin:", error);

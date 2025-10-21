@@ -20,8 +20,8 @@ const RouterConfig = () => (
                     return null;
                 }} />
 
-            <Route path="/perfil-admin" component={PerfilAdmin} />
-            <Route path="/perfil-cliente" component={PerfilCliente} />
+            <Route path="/perfil-admin" component={PerfilAdmin}/>
+           <Route path="/perfil-cliente"  component={PerfilCliente} />
 
             {/* Nuevas rutas del sistema de carrito */}
             <Route path="/catalogo" component={Catalogo} />
