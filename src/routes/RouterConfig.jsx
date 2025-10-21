@@ -1,7 +1,7 @@
 import { Route, Switch } from "react-router-dom";
 import Home from "../components/pages/Home";
 import PerfilAdmin from "../components/pages/PerfilAdmin";
-import PerfilCliente from "../components/pages/PerfilCliente";
+import PerfilCliente from "../components/pages/PerfilCliente"
 import Header from "../components/organisms/Header";
 
 import Catalogo from "../components/pages/Catalogo";

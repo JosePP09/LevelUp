@@ -1,64 +1,91 @@
-function validarCorreo(correo) {
-    const regex = /^[^@\s]+@(duoc\.cl|profesor\.duoc\.cl|gmail\.com)$/i;
-    return regex.test(correo);
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-    const formulario = document.getElementById("formLogin");
-    const correoInput = document.getElementById("correo");
-    const claveInput = document.getElementById("clave"); // Campo de contraseña
-    const mensaje = document.getElementById("mensaje"); // Elemento para mostrar mensajes (asumo que existe otro elemento para mensajes)
+    const form = document.getElementById("formLogin");
+    const correoInput = document.getElementById("correoLogin");
+    const claveInput = document.getElementById("claveLogin");
+    const mensaje = document.getElementById("mensajeLogin");
 
-    // 🔹 Validación en el submit
-    formulario.addEventListener("submit", (event) => {
-        event.preventDefault();
-        mensaje.innerText = ""; // limpiar mensajes previos
+    if (!form) return console.error("No se encontró #formLogin");
 
-        const correo = correoInput.value.trim();
-        const contraseña = claveInput.value.trim();
+    // Inicializar Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyCzRZxZWREqvUp9_snuvgs33DaUnU6ry6Q",
+        authDomain: "tiendalevelup-f5867.firebaseapp.com",
+        projectId: "tiendalevelup-f5867",
+        storageBucket: "tiendalevelup-f5867.appspot.com",
+        messagingSenderId: "49561303717",
+        appId: "1:49561303717:web:711b2ab36f8100a134eb4c",
+        measurementId: "G-V7732K0H9Z"
+    };
 
-        // ✅ Validación de credenciales de administrador
-        if (correo === "admin@duoc.cl" && contraseña === "admin123") {
-            claveInput.setCustomValidity("");
+    if (!firebase.apps?.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+
+    const auth = firebase.auth(); //Apunta a Authentication Firebase
+    const db = firebase.firestore(); //Apunta a la colección usuario del base de datos en Firebase
+
+    form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    mensaje.innerText = "";
+
+    const correo = correoInput.value.trim().toLowerCase();
+    const clave = claveInput.value;
+
+    if (!correo || !clave) {
+        mensaje.style.color = "red";
+        mensaje.innerText = "Debes completar correo y clave";
+        return;
+    }
+
+    // Admin: autenticar con Firebase Auth
+    if (correo === "admin@levelup.cl") {
+        try {
+            await auth.signInWithEmailAndPassword(correo, clave);
+            // Guardar usuario en localStorage
+            const usuario = { nombre: "Administrador", correo, rol: "admin" };
+            localStorage.setItem("usuario", JSON.stringify(usuario));
+
             mensaje.style.color = "green";
-            mensaje.innerText = "✅ Bienvenido Administrador. Redirigiendo...";
-            
-            // Redirigir a la vista de administrador
+            mensaje.innerText = "Bienvenido Administrador, redirigiendo...";
             setTimeout(() => {
-                window.location.href = "perfilAdmin.html"; // Ajusta la ruta según tu estructura
+                window.location.href = `perfilAdmin.html`;
             }, 1000);
-            return;
-        }
-
-        if (!validarCorreo(correo)) {
-            correoInput.setCustomValidity("El correo debe ser '@duoc.cl', '@profesor.duoc.cl' o '@gmail.com'");
-            correoInput.reportValidity();
+        } catch (error) {
+            console.error("Error login admin:", error);
             mensaje.style.color = "red";
-            mensaje.innerText = "❌ Correo inválido. Solo se permiten '@duoc.cl', '@profesor.duoc.cl' o '@gmail.com'.";
-            return;
+            mensaje.innerText = "Credenciales incorrectas para administrador";
         }
+        return;
+    }
 
-        // ✅ Si es válido (usuario normal)
-        correoInput.setCustomValidity("");
-        claveInput.setCustomValidity(""); // Limpiar validación de contraseña
-        mensaje.style.color = "green";
-        mensaje.innerText = "✅ Correo válido. Redirigiendo...";
+    // Cliente: validar desde Firestore
+    try {
+        const query = await db.collection("usuario")
+            .where("correo", "==", correo)
+            .where("clave", "==", clave)
+            .get();
 
-        // Opcional: esperar 1 segundo antes de redirigir
-        setTimeout(() => {
-            window.location.href = "../../index.html"; // 🔥 aquí redirige
-        }, 1000);
-    });
+        if (!query.empty) {
+            const userData = query.docs[0].data();
+            const nombre = userData.nombre || correo;
 
-    // 🔹 Limpiar error cuando el usuario escriba de nuevo
-    correoInput.addEventListener("input", () => {
-        correoInput.setCustomValidity("");
-        mensaje.innerText = "";
-    });
-    
-    // 🔹 Limpiar error de contraseña cuando el usuario escriba de nuevo
-    claveInput.addEventListener("input", () => {
-        claveInput.setCustomValidity("");
-        mensaje.innerText = "";
-    });
+            // Guardar usuario en localStorage con rol real
+            const usuario = { nombre, correo, rol: "cliente" };
+            localStorage.setItem("usuario", JSON.stringify(usuario));
+
+            mensaje.style.color = "green";
+            mensaje.innerText = "Bienvenido Cliente, redirigiendo...";
+            setTimeout(() => {
+                window.location.href = `perfilCliente.html`;
+            }, 1000);
+        } else {
+            mensaje.style.color = "red";
+            mensaje.innerText = "Correo o clave incorrectos";
+        }
+    } catch (error) {
+        console.error("Error login cliente:", error);
+        mensaje.style.color = "red";
+        mensaje.innerText = "Error al verificar usuario";
+    }
+});
 });
