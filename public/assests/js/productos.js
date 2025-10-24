@@ -1,170 +1,145 @@
-// =========================
-// Definición de productos
-// =========================
-const productos = {
-    catan: {
-        codigo: "CAT001",
-        nombre: "Catan",
-        precio: 19000,
-        stock: 15,
-        stockCritico: 5,
-        descripcion: "Un clásico juego de estrategia donde los jugadores compiten por colonizar y expandirse en la isla de Catan. Ideal para 3-4 jugadores y perfecto para noches de juego en familia o con amigos",
-        imagen: "../image/catan.jpg",
-        categoria: "juegos-mesa"
-    },
-    carcassone: {
-        codigo: "CAR001",
-        nombre: "Carcassone",
-        precio: 21990,
-        stock: 12,
-        stockCritico: 3,
-        descripcion: "Un juego de colocación de fichas donde los jugadores construyen el paisaje alrededor de la fortaleza medieval de Carcassonne. Ideal para 2-5 jugadores y fácil de aprender.",
-        imagen: "../image/Carcassone.jpg",
-        categoria: "juegos-mesa"
-    },
-    controlXbox: {
-        codigo: "XBOX001",
-        nombre: "Control Inalámbrico Xbox Series X",
-        precio: 39990,
-        stock: 8,
-        stockCritico: 2,
-        descripcion: "Ofrece una experiencia de juego cómoda con botones mapeables y una respuesta táctil mejorada. Compatible con consolas Xbox y PC.",
-        imagen: "../image/Control Inalámbrico Xbox Series X.png",
-        categoria: "accesorios"
-    },
-    auricularesHyperX: {
-        codigo: "HYP001",
-        nombre: "Auriculares Gamer HyperX Cloud II",
-        precio: 29990,
-        stock: 20,
-        stockCritico: 5,
-        descripcion: "Proporcionan un sonido envolvente de calidad con un micrófono desmontable y almohadillas de espuma viscoelástica para mayor comodidad durante largas sesiones de juego.",
-        imagen: "../image/Auriculares Gamer HyperX Cloud II.jpg",
-        categoria: "accesorios"
-    },
-    mouseLogitech: {
-        codigo: "LOG001",
-        nombre: "Mouse Gamer Logitech G502 HERO",
-        precio: 34990,
-        stock: 18,
-        stockCritico: 4,
-        descripcion: "Con sensor de alta precisión y botones personalizables, este mouse es ideal para gamers que buscan un control preciso y personalización.",
-        imagen: "../image/Mouse Gamer Logitech G502 HERO.jpg",
-        categoria: "accesorios"
-    },
-    ps5: {
-        codigo: "PS5001",
-        nombre: "PlayStation 5",
-        precio: 680990,
-        stock: 3,
-        stockCritico: 1,
-        descripcion: "La consola de última generación de Sony, que ofrece gráficos impresionantes y tiempos de carga ultrarrápidos para una experiencia de juego inmersiva.",
-        imagen: "../image/PlayStation 5.png",
-        categoria: "consolas"
-    },
-    sillaSecretlabTitan: {
-        codigo: "SEC001",
-        nombre: "Silla Gamer Secretlab Titan",
-        precio: 199990,
-        stock: 5,
-        stockCritico: 1,
-        descripcion: "Diseñada para el máximo confort, esta silla ofrece un soporte ergonómico y personalización ajustable para sesiones de juego prolongadas.",
-        imagen: "../image/Silla Gamer Secretlab Titan.jpg",
-        categoria: "sillas-gamer"
-    },
-    asusRogStrix: {
-        codigo: "ASU001",
-        nombre: "PC Gamer ASUS ROG Strix",
-        precio: 980990,
-        stock: 2,
-        stockCritico: 1,
-        descripcion: "Un potente equipo diseñado para los gamers más exigentes, equipado con los últimos componentes para ofrecer un rendimiento excepcional en cualquier juego.",
-        imagen: "../image/PC Gamer ASUS ROG Strix.jpg",
-        categoria: "computadores-gamers"
-    },
-    mousepadRazerGoliathus: {
-        codigo: "RAZ001",
-        nombre: "Mousepad Razer Goliathus Extended Chroma",
-        precio: 19990,
-        stock: 25,
-        stockCritico: 5,
-        descripcion: "Un mousepad extendido con iluminación RGB personalizable que cubre toda tu área de trabajo para una experiencia de juego inmersiva.",
-        imagen: "../image/Mousepad Razer Goliathus Extended Chroma.png",
-        categoria: "mousepads"
-    },
-    poleraGamerPersonalizada: {
-        codigo: "POL001",
-        nombre: "Polera Gamer Personalizada 'Level-Up'",
-        precio: 14990,
-        stock: 30,
-        stockCritico: 10,
-        descripcion: "Una camiseta cómoda y estilizada, con la posibilidad de personalizarla con tu gamer tag o diseño favorito.",
-        imagen: "../image/Polera Gamer Personalizada 'Level-Up'.png",
-        categoria: "poleras-personalizadas"
-    },
-};
-
-// =========================
-// Categorías
-// =========================
-const categorias = {
-    "juegos-mesa": "Juegos de Mesa",
-    "accesorios": "Accesorios",
-    "consolas": "Consolas",
-    "sillas-gamer": "Sillas Gamer",
-    "computadores-gamers": "Computadores Gamers",
-    "mousepads": "Mousepads",
-    "poleras-personalizadas": "Poleras Personalizadas"
-};
-
-// =========================
-// Manejo de eventos de productos
-// =========================
-function setupProductos() {
-    // Agregar eventos a los botones "Agregar al carrito"
-    document.querySelectorAll(".btn-agregar-producto").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            const productoId = e.target.closest('[data-id]').getAttribute("data-id");
-            alert(`Función de carrito deshabilitada. Producto: ${productos[productoId].nombre}`);
-        });
-    });
-}
-
-// =========================
-// Filtros de productos
-// =========================
-function filtrarProductos(categoriaSeleccionada) {
-    const elementosProductos = document.querySelectorAll('.producto');
-    
-    elementosProductos.forEach(elemento => {
-        const productoId = elemento.getAttribute('data-id');
-        const categoriaProducto = productos[productoId] ? productos[productoId].categoria : null;
-        
-        if (categoriaSeleccionada === "todos" || categoriaSeleccionada === categoriaProducto) {
-            elemento.style.display = "block";
-        } else {
-            elemento.style.display = "none";
-        }
-    });
-}
-
-// =========================
-// Inicialización
-// =========================
 document.addEventListener("DOMContentLoaded", () => {
-    // Configurar eventos de productos
-    setupProductos();
+  const productosContainer = document.getElementById("productos-container");
+  const filtroBotones = document.querySelectorAll(".filtro-btn");
+  const buscarInput = document.getElementById("buscar-producto");
+  const limpiarBusquedaBtn = document.getElementById("limpiar-busqueda");
+  const cartCount = document.getElementById("cart-count");
 
-    // Filtros por categoría
-    document.querySelectorAll(".filtro-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            // Remover clase active de todos los botones
-            document.querySelectorAll(".filtro-btn").forEach(b => b.classList.remove("active"));
-            // Agregar clase active al botón clickeado
-            btn.classList.add("active");
-            
-            const cat = btn.getAttribute("data-categoria");
-            filtrarProductos(cat);
-        });
+  // Si no estamos en productos.html, salir
+  if (!productosContainer || !buscarInput || !limpiarBusquedaBtn || !cartCount) {
+    return;
+  }
+
+  let productosGlobal = [];
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+  // Configuración de Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCzRZxZWREqvUp9_snuvgs33DaUnU6ry6Q",
+    authDomain: "tiendalevelup-f5867.firebaseapp.com",
+    projectId: "tiendalevelup-f5867",
+  };
+
+  // Inicializar Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  // Funciones
+  function actualizarContadorCarrito() {
+    cartCount.textContent = carrito.length;
+  }
+
+  async function cargarProductos() {
+    try {
+      productosContainer.innerHTML = `
+        <div class="col-12 text-center text-light">
+          <div class="spinner-border text-primary" role="status"></div>
+          <p class="mt-3">Cargando productos...</p>
+        </div>`;
+
+      const snapshot = await db.collection("producto").get();
+      productosGlobal = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      mostrarProductos(productosGlobal);
+    } catch (error) {
+      console.error("Error cargando productos:", error);
+      productosContainer.innerHTML = `
+        <div class="col-12 text-center text-danger">
+          <p>Error al cargar los productos. Intenta recargar la página.</p>
+        </div>`;
+    }
+  }
+
+  function mostrarProductos(productos) {
+    if (productos.length === 0) {
+      productosContainer.innerHTML = `
+        <div class="col-12 text-center text-light">
+          <p>No se encontraron productos.</p>
+        </div>`;
+      return;
+    }
+
+    productosContainer.innerHTML = productos.map(producto => `
+      <div class="col-lg-3 col-md-6 mb-4 producto ${producto.categoria?.toLowerCase() || ""}" data-id="${producto.id}">
+        <div class="producto-card h-100">
+          <div class="text-center mb-3">
+            <img src="${producto.imagen || 'https://via.placeholder.com/400x300?text=Sin+Imagen'}"
+                 alt="${producto.nombre || 'Producto'}"
+                 class="img-fluid rounded"
+                 style="height: 200px; object-fit: cover; width: 100%;">
+          </div>
+          <h5 class="text-center mb-3">${producto.nombre || "Producto sin nombre"}</h5>
+          <p class="precio text-center mb-3">$${(producto.precio || 0).toLocaleString("es-CL")}</p>
+          <p class="text-light text-center small mb-3">${producto.descripcion || ""}</p>
+          <div class="d-grid gap-2">
+            <a href="detalleProducto.html?producto=${producto.id}" class="btn btn-outline-primary">
+              <i class="bi bi-eye me-2"></i>Ver Detalle
+            </a>
+            <button class="btn btn-success btn-agregar-producto" data-id="${producto.id}">
+              <i class="bi bi-cart-plus me-2"></i>Agregar al Carrito
+            </button>
+          </div>
+        </div>
+      </div>
+    `).join("");
+
+    // Agregar eventos a los botones
+    document.querySelectorAll(".btn-agregar-producto").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.id;
+        const producto = productosGlobal.find(p => p.id === id);
+        if (producto) {
+          carrito.push(producto);
+          localStorage.setItem("carrito", JSON.stringify(carrito));
+          actualizarContadorCarrito();
+          // Notificación simple
+          const notif = document.createElement("div");
+          notif.textContent = `"${producto.nombre}" agregado al carrito`;
+          notif.className = "position-fixed top-0 end-0 m-4 p-3 bg-success text-white rounded shadow";
+          notif.style.zIndex = "1050";
+          document.body.appendChild(notif);
+          setTimeout(() => notif.remove(), 3000);
+        }
+      });
     });
+  }
+
+  // Eventos
+  filtroBotones.forEach(btn => {
+    btn.addEventListener("click", () => {
+      filtroBotones.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const cat = btn.dataset.categoria;
+      const filtrados = cat === "todos" 
+        ? productosGlobal 
+        : productosGlobal.filter(p => p.categoria?.toLowerCase() === cat);
+      mostrarProductos(filtrados);
+    });
+  });
+
+  buscarInput.addEventListener("input", () => {
+    const term = buscarInput.value.toLowerCase().trim();
+    const resultados = term 
+      ? productosGlobal.filter(p => 
+          p.nombre?.toLowerCase().includes(term) ||
+          p.descripcion?.toLowerCase().includes(term) ||
+          p.categoria?.toLowerCase().includes(term)
+        )
+      : productosGlobal;
+    mostrarProductos(resultados);
+  });
+
+  limpiarBusquedaBtn?.addEventListener("click", () => {
+    buscarInput.value = "";
+    mostrarProductos(productosGlobal);
+  });
+
+  // Iniciar
+  actualizarContadorCarrito();
+  cargarProductos();
+
+  console.log("✅ Catálogo listo con Firebase");
 });
