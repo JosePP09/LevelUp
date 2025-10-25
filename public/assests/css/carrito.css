@@ -687,6 +687,10 @@ footer a:hover {
   box-shadow: 0 4px 12px rgba(57, 255, 20, 0.3);
 }
 
+.ofertas-section {
+  grid-column: 1;
+}
+
 /* === RESPONSIVE === */
 @media (max-width: 992px) {
   .carrito-container {
@@ -734,4 +738,3 @@ footer a:hover {
     grid-template-columns: 1fr;
   }
 }
-

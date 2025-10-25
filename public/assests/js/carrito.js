@@ -39,6 +39,8 @@ async function cargarProductosOferta() {
             id: doc.id,
             ...doc.data()
         }));
+
+        console.log("Todos los productos:", productosOferta);
         
         // Filtrar productos con oferta (precio anterior)
         const productosConOferta = productosOferta.filter(producto => producto.precioAnterior);
