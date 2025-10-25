@@ -717,3 +717,11 @@ html {
 .fade-in-up {
     animation: fadeInUp 0.6s ease-out;  /* Aplica la animación de aparición desde abajo */
 }
+
+.imagen-tabla {
+    width: 60px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
