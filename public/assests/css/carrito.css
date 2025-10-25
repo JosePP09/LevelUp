@@ -1,0 +1,737 @@
+/* =========================
+   Variables CSS - Configuración de colores y fuentes
+   ========================= */
+:root {
+    /* Colores principales del tema gaming */
+    --primary-bg: #000000;        /* Fondo principal negro */
+    --accent-blue: #1E90FF;       /* Azul gaming para botones y enlaces */
+    --accent-green: #39FF14;      /* Verde neón para precios y elementos destacados */
+    --text-primary: #FFFFFF;      /* Texto principal blanco */
+    --text-secondary: #D3D3D3;    /* Texto secundario gris claro */
+    
+    /* Fuentes del sitio */
+    --font-primary: 'Roboto', sans-serif;      /* Fuente principal para texto */
+    --font-heading: 'Orbitron', sans-serif;    /* Fuente futurista para títulos */
+}
+
+/* =========================
+   Reset y Base - Configuración inicial del sitio
+   ========================= */
+* {
+    margin: 0;              /* Elimina márgenes por defecto de todos los elementos */
+    padding: 0;             /* Elimina padding por defecto de todos los elementos */
+    box-sizing: border-box; /* Incluye padding y border en el cálculo del ancho */
+}
+
+body {
+    font-family: var(--font-primary);    /* Aplica la fuente principal Roboto */
+    background-color: var(--primary-bg); /* Fondo negro del sitio */
+    color: var(--text-primary);          /* Texto blanco por defecto */
+    line-height: 1.6;                    /* Espaciado entre líneas para mejor legibilidad */
+}
+
+/* =========================
+   Tipografías - Estilos para títulos y texto
+   ========================= */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);  /* Usa la fuente futurista Orbitron para títulos */
+    font-weight: 700;                  /* Peso de fuente bold para títulos */
+}
+
+.display-4 {
+    font-family: var(--font-heading);  /* Fuente especial para títulos grandes */
+    font-weight: 900;                  /* Peso extra bold para títulos principales */
+}
+
+/* =========================
+   Logo - Estilos para el logo de Level-Up
+   ========================= */
+.levelup-logo {
+    width: 40px;                    /* Ancho fijo del logo */
+    height: 40px;                   /* Alto fijo del logo */
+    margin-right: 10px;             /* Espacio a la derecha del logo */
+    vertical-align: middle;         /* Alinea verticalmente el logo con el texto */
+}
+
+/* =========================
+   Hero Section - Sección principal de la página de inicio
+   ========================= */
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-bg) 0%, #1a1a1a 100%); /* Gradiente diagonal de negro a gris oscuro */
+    min-height: 80vh;              /* Altura mínima del 80% de la ventana */
+    display: flex;                 /* Usa flexbox para centrar contenido */
+    align-items: center;           /* Centra verticalmente el contenido */
+}
+
+/* =========================
+   Productos Destacados - Sección de productos principales
+   ========================= */
+#productos-destacados {
+    position: relative;  /* Permite posicionar elementos hijos de forma absoluta */
+}
+
+/* Línea decorativa superior con gradiente */
+#productos-destacados::before {
+    content: '';                                                                    /* Crea un elemento vacío */
+    position: absolute;                                                             /* Posiciona de forma absoluta */
+    top: -50px;                                                                    /* 50px arriba del contenedor */
+    left: 0;                                                                       /* Desde el borde izquierdo */
+    right: 0;                                                                      /* Hasta el borde derecho */
+    height: 1px;                                                                   /* Altura de 1 pixel */
+    background: linear-gradient(90deg, transparent, var(--accent-blue), transparent); /* Gradiente horizontal azul */
+}
+
+/* Título de la sección de productos */
+#productos-destacados h2 {
+    color: var(--text-primary);      /* Color blanco para el título */
+    font-family: var(--font-heading); /* Fuente futurista */
+    font-weight: 700;                /* Peso bold */
+    margin-bottom: 3rem;             /* Espacio inferior grande */
+    position: relative;              /* Para posicionar la línea decorativa */
+}
+
+/* Línea decorativa debajo del título */
+#productos-destacados h2::after {
+    content: '';                                                                    /* Crea un elemento vacío */
+    position: absolute;                                                             /* Posiciona de forma absoluta */
+    bottom: -10px;                                                                 /* 10px debajo del título */
+    left: 50%;                                                                     /* Centra horizontalmente */
+    transform: translateX(-50%);                                                   /* Ajusta el centrado */
+    width: 60px;                                                                   /* Ancho de la línea */
+    height: 3px;                                                                   /* Altura de la línea */
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));  /* Gradiente azul a verde */
+    border-radius: 2px;                                                            /* Bordes redondeados */
+}
+
+/* Animación de entrada para productos destacados */
+.producto-card {
+    opacity: 0;                     /* Inicia invisible */
+    transform: translateY(30px);    /* Inicia 30px abajo de su posición final */
+    animation: fadeInUp 0.6s ease forwards; /* Aplica animación de aparición */
+}
+
+/* Delays escalonados para crear efecto de cascada */
+.producto-card:nth-child(1) { animation-delay: 0.1s; }  /* Primer producto aparece primero */
+.producto-card:nth-child(2) { animation-delay: 0.2s; }  /* Segundo producto con 0.1s de retraso */
+.producto-card:nth-child(3) { animation-delay: 0.3s; }  /* Tercer producto con 0.2s de retraso */
+.producto-card:nth-child(4) { animation-delay: 0.4s; }  /* Cuarto producto con 0.3s de retraso */
+
+/* =========================
+   Botones Personalizados - Estilos para botones del sitio
+   ========================= */
+.btn-primary {
+    background-color: var(--accent-blue);    /* Fondo azul gaming */
+    border-color: var(--accent-blue);        /* Borde azul */
+    font-weight: 500;                        /* Peso de fuente medio */
+    transition: all 0.3s ease;               /* Transición suave de 0.3s para todos los cambios */
+}
+
+/* Efecto hover para botones primarios */
+.btn-primary:hover {
+    background-color: #0066CC;               /* Azul más oscuro al pasar el mouse */
+    border-color: #0066CC;                   /* Borde más oscuro */
+    transform: translateY(-2px);             /* Eleva el botón 2px hacia arriba */
+    box-shadow: 0 4px 8px rgba(30, 144, 255, 0.3); /* Sombra azul suave */
+}
+
+.btn-success {
+    background-color: var(--accent-green);   /* Fondo verde neón */
+    border-color: var(--accent-green);       /* Borde verde */
+    color: var(--primary-bg);                /* Texto negro para contraste */
+    font-weight: 500;                        /* Peso de fuente medio */
+}
+
+/* Efecto hover para botones de éxito */
+.btn-success:hover {
+    background-color: #2ECC40;               /* Verde más oscuro al pasar el mouse */
+    border-color: #2ECC40;                   /* Borde más oscuro */
+    color: var(--primary-bg);                /* Mantiene texto negro */
+}
+
+/* =========================
+   Cards de Productos - Contenedores de productos con efectos visuales
+   ========================= */
+.producto-card {
+    background: rgba(255, 255, 255, 0.05);    /* Fondo semi-transparente blanco */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borde semi-transparente */
+    border-radius: 15px;                       /* Bordes redondeados */
+    padding: 1.5rem;                           /* Espaciado interno */
+    transition: all 0.3s ease;                 /* Transición suave para todos los cambios */
+    height: 100%;                              /* Altura completa del contenedor padre */
+    position: relative;                        /* Para posicionar elementos hijos */
+    overflow: hidden;                          /* Oculta contenido que se salga del contenedor */
+}
+
+/* Efecto de brillo que se desliza por la card */
+.producto-card::before {
+    content: '';                                                                    /* Crea un elemento vacío */
+    position: absolute;                                                             /* Posiciona de forma absoluta */
+    top: 0;                                                                        /* Desde la parte superior */
+    left: -100%;                                                                   /* Inicia fuera del lado izquierdo */
+    width: 100%;                                                                   /* Ancho completo de la card */
+    height: 100%;                                                                  /* Alto completo de la card */
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent); /* Gradiente de brillo */
+    transition: left 0.5s ease;                                                   /* Transición suave del movimiento */
+}
+
+/* Mueve el efecto de brillo de izquierda a derecha al hacer hover */
+.producto-card:hover::before {
+    left: 100%;                                                                    /* Termina fuera del lado derecho */
+}
+
+/* Efectos al pasar el mouse sobre la card */
+.producto-card:hover {
+    transform: translateY(-8px);                                                   /* Eleva la card 8px */
+    box-shadow: 0 15px 35px rgba(30, 144, 255, 0.3);                             /* Sombra azul suave */
+    border-color: var(--accent-blue);                                              /* Borde azul */
+    background: rgba(255, 255, 255, 0.08);                                        /* Fondo más brillante */
+}
+
+.producto-card img {
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.producto-card h5 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.producto-card .precio {
+    color: var(--accent-green);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+/* Estilos para productos simplificados */
+.producto {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.producto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(30, 144, 255, 0.2);
+    border-color: var(--accent-blue);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.producto a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.producto h3 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.producto p {
+    color: var(--accent-green);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.btn-agregar-producto {
+    background: var(--accent-green);
+    color: var(--primary-bg);
+    border: none;
+    border-radius: 25px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.btn-agregar-producto:hover {
+    background: #2ECC40;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(57, 255, 20, 0.3);
+}
+
+/* Filtros de productos */
+.filtro-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    margin: 0.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.filtro-btn:hover {
+    background: rgba(30, 144, 255, 0.2);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    transform: translateY(-2px);
+}
+
+.filtro-btn.active {
+    background: var(--accent-blue);
+    color: white;
+    border-color: var(--accent-blue);
+    box-shadow: 0 4px 15px rgba(30, 144, 255, 0.3);
+}
+
+/* =========================
+   Formularios
+   ========================= */
+.form-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: var(--accent-blue);
+    color: var(--text-primary);
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+}
+
+.form-control::placeholder {
+    color: var(--text-secondary);
+}
+
+.form-label {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* =========================
+   Navbar Personalizada
+   ========================= */
+.navbar-brand {
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+
+.nav-link {
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent-blue) !important;
+}
+
+.navbar {
+    background-color: #0f0f0f !important; /* Elige el gris que prefieras */
+}
+
+/* =========================
+   Footer Personalizado
+   ========================= */
+footer {
+    background: linear-gradient(135deg, #1a1a1a 0%, var(--primary-bg) 100%);
+}
+
+footer h4, footer h5 {
+    color: var(--accent-blue);
+    margin-bottom: 1rem;
+}
+
+footer a {
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--accent-green) !important;
+}
+
+/* =========================
+   CARITO.CSS - Estilos para la página del carrito
+   Compatible con tu tema gamer y con carrito.js
+   ========================= */
+
+/* Contenedor principal del carrito (dos columnas) */
+.carrito-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  padding: 40px 0;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Títulos de sección */
+.section-title {
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+  font-size: 2rem;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+  border-radius: 2px;
+}
+
+/* === PRODUCTOS EN OFERTA === */
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+/* Reutiliza tu estilo .producto-card existente */
+.producto-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.producto-card img {
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.producto-card h3, .producto-card h5 {
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-family: var(--font-primary);
+  font-size: 1.2rem;
+}
+
+.precios-oferta {
+  margin: 12px 0;
+}
+
+.precio-anterior {
+  color: #ff6b6b;
+  text-decoration: line-through;
+  font-size: 0.95rem;
+  margin-right: 8px;
+}
+
+.precio-actual {
+  color: var(--accent-green);
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.stock-disponible {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 10px 0;
+}
+
+.btn-agregar-oferta {
+  background: var(--accent-green);
+  color: var(--primary-bg);
+  border: none;
+  border-radius: 25px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  font-size: 0.9rem;
+  font-family: var(--font-primary);
+}
+
+.btn-agregar-oferta:hover {
+  background: #2ECC40;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(57, 255, 20, 0.3);
+}
+
+.sin-ofertas {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  text-align: center;
+  grid-column: 1 / -1;
+}
+
+/* === TABLA DEL CARRITO === */
+.tabla-carrito-container {
+  margin-bottom: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.tabla-carrito {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-carrito th {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 15px 10px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  font-size: 0.95rem;
+}
+
+.tabla-carrito td {
+  padding: 15px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  vertical-align: middle;
+  font-family: var(--font-primary);
+}
+
+/* Imagen en la tabla */
+.imagen-tabla {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Controles de cantidad */
+.controles-cantidad {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.btn-cantidad {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: var(--accent-blue);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: var(--font-primary);
+  transition: all 0.2s ease;
+}
+
+.btn-cantidad:hover {
+  background: #0066CC;
+  transform: scale(1.1);
+}
+
+.cantidad-actual {
+  font-weight: 600;
+  min-width: 25px;
+  text-align: center;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+/* Botón eliminar */
+.btn-eliminar {
+  background: #ff4757;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-primary);
+  transition: all 0.2s ease;
+}
+
+.btn-eliminar:hover {
+  background: #ff2e43;
+  transform: translateY(-1px);
+}
+
+/* Mensaje carrito vacío */
+.carrito-vacio {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary);
+  grid-column: 1 / -1;
+}
+
+.carrito-vacio .icono {
+  font-size: 60px;
+  margin-bottom: 20px;
+  opacity: 0.5;
+  display: block;
+  font-family: var(--font-primary);
+}
+
+.carrito-vacio h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+}
+
+.carrito-vacio p {
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.btn-ir-catalogo {
+  padding: 12px 24px;
+  background: var(--accent-blue);
+  color: var(--primary-bg);
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+  font-family: var(--font-primary);
+  transition: all 0.3s ease;
+}
+
+.btn-ir-catalogo:hover {
+  background: #0066CC;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(30, 144, 255, 0.3);
+}
+
+/* === FOOTER DEL CARRITO === */
+.carrito-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+}
+
+.total-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.total-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-family: var(--font-primary);
+}
+
+.total-precio {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent-green);
+  font-family: var(--font-heading);
+}
+
+.botones-carrito {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+}
+
+.btn-limpiar {
+  padding: 12px 24px;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: var(--font-primary);
+  transition: all 0.3s ease;
+}
+
+.btn-limpiar:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+}
+
+.btn-comprar-ahora {
+  padding: 12px 24px;
+  background: var(--accent-green);
+  color: var(--primary-bg);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: var(--font-primary);
+  transition: all 0.3s ease;
+}
+
+.btn-comprar-ahora:hover {
+  background: #2ECC40;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(57, 255, 20, 0.3);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 992px) {
+  .carrito-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .productos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .carrito-container {
+    padding: 20px 15px;
+  }
+
+  .tabla-carrito th,
+  .tabla-carrito td {
+    padding: 12px 8px;
+    font-size: 0.85rem;
+  }
+
+  .imagen-tabla {
+    width: 50px;
+    height: 50px;
+  }
+
+  .botones-carrito {
+    flex-direction: column;
+  }
+
+  .btn-limpiar,
+  .btn-comprar-ahora {
+    width: 100%;
+  }
+
+  .section-title {
+    font-size: 1.7rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
