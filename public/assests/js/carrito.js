@@ -174,7 +174,7 @@ function agregarProductoAlCarrito(productId) {
 }
 
 /**
- * Actualizar stock en Firebase cuando se agrega al carrito
+ * Actualizar stock en Firebase y refrescar la vista dinámicamente
  */
 async function actualizarStockFirebase(productId, cantidad) {
     try {
@@ -182,40 +182,50 @@ async function actualizarStockFirebase(productId, cantidad) {
         const productoDoc = await productoRef.get();
         
         if (productoDoc.exists) {
-            const stockActual = productoDoc.data().stock;
-            const nuevoStock = stockActual - cantidad;
-            
-            await productoRef.update({
-                stock: nuevoStock
-            });
-            
-            console.log(`Stock actualizado: ${productoDoc.data().nombre} - Nuevo stock: ${nuevoStock}`);
+            const data = productoDoc.data();
+            const nuevoStock = (data.stock || 0) - cantidad;
+
+            await productoRef.update({ stock: nuevoStock });
+            console.log(`✅ Stock actualizado: ${data.nombre} → Nuevo stock: ${nuevoStock}`);
+
+            // 🔄 Actualizar el stock en el array local
+            const productoLocal = productosOferta.find(p => p.id === productId);
+            if (productoLocal) productoLocal.stock = nuevoStock;
+
+            // 🔁 Refrescar solo la vista de productos en oferta
+            const productosConOferta = productosOferta.filter(p => p.precioAnterior);
+            renderizarProductosOferta(productosConOferta);
         }
     } catch (error) {
-        console.error("Error actualizando stock en Firebase:", error);
+        console.error("❌ Error actualizando stock en Firebase:", error);
     }
 }
 
 /**
- * Restaurar stock cuando se elimina del carrito
+ * Restaurar stock en Firebase y refrescar la vista dinámicamente
  */
 async function restaurarStockFirebase(productId, cantidad) {
     try {
         const productoRef = db.collection("producto").doc(productId);
         const productoDoc = await productoRef.get();
-        
+
         if (productoDoc.exists) {
-            const stockActual = productoDoc.data().stock;
-            const nuevoStock = stockActual + cantidad;
-            
-            await productoRef.update({
-                stock: nuevoStock
-            });
-            
-            console.log(`Stock restaurado: ${productoDoc.data().nombre} - Nuevo stock: ${nuevoStock}`);
+            const data = productoDoc.data();
+            const nuevoStock = (data.stock || 0) + cantidad;
+
+            await productoRef.update({ stock: nuevoStock });
+            console.log(`♻️ Stock restaurado: ${data.nombre} → Nuevo stock: ${nuevoStock}`);
+
+            // 🔄 Actualizar el stock en el array local
+            const productoLocal = productosOferta.find(p => p.id === productId);
+            if (productoLocal) productoLocal.stock = nuevoStock;
+
+            // 🔁 Refrescar solo la vista de productos en oferta
+            const productosConOferta = productosOferta.filter(p => p.precioAnterior);
+            renderizarProductosOferta(productosConOferta);
         }
     } catch (error) {
-        console.error("Error restaurando stock en Firebase:", error);
+        console.error("❌ Error restaurando stock en Firebase:", error);
     }
 }
 

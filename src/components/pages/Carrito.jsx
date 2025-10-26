@@ -186,7 +186,7 @@ const Carrito = () => {
                     className="btn-agregar-oferta"
                     onClick={() => agregarAlCarrito(producto)}
                   >
-                    Añadir
+                    Añadi
                   </button>
                 </div>
               </div>
