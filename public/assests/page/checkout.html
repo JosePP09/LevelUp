@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Bootstrap 5 -->
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- Estilos Custom -->
+    <!-- Estilos Custom (incluye fondo negro en body) -->
     <link rel="stylesheet" href="../css/estilos.css">
 
     <title>Checkout - Level-Up Gamer</title>
 </head>
-<body class="bg-dark text-light">
+<!-- ❗ IMPORTANTE: Sin clase "bg-dark" en body -->
+<body>
     <!-- HEADER -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
@@ -53,106 +54,104 @@
         <div class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
-                    <!-- CARD PRINCIPAL -->
-                    <div class="card bg-dark border-gaming shadow-lg">
-                        <div class="card-header text-center">
-                            <h2 class="text-gaming mb-0">Checkout</h2>
+                    <!-- CARD PRINCIPAL con estilo del catálogo -->
+                    <div class="producto-card">
+                        <div class="text-center mb-4">
+                            <h2 class="text-gaming mb-1">Checkout</h2>
                             <p class="text-light mb-0">Finaliza tu compra de forma segura</p>
                         </div>
 
-                        <div class="card-body">
-                            <!-- TABLA DE PRODUCTOS -->
-                            <h4 class="text-gaming mb-3"><i class="bi bi-cart-check me-2"></i>Resumen de tu carrito</h4>
-                            <div class="table-responsive mb-4">
-                                <table class="table table-dark table-hover align-middle">
-                                    <thead class="text-gaming border-bottom border-gaming">
-                                        <tr>
-                                            <th>Imagen</th>
-                                            <th>Producto</th>
-                                            <th>Precio</th>
-                                            <th>Cantidad</th>
-                                            <th>Subtotal</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tablaCheckoutBody">
-                                        <!-- Productos cargados dinámicamente -->
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="text-end mb-4">
-                                <h5>Total a pagar: <span class="text-gaming">$<span id="totalPagar">0</span></span></h5>
-                            </div>
-
-                            <hr class="border-gaming">
-
-                            <!-- FORMULARIO CLIENTE -->
-                            <h4 class="text-gaming mb-3"><i class="bi bi-person-circle me-2"></i>Información del Cliente</h4>
-                            <form id="formCliente" class="mb-4">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="nombre" class="form-label">Nombre</label>
-                                        <input type="text" id="nombre" class="form-control bg-dark border-gaming text-light" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="apellidos" class="form-label">Apellidos</label>
-                                        <input type="text" id="apellidos" class="form-control bg-dark border-gaming text-light" required>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="correo" class="form-label">Correo Electrónico</label>
-                                        <input type="email" id="correo" class="form-control bg-dark border-gaming text-light" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="telefono" class="form-label">Teléfono</label>
-                                        <input type="text" id="telefono" class="form-control bg-dark border-gaming text-light" required>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <!-- FORMULARIO DIRECCIÓN -->
-                            <h4 class="text-gaming mb-3"><i class="bi bi-geo-alt me-2"></i>Dirección de Entrega</h4>
-                            <form id="formDireccion">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="region" class="form-label">Región</label>
-                                        <select id="region" class="form-select bg-dark border-gaming text-light" required>
-                                            <option value="">Selecciona una región</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="comuna" class="form-label">Comuna</label>
-                                        <select id="comuna" class="form-select bg-dark border-gaming text-light" required disabled>
-                                            <option value="">Primero selecciona una región</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-8 mb-3">
-                                        <label for="direccion" class="form-label">Dirección</label>
-                                        <input type="text" id="direccion" class="form-control bg-dark border-gaming text-light" required>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label for="departamento" class="form-label">Departamento (opcional)</label>
-                                        <input type="text" id="departamento" class="form-control bg-dark border-gaming text-light">
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="indicaciones" class="form-label">Indicaciones para la entrega</label>
-                                    <textarea id="indicaciones" class="form-control bg-dark border-gaming text-light" rows="3"
-                                        placeholder="Ej: dejar con conserje, timbre azul, etc."></textarea>
-                                </div>
-
-                                <div class="text-center mt-4">
-                                    <button type="submit" class="btn btn-success btn-lg px-5">
-                                        <i class="bi bi-credit-card me-2"></i>Pagar Ahora $<span id="montoPagar">0</span>
-                                    </button>
-                                </div>
-                            </form>
+                        <!-- TABLA DE PRODUCTOS -->
+                        <h4 class="text-gaming mb-3"><i class="bi bi-cart-check me-2"></i>Resumen de tu carrito</h4>
+                        <div class="table-responsive mb-4">
+                            <table class="table table-dark table-hover align-middle">
+                                <thead class="text-gaming border-bottom border-gaming">
+                                    <tr>
+                                        <th>Imagen</th>
+                                        <th>Producto</th>
+                                        <th>Precio</th>
+                                        <th>Cantidad</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaCheckoutBody">
+                                    <!-- Productos cargados dinámicamente -->
+                                </tbody>
+                            </table>
                         </div>
+
+                        <div class="text-end mb-4">
+                            <h5>Total a pagar: <span class="text-gaming">$<span id="totalPagar">0</span></span></h5>
+                        </div>
+
+                        <hr class="border-gaming">
+
+                        <!-- FORMULARIO CLIENTE -->
+                        <h4 class="text-gaming mb-3"><i class="bi bi-person-circle me-2"></i>Información del Cliente</h4>
+                        <form id="formCliente" class="mb-4">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input type="text" id="nombre" class="form-control bg-dark border-gaming text-light" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="apellidos" class="form-label">Apellidos</label>
+                                    <input type="text" id="apellidos" class="form-control bg-dark border-gaming text-light" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="correo" class="form-label">Correo Electrónico</label>
+                                    <input type="email" id="correo" class="form-control bg-dark border-gaming text-light" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="telefono" class="form-label">Teléfono</label>
+                                    <input type="text" id="telefono" class="form-control bg-dark border-gaming text-light" required>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- FORMULARIO DIRECCIÓN -->
+                        <h4 class="text-gaming mb-3"><i class="bi bi-geo-alt me-2"></i>Dirección de Entrega</h4>
+                        <form id="formDireccion">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="region" class="form-label">Región</label>
+                                    <select id="region" class="form-select bg-dark border-gaming text-light" required>
+                                        <option value="">Selecciona una región</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="comuna" class="form-label">Comuna</label>
+                                    <select id="comuna" class="form-select bg-dark border-gaming text-light" required disabled>
+                                        <option value="">Primero selecciona una región</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-8 mb-3">
+                                    <label for="direccion" class="form-label">Dirección</label>
+                                    <input type="text" id="direccion" class="form-control bg-dark border-gaming text-light" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="departamento" class="form-label">Departamento (opcional)</label>
+                                    <input type="text" id="departamento" class="form-control bg-dark border-gaming text-light">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="indicaciones" class="form-label">Indicaciones para la entrega</label>
+                                <textarea id="indicaciones" class="form-control bg-dark border-gaming text-light" rows="3"
+                                    placeholder="Ej: dejar con conserje, timbre azul, etc."></textarea>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-success btn-lg px-5">
+                                    <i class="bi bi-credit-card me-2"></i>Pagar Ahora $<span id="montoPagar">0</span>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -212,7 +211,7 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Tu script -->
+    <!-- Tu script de checkout -->
     <script src="../js/checkout.js"></script>
 </body>
 </html>
