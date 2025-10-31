@@ -1,18 +1,14 @@
 // Configuración de Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyBBT7jka7a-7v3vY19BlSajamiedLrBTN0",
-    authDomain: "tiendanombretienda.firebaseapp.com",
-    projectId: "tiendanombretienda",
+    apiKey: "AIzaSyCzRZxZWREqvUp9_snuvgs33DaUnU6ry6Q",
+    authDomain: "tiendalevelup-f5867.firebaseapp.com",
+    projectId: "tiendalevelup-f5867",
 };
 
-// Inicializar Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-
-// Variables globales
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-// Datos de regiones y comunas de Chile
 const regionesComunas = {
     "Arica y Parinacota": ["Arica", "Camarones", "Putre", "General Lagos"],
     "Tarapacá": ["Iquique", "Alto Hospicio", "Pozo Almonte", "Camiña", "Colchane", "Huara", "Pica"],
@@ -32,7 +28,6 @@ const regionesComunas = {
     "Magallanes": ["Punta Arenas", "Laguna Blanca", "Río Verde", "San Gregorio", "Cabo de Hornos", "Antártica", "Porvenir", "Primavera", "Timaukel", "Natales", "Torres del Paine"]
 };
 
-// Inicializar checkout cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
     inicializarCheckout();
     configurarEventosCheckout();
@@ -60,11 +55,11 @@ function cargarComunas(region) {
         option.textContent = comuna;
         selectComuna.appendChild(option);
     });
-    selectComuna.disabled = false;
+    // NO usar disabled - dejar el campo habilitado para validación HTML5
+    selectComuna.value = ''; // Forzar selección
 }
 
 function inicializarCheckout() {
-    // Nota: cart-count no se actualiza aquí, pero podrías hacerlo si lo deseas
     renderizarProductosCheckout();
     actualizarTotales();
 }
@@ -178,7 +173,7 @@ function obtenerDatosCliente() {
 
 function obtenerDatosDireccion() {
     return {
-        calle: document.getElementById('direccion').value, // ✅ CORREGIDO: era 'calle', pero el id es 'direccion'
+        calle: document.getElementById('direccion').value,
         departamento: document.getElementById('departamento').value || '',
         region: document.getElementById('region').value,
         comuna: document.getElementById('comuna').value,
@@ -193,7 +188,6 @@ function generarNumeroOrden() {
 }
 
 function configurarEventosCheckout() {
-    // Manejar el submit del formulario de dirección
     document.getElementById('formDireccion').addEventListener('submit', function(e) {
         e.preventDefault();
         procesarPago();
@@ -204,8 +198,8 @@ function configurarEventosCheckout() {
             cargarComunas(this.value);
         } else {
             const selectComuna = document.getElementById('comuna');
-            selectComuna.innerHTML = '<option value="">Primero selecciona una región</option>';
-            selectComuna.disabled = true;
+            selectComuna.innerHTML = '<option value="">Selecciona una región primero</option>';
+            selectComuna.value = '';
         }
     });
 
