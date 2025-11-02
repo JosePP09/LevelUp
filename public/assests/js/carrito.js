@@ -345,7 +345,18 @@ function irAlCheckout() {
         alert('Agrega productos al carrito antes de continuar');
         return;
     }
-    
+
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+    if (!usuario) {
+        mostrarNotificacion("⚠️ Debes iniciar sesión antes de realizar la compra", "error");
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 2000);
+        return;
+    }
+
+    // Si está logueado, continuar
     window.location.href = 'checkout.html';
 }
 
