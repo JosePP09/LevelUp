@@ -26,13 +26,13 @@ class DashboardManager {
             console.log('Inicializando Firebase...');
             
             const firebaseConfig = {
-                apiKey: "AIzaSyBBT7jka7a-7v3vY19BlSajamiedLrBTN0",
-                authDomain: "tiendanombretienda.firebaseapp.com",
-                projectId: "tiendanombretienda",
-                storageBucket: "tiendanombretienda.appspot.com",
-                messagingSenderId: "408928911689",
-                appId: "1:408928911689:web:d8b313c7e15fc528661a98",
-                measurementId: "G-Y1DW47VEWZ"
+                apiKey: "AIzaSyCzRZxZWREqvUp9_snuvgs33DaUnU6ry6Q",
+                authDomain: "tiendalevelup-f5867.firebaseapp.com",
+                projectId: "tiendalevelup-f5867",
+                storageBucket: "tiendalevelup-f5867.appspot.com",
+                messagingSenderId: "49561303717",
+                appId: "1:49561303717:web:711b2ab36f8100a134eb4c",
+                measurementId: "G-V7732K0H9Z"
             };
 
             if (typeof firebase === 'undefined') {

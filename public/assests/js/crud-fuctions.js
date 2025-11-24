@@ -16,8 +16,7 @@ class CRUDFunctions {
                 messagingSenderId: "49561303717",
                 appId: "1:49561303717:web:711b2ab36f8100a134eb4c",
                 measurementId: "G-V7732K0H9Z"
-                };
-
+            };
 
             if (typeof firebase !== 'undefined' && !firebase.apps.length) {
                 firebase.initializeApp(firebaseConfig);
