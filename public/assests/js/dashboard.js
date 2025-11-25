@@ -1,30 +1,21 @@
 // dashboard.js
 
-// Suponemos que las funciones CRUD se definen aquí dentro de la clase
 class DashboardManager {
     constructor() {
         this.estadisticas = null;
         this.estaCargando = false;
         this.firebaseInicializado = false;
         this.db = null;
-        this.usuarioActual = null; // Para manejar el usuario logueado
+        this.usuarioActual = null;
         this.init();
     }
 
     async init() {
         console.log('Iniciando DashboardManager...');
-        
-        // Inicializar Firebase
         await this.inicializarFirebase();
-        
-        // Cargar usuario actual del localStorage
         this.cargarUsuarioActual();
-
-        // Configurar navegación
         this.configurarNavegacion();
         this.inicializarNavegacion();
-        
-        // Cargar estadísticas
         await this.cargarEstadisticasReales();
     }
 
@@ -39,7 +30,7 @@ class DashboardManager {
     async inicializarFirebase() {
         try {
             console.log('Inicializando Firebase...');
-            
+
             const firebaseConfig = {
                 apiKey: "AIzaSyCzRZxZWREqvUp9_snuvgs33DaUnU6ry6Q",
                 authDomain: "tiendalevelup-f5867.firebaseapp.com",
@@ -58,13 +49,13 @@ class DashboardManager {
             if (!firebase.apps.length) {
                 firebase.initializeApp(firebaseConfig);
             }
-            
+
             this.db = firebase.firestore();
             this.firebaseInicializado = true;
-            
+
             console.log('Firebase inicializado correctamente');
             return true;
-            
+
         } catch (error) {
             console.error('Error inicializando Firebase:', error);
             return false;
@@ -94,12 +85,12 @@ class DashboardManager {
         sections.forEach(section => {
             section.style.display = 'none';
         });
-        
+
         const targetSection = document.getElementById(seccion);
         if (targetSection) {
             targetSection.style.display = 'block';
         }
-        
+
         const menuLinks = document.querySelectorAll('.menu-link');
         menuLinks.forEach(link => {
             link.classList.remove('active');
@@ -129,13 +120,13 @@ class DashboardManager {
             this.usarDatosEjemplo();
             return;
         }
-        
+
         try {
             this.estaCargando = true;
             this.mostrarEstadoCarga(true);
-            
+
             console.log('Cargando estadísticas REALES de Firebase...');
-            
+
             const [
                 totalCompras,
                 proyeccion,
@@ -163,7 +154,7 @@ class DashboardManager {
 
             console.log('Estadísticas REALES obtenidas:', this.estadisticas);
             this.actualizarUI();
-            
+
         } catch (error) {
             console.error('Error cargando estadísticas reales:', error);
             this.usarDatosEjemplo();
@@ -203,7 +194,7 @@ class DashboardManager {
             const comprasAnterior = snapshotAnterior.size;
 
             if (comprasAnterior === 0) return comprasActual > 0 ? 100 : 0;
-            
+
             const aumento = ((comprasActual - comprasAnterior) / comprasAnterior) * 100;
             return Math.round(aumento);
         } catch (error) {
@@ -226,12 +217,12 @@ class DashboardManager {
         try {
             const snapshot = await this.db.collection("producto").get();
             let totalInventario = 0;
-            
+
             snapshot.forEach(doc => {
                 const producto = doc.data();
                 totalInventario += producto.cantidad || producto.stock || 0;
             });
-            
+
             return totalInventario;
         } catch (error) {
             console.error("Error al calcular inventario:", error);
@@ -258,7 +249,7 @@ class DashboardManager {
             const snapshot = await this.db.collection("usuario")
                 .where("createdAt", ">=", inicioMes)
                 .get();
-            
+
             return snapshot.size;
         } catch (error) {
             console.error("Error al obtener nuevos usuarios:", error);
@@ -279,7 +270,7 @@ class DashboardManager {
             console.log("Cargando usuarios desde Firestore...");
             const snapshot = await this.db.collection("usuario").get();
             const tbody = document.getElementById("usuarios-tbody");
-            tbody.innerHTML = ""; // Limpiar tabla
+            tbody.innerHTML = "";
 
             if (snapshot.empty) {
                 tbody.innerHTML = `<tr><td colspan="11" class="no-data">No hay usuarios registrados.</td></tr>`;
@@ -289,12 +280,11 @@ class DashboardManager {
             snapshot.forEach((doc) => {
                 const data = doc.data();
                 const row = document.createElement("tr");
-                // Ajusta los campos según tu estructura de datos en Firestore
                 row.innerHTML = `
                     <td>${data.run || 'N/A'}</td>
                     <td>${data.nombre || 'N/A'}</td>
                     <td>${data.email || 'N/A'}</td>
-                    <td>••••••</td> <!-- No mostrar claves en texto plano -->
+                    <td>••••••</td>
                     <td>${data.fecha || 'N/A'}</td>
                     <td>${data.telefono || 'N/A'}</td>
                     <td>${data.direccion || 'N/A'}</td>
@@ -334,6 +324,50 @@ class DashboardManager {
         }
     }
 
+    // CORREGIDO: manejarSubmitUsuario
+    async manejarSubmitUsuario(event) {
+        event.preventDefault();
+        const form = event.target;
+        const id = document.getElementById('usuarioId').value;
+
+        // CORREGIDO: Leer campos como strings y manejar valores vacíos
+        const run = form.querySelector('#usuarioRun')?.value?.trim() || '';
+        const nombre = form.querySelector('#usuarioNombre')?.value?.trim() || '';
+        const email = form.querySelector('#usuarioEmail')?.value?.trim() || '';
+        const fecha = form.querySelector('#usuarioFecha')?.value?.trim() || '';
+        const telefono = form.querySelector('#usuarioTelefono')?.value?.trim() || '';
+        const direccion = form.querySelector('#usuarioDireccion')?.value?.trim() || '';
+        const rol = form.querySelector('#usuarioRol')?.value?.trim() || 'cliente';
+        const activo = form.querySelector('#usuarioActivo')?.checked || false;
+        const clave = form.querySelector('#usuarioClave')?.value?.trim(); // No es obligatorio en edición
+
+        if (!id) {
+            // Creación
+            if (!clave) {
+                alert("La clave es obligatoria para crear un nuevo usuario.");
+                return;
+            }
+        }
+
+        const datos = {
+            id: id || null,
+            run,
+            nombre,
+            email,
+            fecha,
+            telefono,
+            direccion,
+            rol,
+            activo
+        };
+
+        if (!id) {
+            datos.clave = clave; // Solo incluir clave si es creación
+        }
+
+        await this.guardarUsuario(datos);
+    }
+
     async guardarUsuario(datos) {
         if (!this.firebaseInicializado) {
             console.error("Firebase no está inicializado para guardar usuario.");
@@ -359,7 +393,7 @@ class DashboardManager {
                 // Crear
                 const nuevoUsuario = {
                     ...datos,
-                    clave: datos.clave, // Solo se asigna en creación
+                    clave: datos.clave,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
@@ -367,7 +401,7 @@ class DashboardManager {
                 alert("Usuario creado correctamente.");
             }
             this.cerrarModal('modalUsuario');
-            this.cargarUsuarios(); // Recargar la lista
+            this.cargarUsuarios();
         } catch (error) {
             console.error("Error al guardar usuario:", error);
             alert("Error al guardar usuario: " + error.message);
@@ -383,12 +417,11 @@ class DashboardManager {
         document.getElementById('usuarioTelefono').value = datos.telefono || '';
         document.getElementById('usuarioDireccion').value = datos.direccion || '';
         document.getElementById('usuarioRol').value = datos.rol || 'cliente';
-        document.getElementById('usuarioActivo').checked = datos.activo !== false; // Asegura que sea booleano
+        document.getElementById('usuarioActivo').checked = datos.activo !== false;
 
-        // Ocultar campo de contraseña en edición
-        document.getElementById('passwordField').style.display = 'none';
-        document.getElementById('modalUsuarioTitulo').textContent = 'Editar Usuario';
-        this.mostrarModal('modalUsuario');
+        document.getElementById('passwordField').style.display = id ? 'none' : 'block'; // Ocultar clave en edición
+        document.getElementById('modalUsuarioTitulo').textContent = id ? 'Editar Usuario' : 'Nuevo Usuario';
+        this.mostrarModal('modalUsuario'); // CORREGIDO: Usar 'this'
     }
 
     async eliminarUsuario(id) {
@@ -400,38 +433,10 @@ class DashboardManager {
         try {
             await this.db.collection("usuario").doc(id).delete();
             alert("Usuario eliminado correctamente.");
-            this.cargarUsuarios(); // Recargar la lista
+            this.cargarUsuarios();
         } catch (error) {
             console.error("Error al eliminar usuario:", error);
             alert("Error al eliminar usuario: " + error.message);
-        }
-    }
-
-    mostrarModal(id) {
-        const modal = document.getElementById(id);
-        if (modal) {
-            modal.style.display = 'block';
-        }
-    }
-
-    cerrarModal(id) {
-        const modal = document.getElementById(id);
-        if (modal) {
-            modal.style.display = 'none';
-            // Resetear formulario al cerrar
-            if (id === 'modalUsuario') {
-                document.getElementById('formUsuario').reset();
-                document.getElementById('passwordField').style.display = 'block'; // Mostrar contraseña en creación
-                document.getElementById('modalUsuarioTitulo').textContent = 'Nuevo Usuario';
-            }
-            if (id === 'modalProducto') {
-                document.getElementById('formProducto').reset();
-                document.getElementById('modalProductoTitulo').textContent = 'Nuevo Producto';
-            }
-            if (id === 'modalCategoria') {
-                document.getElementById('formCategoria').reset();
-                document.getElementById('modalCategoriaTitulo').textContent = 'Nueva Categoría';
-            }
         }
     }
 
@@ -446,7 +451,7 @@ class DashboardManager {
             console.log("Cargando productos desde Firestore...");
             const snapshot = await this.db.collection("producto").get();
             const tbody = document.getElementById("productos-tbody");
-            tbody.innerHTML = ""; // Limpiar tabla
+            tbody.innerHTML = "";
 
             if (snapshot.empty) {
                 tbody.innerHTML = `<tr><td colspan="6" class="no-data">No hay productos registrados.</td></tr>`;
@@ -495,6 +500,31 @@ class DashboardManager {
         }
     }
 
+    // CORREGIDO: manejarSubmitProducto
+    async manejarSubmitProducto(event) {
+        event.preventDefault();
+        const form = event.target;
+        const id = document.getElementById('productoId').value;
+
+        // CORREGIDO: Leer campos como strings y manejar valores vacíos
+        const nombre = form.querySelector('#productoNombre')?.value?.trim() || '';
+        const precio = form.querySelector('#productoPrecio')?.value?.trim() || '0';
+        const stock = form.querySelector('#productoStock')?.value?.trim() || '0';
+        const categoria = form.querySelector('#productoCategoria')?.value?.trim() || '';
+        const imagen = form.querySelector('#productoImagen')?.value?.trim() || '';
+
+        const datos = {
+            id: id || null,
+            nombre,
+            precio: parseFloat(precio) || 0,
+            stock: parseInt(stock) || 0,
+            categoria,
+            imagen
+        };
+
+        await this.guardarProducto(datos);
+    }
+
     async guardarProducto(datos) {
         if (!this.firebaseInicializado) {
             console.error("Firebase no está inicializado para guardar producto.");
@@ -506,8 +536,8 @@ class DashboardManager {
                 // Actualizar
                 await collection.doc(datos.id).update({
                     nombre: datos.nombre,
-                    precio: parseFloat(datos.precio),
-                    stock: parseInt(datos.stock),
+                    precio: datos.precio,
+                    stock: datos.stock,
                     categoria: datos.categoria,
                     imagen: datos.imagen,
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -517,8 +547,6 @@ class DashboardManager {
                 // Crear
                 const nuevoProducto = {
                     ...datos,
-                    precio: parseFloat(datos.precio),
-                    stock: parseInt(datos.stock),
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
@@ -526,7 +554,7 @@ class DashboardManager {
                 alert("Producto creado correctamente.");
             }
             this.cerrarModal('modalProducto');
-            this.cargarProductos(); // Recargar la lista
+            this.cargarProductos();
         } catch (error) {
             console.error("Error al guardar producto:", error);
             alert("Error al guardar producto: " + error.message);
@@ -541,8 +569,8 @@ class DashboardManager {
         document.getElementById('productoCategoria').value = datos.categoria || '';
         document.getElementById('productoImagen').value = datos.imagen || '';
 
-        document.getElementById('modalProductoTitulo').textContent = 'Editar Producto';
-        this.mostrarModal('modalProducto');
+        document.getElementById('modalProductoTitulo').textContent = id ? 'Editar Producto' : 'Nuevo Producto';
+        this.mostrarModal('modalProducto'); // CORREGIDO: Usar 'this'
     }
 
     async eliminarProducto(id) {
@@ -554,14 +582,14 @@ class DashboardManager {
         try {
             await this.db.collection("producto").doc(id).delete();
             alert("Producto eliminado correctamente.");
-            this.cargarProductos(); // Recargar la lista
+            this.cargarProductos();
         } catch (error) {
             console.error("Error al eliminar producto:", error);
             alert("Error al eliminar producto: " + error.message);
         }
     }
 
-    // --- Categorías (ahora desde colección 'categorias') ---
+    // --- Categorías ---
     async cargarCategorias() {
         if (!this.firebaseInicializado) {
             console.error("Firebase no está inicializado para cargar categorías.");
@@ -570,9 +598,9 @@ class DashboardManager {
 
         try {
             console.log("Cargando categorías desde la colección 'categorias' en Firestore...");
-            const snapshot = await this.db.collection("categorias").get(); // Cambiado a 'categorias'
+            const snapshot = await this.db.collection("categorias").get();
             const tbody = document.getElementById("categorias-tbody");
-            tbody.innerHTML = ""; // Limpiar tabla
+            tbody.innerHTML = "";
 
             if (snapshot.empty) {
                 tbody.innerHTML = `<tr><td colspan="5" class="no-data"><i class="bi bi-inbox"></i><p>No hay categorías registradas.</p></td></tr>`;
@@ -582,12 +610,11 @@ class DashboardManager {
             snapshot.forEach((doc) => {
                 const data = doc.data();
                 const row = document.createElement("tr");
-                // Ajusta los campos según tu estructura en la colección 'categorias'
                 row.innerHTML = `
                     <td>${data.nombre || 'N/A'}</td>
                     <td>${data.descripcion || 'N/A'}</td>
                     <td>${data.estado || 'Activa'}</td>
-                    <td>N/A</td> <!-- No se calcula productos aquí si es una colección separada -->
+                    <td>N/A</td>
                     <td>
                         <button class="btn btn-sm btn-warning" onclick="window.dashboardManager.prepararEdicionCategoria('${doc.id}')">Editar</button>
                         <button class="btn btn-sm btn-danger" onclick="window.dashboardManager.eliminarCategoria('${doc.id}')">Eliminar</button>
@@ -621,6 +648,27 @@ class DashboardManager {
         }
     }
 
+    // CORREGIDO: manejarSubmitCategoria
+    async manejarSubmitCategoria(event) {
+        event.preventDefault();
+        const form = event.target;
+        const id = document.getElementById('categoriaId').value;
+
+        // CORREGIDO: Leer campos como strings y manejar valores vacíos
+        const nombre = form.querySelector('#categoriaNombre')?.value?.trim() || '';
+        const descripcion = form.querySelector('#categoriaDescripcion')?.value?.trim() || '';
+        const estado = form.querySelector('#categoriaEstado')?.value?.trim() || 'Activa';
+
+        const datos = {
+            id: id || null,
+            nombre,
+            descripcion,
+            estado
+        };
+
+        await this.guardarCategoria(datos);
+    }
+
     async guardarCategoria(datos) {
         if (!this.firebaseInicializado) {
             console.error("Firebase no está inicializado para guardar categoría.");
@@ -641,7 +689,6 @@ class DashboardManager {
                 // Crear
                 const nuevaCategoria = {
                     ...datos,
-                    estado: datos.estado || 'Activa', // Valor por defecto
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
@@ -649,7 +696,7 @@ class DashboardManager {
                 alert("Categoría creada correctamente.");
             }
             this.cerrarModal('modalCategoria');
-            this.cargarCategorias(); // Recargar la lista
+            this.cargarCategorias();
         } catch (error) {
             console.error("Error al guardar categoría:", error);
             alert("Error al guardar categoría: " + error.message);
@@ -660,10 +707,10 @@ class DashboardManager {
         document.getElementById('categoriaId').value = id;
         document.getElementById('categoriaNombre').value = datos.nombre || '';
         document.getElementById('categoriaDescripcion').value = datos.descripcion || '';
-        // Ajusta según los campos que manejes en tu colección 'categorias'
+        document.getElementById('categoriaEstado').value = datos.estado || 'Activa';
 
-        document.getElementById('modalCategoriaTitulo').textContent = 'Editar Categoría';
-        this.mostrarModal('modalCategoria');
+        document.getElementById('modalCategoriaTitulo').textContent = id ? 'Editar Categoría' : 'Nueva Categoría';
+        this.mostrarModal('modalCategoria'); // CORREGIDO: Usar 'this'
     }
 
     async eliminarCategoria(id) {
@@ -675,7 +722,7 @@ class DashboardManager {
         try {
             await this.db.collection("categorias").doc(id).delete();
             alert("Categoría eliminada correctamente.");
-            this.cargarCategorias(); // Recargar la lista
+            this.cargarCategorias();
         } catch (error) {
             console.error("Error al eliminar categoría:", error);
             alert("Error al eliminar categoría: " + error.message);
@@ -683,11 +730,11 @@ class DashboardManager {
     }
 
     async crearCategoria() {
-        this.cerrarModal('modalCategoria'); // Cierra si estaba abierta por error
+        this.cerrarModal('modalCategoria');
         document.getElementById('formCategoria').reset();
         document.getElementById('categoriaId').value = '';
         document.getElementById('modalCategoriaTitulo').textContent = 'Nueva Categoría';
-        this.mostrarModal('modalCategoria');
+        this.mostrarModal('modalCategoria'); // CORREGIDO: Usar 'this'
     }
 
     // --- Órdenes ---
@@ -699,9 +746,9 @@ class DashboardManager {
 
         try {
             console.log("Cargando órdenes desde Firestore...");
-            const snapshot = await this.db.collection("compras").get(); // Asumiendo colección 'compras'
+            const snapshot = await this.db.collection("compras").get();
             const tbody = document.getElementById("ordenes-tbody");
-            tbody.innerHTML = ""; // Limpiar tabla
+            tbody.innerHTML = "";
 
             if (snapshot.empty) {
                 tbody.innerHTML = `<tr><td colspan="6" class="no-data">No hay órdenes registradas.</td></tr>`;
@@ -773,11 +820,11 @@ class DashboardManager {
     mostrarEstadoCarga(mostrar) {
         const cards = document.querySelectorAll('.summary-card');
         const botones = document.querySelectorAll('.nav-button');
-        
+
         cards.forEach(card => {
             card.classList.toggle('cargando', mostrar);
         });
-        
+
         botones.forEach(boton => {
             boton.style.opacity = mostrar ? '0.6' : '1';
         });
@@ -792,69 +839,63 @@ class DashboardManager {
         }
     }
 
-    // ==================== FUNCIONES DE FORMULARIOS ====================
+    // ==================== MÉTODOS MODALES ====================
 
-    // Manejar el submit del formulario de Usuario
-    async manejarSubmitUsuario(event) {
-        event.preventDefault();
-        const form = event.target;
-        const formData = new FormData(form);
-        const id = formData.get('id');
-        const datos = {
-            id: id || null,
-            run: formData.get('run'),
-            nombre: formData.get('nombre'),
-            email: formData.get('email'),
-            fecha: formData.get('fecha'),
-            telefono: formData.get('telefono'),
-            direccion: formData.get('direccion'),
-            rol: formData.get('rol'),
-            activo: formData.get('activo') === 'on'
-        };
-
-        // Solo incluir clave si es creación (id vacío)
-        if (!id) {
-            datos.clave = formData.get('clave');
+    // CORREGIDO: Añadir el método mostrarModal a la clase
+    mostrarModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.style.display = 'block';
         }
-
-        await this.guardarUsuario(datos);
     }
 
-    // Manejar el submit del formulario de Producto
-    async manejarSubmitProducto(event) {
-        event.preventDefault();
-        const form = event.target;
-        const formData = new FormData(form);
-        const id = formData.get('id');
-        const datos = {
-            id: id || null,
-            nombre: formData.get('nombre'),
-            precio: formData.get('precio'),
-            stock: formData.get('stock'),
-            categoria: formData.get('categoria'),
-            imagen: formData.get('imagen')
-        };
-
-        await this.guardarProducto(datos);
+    // CORREGIDO: Añadir el método cerrarModal a la clase
+    cerrarModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.style.display = 'none';
+            // Resetear formulario al cerrar
+            if (id === 'modalUsuario') {
+                document.getElementById('formUsuario').reset();
+                document.getElementById('passwordField').style.display = 'block'; // Mostrar contraseña en creación
+                document.getElementById('modalUsuarioTitulo').textContent = 'Nuevo Usuario';
+            }
+            if (id === 'modalProducto') {
+                document.getElementById('formProducto').reset();
+                document.getElementById('modalProductoTitulo').textContent = 'Nuevo Producto';
+            }
+            if (id === 'modalCategoria') {
+                document.getElementById('formCategoria').reset();
+                document.getElementById('modalCategoriaTitulo').textContent = 'Nueva Categoría';
+            }
+        }
     }
 
-    // Manejar el submit del formulario de Categoria
-    async manejarSubmitCategoria(event) {
-        event.preventDefault();
-        const form = event.target;
-        const formData = new FormData(form);
-        const id = formData.get('id');
-        const datos = {
-            id: id || null,
-            nombre: formData.get('nombre'),
-            descripcion: formData.get('descripcion'),
-            estado: formData.get('estado') // Asumiendo que tienes un campo para estado
-        };
+    // ==================== FUNCIONES GLOBALES ====================
 
-        await this.guardarCategoria(datos);
+    mostrarModalUsuario() {
+        document.getElementById('formUsuario').reset();
+        document.getElementById('passwordField').style.display = 'block';
+        document.getElementById('modalUsuarioTitulo').textContent = 'Nuevo Usuario';
+        document.getElementById('usuarioId').value = ''; // Asegurar ID vacío en creación
+        this.mostrarModal('modalUsuario'); // CORREGIDO: Usar 'this'
     }
 
-    // Manejar el submit del formulario de Perfil
+    mostrarModalProducto() {
+        document.getElementById('formProducto').reset();
+        document.getElementById('modalProductoTitulo').textContent = 'Nuevo Producto';
+        document.getElementById('productoId').value = ''; // Asegurar ID vacío en creación
+        this.mostrarModal('modalProducto'); // CORREGIDO: Usar 'this'
+    }
+
+    mostrarModalCategoria() {
+        document.getElementById('formCategoria').reset();
+        document.getElementById('modalCategoriaTitulo').textContent = 'Nueva Categoría';
+        document.getElementById('categoriaId').value = ''; // Asegurar ID vacío en creación
+        this.mostrarModal('modalCategoria'); // CORREGIDO: Usar 'this'
+    }
+
+
     async manejarSubmitPerfil(event) {
         event.preventDefault();
         const form = event.target;
@@ -865,53 +906,22 @@ class DashboardManager {
             profileTelefono: formData.get('profileTelefono')
         };
 
-        // Aquí actualizarías los datos del usuario actual en Firestore y localStorage
-        // await this.actualizarPerfilUsuario(datos);
         alert("Actualizar perfil no implementado completamente.");
     }
 
-    // ==================== FUNCIONES GLOBALES (Llamadas desde HTML) ====================
-
-    mostrarModalUsuario() {
-        document.getElementById('formUsuario').reset();
-        document.getElementById('passwordField').style.display = 'block';
-        document.getElementById('modalUsuarioTitulo').textContent = 'Nuevo Usuario';
-        this.mostrarModal('modalUsuario');
-    }
-
-    mostrarModalProducto() {
-        document.getElementById('formProducto').reset();
-        document.getElementById('modalProductoTitulo').textContent = 'Nuevo Producto';
-        this.mostrarModal('modalProducto');
-    }
-
-    mostrarModalCategoria() {
-        document.getElementById('formCategoria').reset();
-        document.getElementById('categoriaId').value = '';
-        document.getElementById('modalCategoriaTitulo').textContent = 'Nueva Categoría';
-        this.mostrarModal('modalCategoria');
-    }
-
     filtrarOrdenes() {
-        // Lógica de filtrado aquí
         console.log("Filtrando órdenes...");
-        this.cargarOrdenes(); // Recargar con filtro aplicado
+        this.cargarOrdenes();
     }
 
     generarReporte() {
-        // Lógica de generación de reporte aquí
         console.log("Generando reporte...");
         document.getElementById("reporte-ventas").innerHTML = "<p>Reporte de Ventas (simulado)</p>";
         document.getElementById("reporte-productos").innerHTML = "<p>Productos Más Vendidos (simulado)</p>";
     }
-
-    async actualizarPerfil(event) {
-        event.preventDefault();
-        this.manejarSubmitPerfil(event);
-    }
 }
 
-// Funciones globales que llaman a métodos del objeto DashboardManager
+// Funciones globales
 function navegarA(seccion) {
     if (window.dashboardManager) {
         window.dashboardManager.navegarASeccion(seccion);
@@ -923,12 +933,11 @@ function irATienda() {
 }
 
 function cerrarSesion() {
-    // Lógica de cierre de sesión (limpiar localStorage, redirigir)
     localStorage.removeItem("usuario");
-    window.location.href = '../login.html'; // Ajusta la ruta según tu estructura
+    window.location.href = '../login.html';
 }
 
-// Funciones para manejar submits de formularios
+// CORREGIDO: Llamadas a las nuevas funciones de manejo de submit
 function guardarUsuario(event) {
     if (window.dashboardManager) {
         window.dashboardManager.manejarSubmitUsuario(event);
@@ -944,6 +953,13 @@ function guardarProducto(event) {
 function guardarCategoria(event) {
     if (window.dashboardManager) {
         window.dashboardManager.manejarSubmitCategoria(event);
+    }
+}
+
+function actualizarPerfil(event) {
+    event.preventDefault();
+    if (window.dashboardManager) {
+        window.dashboardManager.manejarSubmitPerfil(event);
     }
 }
 
