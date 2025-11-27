@@ -934,7 +934,7 @@ function irATienda() {
 
 function cerrarSesion() {
     localStorage.removeItem("usuario");
-    window.location.href = '../login.html';
+    window.location.href = '../../index.html';
 }
 
 // CORREGIDO: Llamadas a las nuevas funciones de manejo de submit
