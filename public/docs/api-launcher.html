@@ -702,18 +702,6 @@ components:
                 }, 500);
             }
         }
-
-        // Versión alternativa que intenta codificar de forma más segura
-        function encodeToBase64(str) {
-            try {
-                // Primero convertir a bytes UTF-8
-                const bytes = new TextEncoder().encode(str);
-                const binary = String.fromCharCode(...bytes);
-                return btoa(binary);
-            } catch (e) {
-                return null;
-            }
-        }
     </script>
 </body>
 </html>

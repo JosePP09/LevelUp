@@ -1001,6 +1001,10 @@ function irATienda() {
     window.location.href = '../../index.html';
 }
 
+function irALauncher() {
+    window.location.href = '../../docs/api-launcher.html';
+}
+
 function cerrarSesion() {
     localStorage.removeItem("usuario");
     window.location.href = '../login.html';
