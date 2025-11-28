@@ -324,13 +324,11 @@ class DashboardManager {
         }
     }
 
-    // CORREGIDO: manejarSubmitUsuario
     async manejarSubmitUsuario(event) {
         event.preventDefault();
         const form = event.target;
         const id = document.getElementById('usuarioId').value;
 
-        // CORREGIDO: Leer campos como strings y manejar valores vacíos
         const run = form.querySelector('#usuarioRun')?.value?.trim() || '';
         const nombre = form.querySelector('#usuarioNombre')?.value?.trim() || '';
         const email = form.querySelector('#usuarioEmail')?.value?.trim() || '';
@@ -339,10 +337,9 @@ class DashboardManager {
         const direccion = form.querySelector('#usuarioDireccion')?.value?.trim() || '';
         const rol = form.querySelector('#usuarioRol')?.value?.trim() || 'cliente';
         const activo = form.querySelector('#usuarioActivo')?.checked || false;
-        const clave = form.querySelector('#usuarioClave')?.value?.trim(); // No es obligatorio en edición
+        const clave = form.querySelector('#usuarioClave')?.value?.trim();
 
         if (!id) {
-            // Creación
             if (!clave) {
                 alert("La clave es obligatoria para crear un nuevo usuario.");
                 return;
@@ -362,7 +359,7 @@ class DashboardManager {
         };
 
         if (!id) {
-            datos.clave = clave; // Solo incluir clave si es creación
+            datos.clave = clave;
         }
 
         await this.guardarUsuario(datos);
@@ -376,7 +373,6 @@ class DashboardManager {
         try {
             const collection = this.db.collection("usuario");
             if (datos.id) {
-                // Actualizar
                 await collection.doc(datos.id).update({
                     run: datos.run,
                     nombre: datos.nombre,
@@ -390,7 +386,6 @@ class DashboardManager {
                 });
                 alert("Usuario actualizado correctamente.");
             } else {
-                // Crear
                 const nuevoUsuario = {
                     ...datos,
                     clave: datos.clave,
@@ -419,9 +414,9 @@ class DashboardManager {
         document.getElementById('usuarioRol').value = datos.rol || 'cliente';
         document.getElementById('usuarioActivo').checked = datos.activo !== false;
 
-        document.getElementById('passwordField').style.display = id ? 'none' : 'block'; // Ocultar clave en edición
+        document.getElementById('passwordField').style.display = id ? 'none' : 'block';
         document.getElementById('modalUsuarioTitulo').textContent = id ? 'Editar Usuario' : 'Nuevo Usuario';
-        this.mostrarModal('modalUsuario'); // CORREGIDO: Usar 'this'
+        this.mostrarModal('modalUsuario');
     }
 
     async eliminarUsuario(id) {
@@ -500,13 +495,11 @@ class DashboardManager {
         }
     }
 
-    // CORREGIDO: manejarSubmitProducto
     async manejarSubmitProducto(event) {
         event.preventDefault();
         const form = event.target;
         const id = document.getElementById('productoId').value;
 
-        // CORREGIDO: Leer campos como strings y manejar valores vacíos
         const nombre = form.querySelector('#productoNombre')?.value?.trim() || '';
         const precio = form.querySelector('#productoPrecio')?.value?.trim() || '0';
         const stock = form.querySelector('#productoStock')?.value?.trim() || '0';
@@ -533,7 +526,6 @@ class DashboardManager {
         try {
             const collection = this.db.collection("producto");
             if (datos.id) {
-                // Actualizar
                 await collection.doc(datos.id).update({
                     nombre: datos.nombre,
                     precio: datos.precio,
@@ -544,7 +536,6 @@ class DashboardManager {
                 });
                 alert("Producto actualizado correctamente.");
             } else {
-                // Crear
                 const nuevoProducto = {
                     ...datos,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -570,7 +561,7 @@ class DashboardManager {
         document.getElementById('productoImagen').value = datos.imagen || '';
 
         document.getElementById('modalProductoTitulo').textContent = id ? 'Editar Producto' : 'Nuevo Producto';
-        this.mostrarModal('modalProducto'); // CORREGIDO: Usar 'this'
+        this.mostrarModal('modalProducto');
     }
 
     async eliminarProducto(id) {
@@ -648,13 +639,11 @@ class DashboardManager {
         }
     }
 
-    // CORREGIDO: manejarSubmitCategoria
     async manejarSubmitCategoria(event) {
         event.preventDefault();
         const form = event.target;
         const id = document.getElementById('categoriaId').value;
 
-        // CORREGIDO: Leer campos como strings y manejar valores vacíos
         const nombre = form.querySelector('#categoriaNombre')?.value?.trim() || '';
         const descripcion = form.querySelector('#categoriaDescripcion')?.value?.trim() || '';
         const estado = form.querySelector('#categoriaEstado')?.value?.trim() || 'Activa';
@@ -677,7 +666,6 @@ class DashboardManager {
         try {
             const collection = this.db.collection("categorias");
             if (datos.id) {
-                // Actualizar
                 await collection.doc(datos.id).update({
                     nombre: datos.nombre,
                     descripcion: datos.descripcion,
@@ -686,7 +674,6 @@ class DashboardManager {
                 });
                 alert("Categoría actualizada correctamente.");
             } else {
-                // Crear
                 const nuevaCategoria = {
                     ...datos,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -710,7 +697,7 @@ class DashboardManager {
         document.getElementById('categoriaEstado').value = datos.estado || 'Activa';
 
         document.getElementById('modalCategoriaTitulo').textContent = id ? 'Editar Categoría' : 'Nueva Categoría';
-        this.mostrarModal('modalCategoria'); // CORREGIDO: Usar 'this'
+        this.mostrarModal('modalCategoria');
     }
 
     async eliminarCategoria(id) {
@@ -734,10 +721,10 @@ class DashboardManager {
         document.getElementById('formCategoria').reset();
         document.getElementById('categoriaId').value = '';
         document.getElementById('modalCategoriaTitulo').textContent = 'Nueva Categoría';
-        this.mostrarModal('modalCategoria'); // CORREGIDO: Usar 'this'
+        this.mostrarModal('modalCategoria');
     }
 
-    // --- Órdenes ---
+    // --- Órdenes (Corregido para mostrar el correo del cliente desde la orden) ---
     async cargarOrdenes() {
         if (!this.firebaseInicializado) {
             console.error("Firebase no está inicializado para cargar órdenes.");
@@ -746,7 +733,7 @@ class DashboardManager {
 
         try {
             console.log("Cargando órdenes desde Firestore...");
-            const snapshot = await this.db.collection("compras").get();
+            const snapshot = await this.db.collection("compras").get(); // Asumiendo colección 'compras'
             const tbody = document.getElementById("ordenes-tbody");
             tbody.innerHTML = "";
 
@@ -755,29 +742,111 @@ class DashboardManager {
                 return;
             }
 
+            // Iterar sobre las órdenes directamente, ya que el cliente está dentro de cada orden
             snapshot.forEach((doc) => {
                 const data = doc.data();
+
+                // Acceder al correo directamente desde el objeto 'cliente' dentro de la orden
+                const userEmail = data.cliente?.correo || 'N/A'; // Usar operador de encadenamiento opcional
+
                 const row = document.createElement("tr");
+                // Añadir onclick para ver detalles y editar estado
                 row.innerHTML = `
                     <td>${doc.id}</td>
-                    <td>${data.usuarioId || data.cliente || 'N/A'}</td>
+                    <td>${userEmail}</td> <!-- Mostrar el correo del cliente desde la orden -->
                     <td>$${data.total || 0}</td>
                     <td>${data.estado || 'Pendiente'}</td>
                     <td>${data.fecha ? data.fecha.toDate ? data.fecha.toDate().toLocaleString() : data.fecha : 'N/A'}</td>
                     <td>
-                        <button class="btn btn-sm btn-info">Ver Detalles</button>
-                        <button class="btn btn-sm btn-warning">Editar</button>
-                        <button class="btn btn-sm btn-danger">Cancelar</button>
+                        <button class="btn btn-sm btn-info" onclick="window.dashboardManager.verDetallesOrden('${doc.id}')">Ver Detalles</button>
+                        <button class="btn btn-sm btn-warning" onclick="window.dashboardManager.prepararEditarEstadoOrden('${doc.id}', '${data.estado}')">Editar</button>
+                        <button class="btn btn-sm btn-danger" onclick="window.dashboardManager.cancelarOrden('${doc.id}')">Cancelar</button>
                     </td>
                 `;
                 tbody.appendChild(row);
             });
+
         } catch (error) {
             console.error("Error al cargar órdenes:", error);
             const tbody = document.getElementById("ordenes-tbody");
             tbody.innerHTML = `<tr><td colspan="6" class="error-data">Error al cargar órdenes: ${error.message}</td></tr>`;
         }
     }
+
+
+    // Función para mostrar detalles de la orden (solo ID en este caso)
+    verDetallesOrden(id) {
+        // Puedes mostrar un alert simple o abrir un modal con más detalles
+        alert(`ID de la Orden: ${id}`);
+        // O abre un modal si prefieres una UI más elaborada
+        // this.mostrarModalDetallesOrden(id);
+    }
+
+    // Función para preparar la edición del estado
+    prepararEditarEstadoOrden(id, estadoActual) {
+        // Llena el formulario de edición con el ID y el estado actual
+        document.getElementById('editarEstadoOrdenId').value = id;
+        document.getElementById('editarEstadoOrdenEstado').value = estadoActual;
+
+        // Muestra el modal
+        this.mostrarModal('modalEditarEstadoOrden');
+    }
+
+    // Función para guardar el nuevo estado de la orden
+    async guardarEstadoOrden(event) {
+        event.preventDefault();
+        const form = event.target;
+        const id = document.getElementById('editarEstadoOrdenId').value;
+        const nuevoEstado = document.getElementById('editarEstadoOrdenEstado').value;
+
+        if (!this.firebaseInicializado) {
+            console.error("Firebase no está inicializado para actualizar el estado de la orden.");
+            alert("Error al actualizar el estado: Firebase no inicializado.");
+            return;
+        }
+
+        try {
+            // Actualiza el campo 'estado' en la colección 'compras'
+            await this.db.collection("compras").doc(id).update({
+                estado: nuevoEstado,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp() // Opcional: registrar fecha de actualización
+            });
+
+            alert("Estado de la orden actualizado correctamente.");
+            this.cerrarModal('modalEditarEstadoOrden');
+            this.cargarOrdenes(); // Recarga la tabla para reflejar el cambio
+
+        } catch (error) {
+            console.error("Error al actualizar el estado de la orden:", error);
+            alert("Error al actualizar el estado: " + error.message);
+        }
+    }
+
+    // Función para cancelar una orden (solo como ejemplo, puedes reutilizar editar estado)
+    async cancelarOrden(id) {
+        if (!confirm("¿Estás seguro de que deseas cancelar esta orden?")) return;
+
+        if (!this.firebaseInicializado) {
+            console.error("Firebase no está inicializado para cancelar la orden.");
+            alert("Error al cancelar: Firebase no inicializado.");
+            return;
+        }
+
+        try {
+            await this.db.collection("compras").doc(id).update({
+                estado: 'cancelado', // Cambia el estado a 'cancelado'
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            alert("Orden cancelada correctamente.");
+            this.cargarOrdenes(); // Recarga la tabla
+
+        } catch (error) {
+            console.error("Error al cancelar la orden:", error);
+            alert("Error al cancelar la orden: " + error.message);
+        }
+    }
+
 
     // ==================== MÉTODOS UI ====================
 
@@ -841,7 +910,6 @@ class DashboardManager {
 
     // ==================== MÉTODOS MODALES ====================
 
-    // CORREGIDO: Añadir el método mostrarModal a la clase
     mostrarModal(id) {
         const modal = document.getElementById(id);
         if (modal) {
@@ -849,15 +917,13 @@ class DashboardManager {
         }
     }
 
-    // CORREGIDO: Añadir el método cerrarModal a la clase
     cerrarModal(id) {
         const modal = document.getElementById(id);
         if (modal) {
             modal.style.display = 'none';
-            // Resetear formulario al cerrar
             if (id === 'modalUsuario') {
                 document.getElementById('formUsuario').reset();
-                document.getElementById('passwordField').style.display = 'block'; // Mostrar contraseña en creación
+                document.getElementById('passwordField').style.display = 'block';
                 document.getElementById('modalUsuarioTitulo').textContent = 'Nuevo Usuario';
             }
             if (id === 'modalProducto') {
@@ -868,6 +934,10 @@ class DashboardManager {
                 document.getElementById('formCategoria').reset();
                 document.getElementById('modalCategoriaTitulo').textContent = 'Nueva Categoría';
             }
+            // Reiniciar formularios de órdenes al cerrar también
+            if (id === 'modalEditarEstadoOrden') {
+                document.getElementById('formEditarEstadoOrden').reset();
+            }
         }
     }
 
@@ -877,24 +947,23 @@ class DashboardManager {
         document.getElementById('formUsuario').reset();
         document.getElementById('passwordField').style.display = 'block';
         document.getElementById('modalUsuarioTitulo').textContent = 'Nuevo Usuario';
-        document.getElementById('usuarioId').value = ''; // Asegurar ID vacío en creación
-        this.mostrarModal('modalUsuario'); // CORREGIDO: Usar 'this'
+        document.getElementById('usuarioId').value = '';
+        this.mostrarModal('modalUsuario');
     }
 
     mostrarModalProducto() {
         document.getElementById('formProducto').reset();
         document.getElementById('modalProductoTitulo').textContent = 'Nuevo Producto';
-        document.getElementById('productoId').value = ''; // Asegurar ID vacío en creación
-        this.mostrarModal('modalProducto'); // CORREGIDO: Usar 'this'
+        document.getElementById('productoId').value = '';
+        this.mostrarModal('modalProducto');
     }
 
     mostrarModalCategoria() {
         document.getElementById('formCategoria').reset();
         document.getElementById('modalCategoriaTitulo').textContent = 'Nueva Categoría';
-        document.getElementById('categoriaId').value = ''; // Asegurar ID vacío en creación
-        this.mostrarModal('modalCategoria'); // CORREGIDO: Usar 'this'
+        document.getElementById('categoriaId').value = '';
+        this.mostrarModal('modalCategoria');
     }
-
 
     async manejarSubmitPerfil(event) {
         event.preventDefault();
@@ -934,10 +1003,9 @@ function irATienda() {
 
 function cerrarSesion() {
     localStorage.removeItem("usuario");
-    window.location.href = '../../index.html';
+    window.location.href = '../login.html';
 }
 
-// CORREGIDO: Llamadas a las nuevas funciones de manejo de submit
 function guardarUsuario(event) {
     if (window.dashboardManager) {
         window.dashboardManager.manejarSubmitUsuario(event);
@@ -963,6 +1031,13 @@ function actualizarPerfil(event) {
     }
 }
 
+// Nuevas funciones globales para órdenes
+function guardarEstadoOrden(event) {
+    if (window.dashboardManager) {
+        window.dashboardManager.guardarEstadoOrden(event);
+    }
+}
+
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🏁 DOM Cargado - Inicializando DashboardManager...');
@@ -973,4 +1048,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('formProducto')?.addEventListener('submit', (e) => window.dashboardManager.manejarSubmitProducto(e));
     document.getElementById('formCategoria')?.addEventListener('submit', (e) => window.dashboardManager.manejarSubmitCategoria(e));
     document.getElementById('formPerfil')?.addEventListener('submit', (e) => window.dashboardManager.manejarSubmitPerfil(e));
+    // Asociar evento submit al nuevo formulario de edición de estado
+    document.getElementById('formEditarEstadoOrden')?.addEventListener('submit', (e) => window.dashboardManager.guardarEstadoOrden(e));
 });

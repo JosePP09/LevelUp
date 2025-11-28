@@ -109,9 +109,12 @@ body {
     border-radius: 12px;
     padding: 12px 15px;
     text-decoration: none;
-    display: flex;
-    align-items: center;
+    display: flex; /* Asegura el uso de flexbox */
+    align-items: center; /* Alinea verticalmente */
+    justify-content: flex-start; /* Alinea horizontalmente el contenido a la izquierda */
+    text-align: left; /* Asegura que el texto dentro del enlace esté a la izquierda */
     transition: all 0.3s ease;
+    width: 100%; /* Ocupa todo el ancho del contenedor */
 }
 
 .menu-link i {
