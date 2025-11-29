@@ -21,60 +21,75 @@
 
 <body>
     <!-- Header -->
-    <!-- Header -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href="index.html">
-      <img src="assests/image/Diseño sin título (6).png" class="levelup-logo me-2" alt="Level-Up Logo">
-      <span class="fw-bold">Level-Up Gamer</span>
-    </a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assests/image/Diseño sin título (6).png" class="levelup-logo me-2" alt="Level-Up Logo">
+                <span class="fw-bold">Level-Up Gamer</span>
+            </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="assests/page/productos.html">Productos</a></li>
-        <li class="nav-item"><a class="nav-link" href="assests/page/nosotros.html">Nosotros</a></li>
-        <li class="nav-item"><a class="nav-link" href="assests/page/blogs.html">Blogs</a></li>
-        <li class="nav-item"><a class="nav-link" href="assests/page/contacto.html">Contacto</a></li>
-      </ul>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Formulario de búsqueda (en la parte superior) -->
+                <form class="d-flex me-auto my-2 my-lg-0" id="searchForm">
+                    <input class="form-control me-2" type="search" id="buscar-producto" placeholder="Buscar productos..." aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
 
-      <!-- Sección derecha (carrito + perfil o login) -->
-      <ul class="navbar-nav align-items-center">
-        <!-- Carrito -->
-        <li class="nav-item me-3">
-          <a class="nav-link" href="assests/page/carrito.html">
-            <i class="bi bi-cart3 fs-5"></i>
-            <span class="badge bg-primary" id="cart-count">0</span>
-          </a>
-        </li>
+                <!-- Botones de navegación (debajo del buscador) -->
+                <ul class="navbar-nav">
+                    <!-- Botón Categoría con menú desplegable -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categoría
+                        </a>
+                        <ul class="dropdown-menu" id="categoriasDropdownMenu">
+                            <!-- Las categorías se cargarán aquí dinámicamente -->
+                            <li><a class="dropdown-item" href="#">Cargando categorías...</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="assests/page/productos.html">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="assests/page/ofertas.html">Ofertas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="assests/page/nosotros.html">Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="assests/page/blogs.html">Blogs</a></li>
+                </ul>
 
-        <!-- Perfil dinámico -->
-        <li class="nav-item dropdown" id="perfilDropdown" style="display: none;">
-          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-person-circle fs-5"></i>
-            <span id="nombreUsuario" class="ms-2"></span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#" id="irPerfil">Ir al perfil</a></li>
-            <li><a class="dropdown-item text-danger" href="#" id="cerrarSesion">Cerrar sesión</a></li>
-          </ul>
-        </li>
+                <!-- Sección derecha (carrito + perfil o login) -->
+                <ul class="navbar-nav align-items-center">
+                    <!-- Carrito -->
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="assests/page/carrito.html">
+                            <i class="bi bi-cart3 fs-5"></i>
+                            <span class="badge bg-primary" id="cart-count">0</span>
+                        </a>
+                    </li>
 
-        <!-- Enlaces login/registro -->
-        <li class="nav-item" id="loginLinks">
-          <a href="assests/page/login.html" class="nav-link">Iniciar sesión</a>
-        </li>
-        <li class="nav-item" id="registroLinks">
-          <a href="assests/page/registro.html" class="nav-link">Registrarse</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+                    <!-- Perfil dinámico -->
+                    <li class="nav-item dropdown" id="perfilDropdown" style="display: none;">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle fs-5"></i>
+                            <span id="nombreUsuario" class="ms-2"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#" id="irPerfil">Ir al perfil</a></li>
+                            <li><a class="dropdown-item text-danger" href="#" id="cerrarSesion">Cerrar sesión</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Enlaces login/registro -->
+                    <li class="nav-item" id="loginLinks">
+                        <a href="assests/page/login.html" class="nav-link">Iniciar sesión</a>
+                    </li>
+                    <li class="nav-item" id="registroLinks">
+                        <a href="assests/page/registro.html" class="nav-link">Registrarse</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
 
 
@@ -101,7 +116,90 @@
             </div>
         </section>
 
-        <!-- Productos Destacados --> <section class="py-5"> <div class="container"> <h2 class="text-center mb-5">Productos Destacados</h2> <div class="row" id="productos-destacados"> <!-- Producto Destacado 1 --> <div class="col-lg-3 col-md-6 mb-4"> <div class="producto-card h-100"> <div class="text-center mb-3"> <img src="assests/image/catan.jpg" alt="Catan" class="img-fluid rounded" style="height: 200px; object-fit: cover; width: 100%;"> </div> <h5 class="text-center mb-3">Catan</h5> <p class="precio text-center mb-3">$19.990</p> <p class="text-light text-center small mb-3">Un clásico juego de estrategia donde los jugadores compiten por colonizar y expandirse en la isla de Catan...</p> <div class="d-grid gap-2"> <a href="assests/page/detalleProducto.html?producto=catan" class="btn btn-outline-primary"> <i class="bi bi-eye me-2"></i>Ver Detalle </a> <button class="btn btn-success" onclick="alert('Función de carrito deshabilitada')"> <i class="bi bi-cart-plus me-2"></i>Agregar al Carrito </button> </div> </div> </div> <!-- Producto Destacado 2 --> <div class="col-lg-3 col-md-6 mb-4"> <div class="producto-card h-100"> <div class="text-center mb-3"> <img src="assests/image/Carcassone.jpg" alt="Carcassone" class="img-fluid rounded" style="height: 200px; object-fit: cover; width: 100%;"> </div> <h5 class="text-center mb-3">Carcassone</h5> <p class="precio text-center mb-3">$21.990</p> <p class="text-light text-center small mb-3">Un juego de colocación de fichas donde los jugadores construyen el paisaje alrededor de la fortaleza medieval...</p> <div class="d-grid gap-2"> <a href="assests/page/detalleProducto.html?producto=carcassone" class="btn btn-outline-primary"> <i class="bi bi-eye me-2"></i>Ver Detalle </a> <button class="btn btn-success" onclick="alert('Función de carrito deshabilitada')"> <i class="bi bi-cart-plus me-2"></i>Agregar al Carrito </button> </div> </div> </div> <!-- Producto Destacado 3 --> <div class="col-lg-3 col-md-6 mb-4"> <div class="producto-card h-100"> <div class="text-center mb-3"> <img src="assests/image/Control Inalámbrico Xbox Series X.png" alt="Control Xbox" class="img-fluid rounded" style="height: 200px; object-fit: cover; width: 100%;"> </div> <h5 class="text-center mb-3">Control Xbox Series X</h5> <p class="precio text-center mb-3">$39.990</p> <p class="text-light text-center small mb-3">Ofrece una experiencia de juego cómoda con botones mapeables y una respuesta táctil mejorada...</p> <div class="d-grid gap-2"> <a href="assests/page/detalleProducto.html?producto=controlXbox" class="btn btn-outline-primary"> <i class="bi bi-eye me-2"></i>Ver Detalle </a> <button class="btn btn-success" onclick="alert('Función de carrito deshabilitada')"> <i class="bi bi-cart-plus me-2"></i>Agregar al Carrito </button> </div> </div> </div> <!-- Producto Destacado 4 --> <div class="col-lg-3 col-md-6 mb-4"> <div class="producto-card h-100"> <div class="text-center mb-3"> <img src="assests/image/Auriculares Gamer HyperX Cloud II.jpg" alt="Auriculares HyperX" class="img-fluid rounded" style="height: 200px; object-fit: cover; width: 100%;"> </div> <h5 class="text-center mb-3">Auriculares HyperX Cloud II</h5> <p class="precio text-center mb-3">$29.990</p> <p class="text-light text-center small mb-3">Proporcionan un sonido envolvente de calidad con un micrófono desmontable y almohadillas de espuma...</p> <div class="d-grid gap-2"> <a href="assests/page/detalleProducto.html?producto=auricularesHyperX" class="btn btn-outline-primary"> <i class="bi bi-eye me-2"></i>Ver Detalle </a> <button class="btn btn-success" onclick="alert('Función de carrito deshabilitada')"> <i class="bi bi-cart-plus me-2"></i>Agregar al Carrito </button> </div> </div> </div> </div> </div> </section>
+        <!-- Productos Destacados -->
+        <section class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-5">Productos Destacados</h2>
+                <div class="row" id="productos-destacados">
+                    <!-- Producto Destacado 1 -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="producto-card h-100">
+                            <div class="text-center mb-3">
+                                <img src="assests/image/catan.jpg" alt="Catan" class="img-fluid rounded" style="height: 200px; object-fit: cover; width: 100%;">
+                            </div>
+                            <h5 class="text-center mb-3">Catan</h5>
+                            <p class="precio text-center mb-3">$19.990</p>
+                            <p class="text-light text-center small mb-3">Un clásico juego de estrategia donde los jugadores compiten por colonizar y expandirse en la isla de Catan...</p>
+                            <div class="d-grid gap-2">
+                                <a href="assests/page/detalleProducto.html?producto=catan" class="btn btn-outline-primary">
+                                    <i class="bi bi-eye me-2"></i>Ver Detalle
+                                </a>
+                                <button class="btn btn-success" onclick="alert('Función de carrito deshabilitada')">
+                                    <i class="bi bi-cart-plus me-2"></i>Agregar al Carrito
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Producto Destacado 2 -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="producto-card h-100">
+                            <div class="text-center mb-3">
+                                <img src="assests/image/Carcassone.jpg" alt="Carcassone" class="img-fluid rounded" style="height: 200px; object-fit: cover; width: 100%;">
+                            </div>
+                            <h5 class="text-center mb-3">Carcassone</h5>
+                            <p class="precio text-center mb-3">$21.990</p>
+                            <p class="text-light text-center small mb-3">Un juego de colocación de fichas donde los jugadores construyen el paisaje alrededor de la fortaleza medieval...</p>
+                            <div class="d-grid gap-2">
+                                <a href="assests/page/detalleProducto.html?producto=carcassone" class="btn btn-outline-primary">
+                                    <i class="bi bi-eye me-2"></i>Ver Detalle
+                                </a>
+                                <button class="btn btn-success" onclick="alert('Función de carrito deshabilitada')">
+                                    <i class="bi bi-cart-plus me-2"></i>Agregar al Carrito
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Producto Destacado 3 -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="producto-card h-100">
+                            <div class="text-center mb-3">
+                                <img src="assests/image/Control Inalámbrico Xbox Series X.png" alt="Control Xbox" class="img-fluid rounded" style="height: 200px; object-fit: cover; width: 100%;">
+                            </div>
+                            <h5 class="text-center mb-3">Control Xbox Series X</h5>
+                            <p class="precio text-center mb-3">$39.990</p>
+                            <p class="text-light text-center small mb-3">Ofrece una experiencia de juego cómoda con botones mapeables y una respuesta táctil mejorada...</p>
+                            <div class="d-grid gap-2">
+                                <a href="assests/page/detalleProducto.html?producto=controlXbox" class="btn btn-outline-primary">
+                                    <i class="bi bi-eye me-2"></i>Ver Detalle
+                                </a>
+                                <button class="btn btn-success" onclick="alert('Función de carrito deshabilitada')">
+                                    <i class="bi bi-cart-plus me-2"></i>Agregar al Carrito
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Producto Destacado 4 -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="producto-card h-100">
+                            <div class="text-center mb-3">
+                                <img src="assests/image/Auriculares Gamer HyperX Cloud II.jpg" alt="Auriculares HyperX" class="img-fluid rounded" style="height: 200px; object-fit: cover; width: 100%;">
+                            </div>
+                            <h5 class="text-center mb-3">Auriculares HyperX Cloud II</h5>
+                            <p class="precio text-center mb-3">$29.990</p>
+                            <p class="text-light text-center small mb-3">Proporcionan un sonido envolvente de calidad con un micrófono desmontable y almohadillas de espuma...</p>
+                            <div class="d-grid gap-2">
+                                <a href="assests/page/detalleProducto.html?producto=auricularesHyperX" class="btn btn-outline-primary">
+                                    <i class="bi bi-eye me-2"></i>Ver Detalle
+                                </a>
+                                <button class="btn btn-success" onclick="alert('Función de carrito deshabilitada')">
+                                    <i class="bi bi-cart-plus me-2"></i>Agregar al Carrito
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
