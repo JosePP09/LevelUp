@@ -109,20 +109,28 @@ function procesarPago() {
         alert('No hay productos en el carrito');
         return;
     }
-
     if (!validarFormularios()) {
         alert('Por favor completa todos los campos obligatorios');
         return;
     }
 
+    // Obtener el run del usuario actual
+    const runUsuario = obtenerRunUsuarioActual();
+    if (!runUsuario) {
+        alert('Usuario no autenticado o sin RUN. Por favor, inicia sesión.');
+        return; // Detener el proceso si no hay run
+    }
+
     try {
         const datosCliente = obtenerDatosCliente();
+        // Añadir el run al objeto datosCliente
+        datosCliente.run = runUsuario; // <-- Añadir esta línea
+
         const datosDireccion = obtenerDatosDireccion();
         const total = carrito.reduce((sum, producto) => sum + ((producto.precio || 0) * (producto.cantidad || 1)), 0);
-
         const compra = {
             fecha: new Date(),
-            cliente: datosCliente,
+            cliente: datosCliente, // Ahora incluye el run
             direccion: datosDireccion,
             productos: [...carrito],
             total: total,
@@ -133,7 +141,6 @@ function procesarPago() {
         db.collection('compras').add(compra)
             .then(async (docRef) => {
                 const pagoExitoso = Math.random() > 0.5;
-
                 if (pagoExitoso) {
                     await db.collection('compras').doc(docRef.id).update({ estado: 'completada' });
                     localStorage.removeItem('carrito');
@@ -149,7 +156,6 @@ function procesarPago() {
                 console.error('Error al guardar la compra:', error);
                 alert('Error al procesar la compra. Intenta nuevamente.');
             });
-
     } catch (error) {
         console.error('Error procesando la compra:', error);
         alert('Error inesperado. Intenta nuevamente.');
