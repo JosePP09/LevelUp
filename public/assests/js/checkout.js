@@ -9,6 +9,25 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
+// Función para obtener el run del usuario actual desde localStorage
+function obtenerRunUsuarioActual() {
+    const usuarioStr = localStorage.getItem("usuario");
+    if (usuarioStr) {
+        const usuario = JSON.parse(usuarioStr);
+        // Asumiendo que el objeto usuario tiene una propiedad 'run'
+        if (usuario && usuario.run) {
+            console.log("Run del usuario obtenido:", usuario.run);
+            return usuario.run;
+        } else {
+            console.error("El usuario en localStorage no tiene la propiedad 'run'.");
+            return null;
+        }
+    } else {
+        console.error("No hay usuario en localStorage.");
+        return null;
+    }
+}
+
 const regionesComunas = {
     "Arica y Parinacota": ["Arica", "Camarones", "Putre", "General Lagos"],
     "Tarapacá": ["Iquique", "Alto Hospicio", "Pozo Almonte", "Camiña", "Colchane", "Huara", "Pica"],
