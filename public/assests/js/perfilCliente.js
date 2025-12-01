@@ -160,12 +160,13 @@ class PerfilCliente {
         }
     }
 
+    // ==================== MÉTODO CARGA RESEÑAS (CORREGIDO) ====================
     async cargarResenasUsuario() {
         if (!this.usuarioActual || !this.firebaseInicializado) return;
         try {
-            // Cambiado: Usar 'run' en lugar de 'correo'
-            const snapshot = await this.db.collection("resena*") // Ajusta el nombre de la colección si es necesario
-                .where("run", "==", this.usuarioActual.run) // Ajustado a 'run'
+            // Cambiado: Usar 'run' en lugar de 'correo' Y usar la colección correcta 'resena'
+            const snapshot = await this.db.collection("resena") // <-- AQUÍ: Cambiado de 'resena*' a 'resena'
+                .where("run", "==", this.usuarioActual.run) // <-- AQUÍ: Asegúrate que 'run' sea el nombre del campo en la colección 'resena'
                 .get();
             this.resenas = snapshot.docs.map(doc => ({
                 id: doc.id,
@@ -218,7 +219,7 @@ class PerfilCliente {
         this.cargarHistorialCompras();
     }
 
-    // ==================== MÉTODOS HISTORIAL RESEÑAS ====================
+    // ==================== MÉTODOS HISTORIAL RESEÑAS (CORREGIDO) ====================
     async cargarHistorialResenas() {
         await this.cargarResenasUsuario(); // Asegura que los datos estén actualizados
         const tbody = document.getElementById("resenas-tbody");
@@ -228,13 +229,14 @@ class PerfilCliente {
             return;
         }
         this.resenas.forEach((resena) => {
+            // CORREGIDO: Usar los campos que realmente tiene 'resena' guardada por formularioContacto.js
             const row = document.createElement("tr");
             row.innerHTML = `
-                <td>${resena.productoId || 'N/A'}</td>
-                <td>${resena.nombreProducto || 'N/A'}</td>
-                <td>${'★'.repeat(resena.calificacion || 0)}${'☆'.repeat(5 - (resena.calificacion || 0))} (${resena.calificacion || 0}/5)</td>
-                <td>${resena.comentario || 'Sin comentario'}</td>
-                <td>${resena.fecha ? resena.fecha.toDate ? resena.fecha.toDate().toLocaleString() : resena.fecha : 'N/A'}</td>
+                <td>${resena.run || 'N/A'}</td> <!-- Mostrar el RUN del usuario que hizo la reseña -->
+                <td>${resena.nombre || 'N/A'}</td> <!-- Mostrar el nombre del usuario -->
+                <td>${resena.correo || 'N/A'}</td> <!-- Mostrar el correo del usuario -->
+                <td>${resena.comentario || 'Sin comentario'}</td> <!-- Mostrar el comentario -->
+                <td>${resena.fecha ? resena.fecha.toDate ? resena.fecha.toDate().toLocaleString() : resena.fecha : 'N/A'}</td> <!-- Mostrar la fecha -->
                 <td>
                     <button class="btn btn-sm btn-warning" onclick="editarResena('${resena.id}')">Editar</button>
                     <button class="btn btn-sm btn-danger" onclick="eliminarResena('${resena.id}')">Eliminar</button>
@@ -281,10 +283,10 @@ class PerfilCliente {
                 // No actualizamos el correo aquí directamente en 'usuario', solo en Auth si es necesario
             };
             // Actualizar datos en la colección 'usuario' de Firestore
-            await this.db.collection("usuario*").doc(this.usuarioActual.id).update(updates); // Cambiado a 'usuario*'
+            await this.db.collection("usuario").doc(this.usuarioActual.id).update(updates); // Cambiado a 'usuario*'
             // Si hay nueva clave, actualizarla en Firestore (NO en Auth para este ejemplo)
             if (nuevaClave) {
-                await this.db.collection("usuario*").doc(this.usuarioActual.id).update({ // Cambiado a 'usuario*'
+                await this.db.collection("usuario").doc(this.usuarioActual.id).update({ // Cambiado a 'usuario*'
                     clave: nuevaClave // ATENCIÓN: Esto es inseguro. En producción, maneja claves solo con Auth.
                 });
                 alert("Contraseña actualizada en Firestore. (ADVERTENCIA: No se actualizó en Firebase Auth)");
