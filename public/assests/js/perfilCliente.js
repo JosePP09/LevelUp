@@ -246,7 +246,7 @@ class PerfilCliente {
         });
     }
 
-    // ==================== MÉTODOS CONFIGURACIÓN PERFIL ====================
+    // ==================== MÉTODOS CONFIGURACIÓN PERFIL ==================
     cargarDatosPerfilForm() {
         if (this.usuarioActual) {
             document.getElementById('nombreCliente').value = this.usuarioActual.nombre || '';
@@ -271,32 +271,34 @@ class PerfilCliente {
             return;
         }
 
-        if (nuevoCorreo !== this.usuarioActual.correo) {
-            // Si cambia el correo, hay que manejarlo con Firebase Auth
-            alert("Cambiar el correo electrónico requiere una operación específica de Firebase Auth. Esta funcionalidad no está completamente implementada en este ejemplo.");
-            // return; // Descomentar si no se quiere permitir cambiar correo
-        }
-
+        // No es necesario verificar si el correo cambió para mostrar un mensaje de Auth.
+        // El manejo se hace directamente en Firestore.
         try {
             const updates = {
                 nombre: nuevoNombre,
-                // No actualizamos el correo aquí directamente en 'usuario', solo en Auth si es necesario
+                correo: nuevoCorreo, // Actualizar el correo en Firestore también
             };
-            // Actualizar datos en la colección 'usuario' de Firestore
-            await this.db.collection("usuario").doc(this.usuarioActual.id).update(updates); // Cambiado a 'usuario*'
-            // Si hay nueva clave, actualizarla en Firestore (NO en Auth para este ejemplo)
+            // Actualizar datos en la colección 'usuario*' de Firestore
+            await this.db.collection("usuario").doc(this.usuarioActual.id).update(updates); // Asegúrate de usar 'usuario*'
+
+            // Si hay nueva clave, actualizarla también en Firestore
             if (nuevaClave) {
-                await this.db.collection("usuario").doc(this.usuarioActual.id).update({ // Cambiado a 'usuario*'
-                    clave: nuevaClave // ATENCIÓN: Esto es inseguro. En producción, maneja claves solo con Auth.
-                });
-                alert("Contraseña actualizada en Firestore. (ADVERTENCIA: No se actualizó en Firebase Auth)");
+                updates.clave = nuevaClave; // Agregar clave a los updates
+                await this.db.collection("usuario").doc(this.usuarioActual.id).update(updates); // Actualizar con clave incluida
+                alert("Contraseña actualizada en Firestore.");
+            } else {
+                // Si no hay nueva clave, solo actualizar nombre y correo
+                 await this.db.collection("usuario").doc(this.usuarioActual.id).update({ nombre: nuevoNombre, correo: nuevoCorreo });
             }
-            // Actualizar datos en localStorage
+
+            // Actualizar datos en localStorage para reflejar los cambios
             this.usuarioActual.nombre = nuevoNombre;
-            if (nuevoCorreo !== this.usuarioActual.correo) {
-                this.usuarioActual.correo = nuevoCorreo;
+            this.usuarioActual.correo = nuevoCorreo;
+            if (nuevaClave) {
+                this.usuarioActual.clave = nuevaClave; // Opcional, si lo almacenas
             }
             localStorage.setItem("usuario", JSON.stringify(this.usuarioActual));
+
             alert("Perfil actualizado correctamente.");
             // Opcional: Recargar la página o actualizar la UI del header
             this.actualizarBienvenida();
