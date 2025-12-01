@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Cliente: validar desde Firestore
         try {
             // Cambiado: Usar la colección 'usuario*'
-            const query = await db.collection("usuario*") // Ajustado a 'usuario*'
+            const query = await db.collection("usuario") // Ajustado a 'usuario*'
                 .where("correo", "==", correo)
                 .where("clave", "==", clave)
                 .get();
