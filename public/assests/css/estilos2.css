@@ -961,3 +961,63 @@ main .container .row.mb-4:first-child {
     margin-top: 1rem !important;
 }
 
+
+/* Dropdown personalizado para el menú de navegación principal */
+.dropdown-nav {
+  position: relative;
+  display: inline-block;
+  
+}
+
+.dropdown-menu-categorias {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1a1a1a;
+  border: 1px solid var(--accent-blue);
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  min-width: 220px;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  margin-top: 0.5rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+.dropdown-nav:hover .dropdown-menu-categorias {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dropdown-item-categoria {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  border-radius: 4px;
+  margin: 0 0.25rem;
+}
+
+.dropdown-item-categoria:hover {
+  background-color: rgba(30, 144, 255, 0.2);
+  color: var(--accent-blue);
+  padding-left: 1.25rem;
+}
+
+.categorias-trigger {
+  cursor: pointer; /* Indica que es interactivo */
+}
+
+/* Añade esto al final de tu CSS */
+.dropdown-nav {
+  position: relative;
+  display: inline-block;
+  margin: 0 0.5rem; /* Espacio entre enlaces */
+}
