@@ -39,16 +39,34 @@
                 </div>
             </form>
 
-            <!-- Botones de Iniciar Sesión, Crear Cuenta y Carrito a la derecha -->
+            <!-- Dropdown de Perfil / Botones de Login/Registro a la derecha -->
             <div class="d-flex ms-auto align-items-center">
-                <a href="login.html" class="btn btn-outline-light me-2">Iniciar Sesión</a>
-                <a href="registro.html" class="btn btn-primary me-2">Crear Cuenta</a>
+                <!-- Dropdown de Perfil (se muestra si el usuario está logueado) -->
+                <div class="dropdown" id="perfilDropdown" style="display: none;">
+                    <a class="btn btn-outline-light dropdown-toggle me-2" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span id="nombreUsuario"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" id="irPerfil">Ir a Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="cerrarSesion">Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+
+                <!-- Enlaces de Login/Registro (se muestran si el usuario NO está logueado) -->
+                <div id="loginLinks">
+                    <a href="login.html" class="btn btn-outline-light me-2">Iniciar Sesión</a>
+                </div>
+                <div id="registroLinks">
+                    <a href="registro.html" class="btn btn-primary me-2">Crear Cuenta</a>
+                </div>
+
+                <!-- Carrito (siempre visible) -->
                 <a class="nav-link" href="carrito.html">
                     <i class="bi bi-cart3 fs-5"></i>
                     <span class="badge bg-primary" id="cart-count">0</span>
                 </a>
             </div>
-
             <!-- Botón de colapso para el menú de navegación -->
             <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
