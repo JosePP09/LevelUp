@@ -5,93 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Level-Up Gamer - Tu tienda especializada en gaming</title>
 
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 🔥 Firebase SDKs SIN ESPACIOS -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js  "></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js  "></script>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css  " rel="stylesheet">
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css  ">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="assests/css/estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron  :wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assests/css/estilos2.css"> <!-- Cambiado a estilos2.css -->
 
     <!-- Firebase (solo app y firestore) -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <!-- Scripts ya están en el head -->
 </head>
 
 <body>
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
+            <!-- Logo a la izquierda -->
             <a class="navbar-brand d-flex align-items-center" href="index.html">
                 <img src="assests/image/Diseño sin título (6).png" class="levelup-logo me-2" alt="Level-Up Logo">
                 <span class="fw-bold">Level-Up Gamer</span>
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <!-- Barra de búsqueda centrada -->
+            <form class="d-flex search-form mx-auto" style="max-width: 600px;">
+                <div class="input-group">
+                    <span class="input-group-text bg-dark border-gaming text-light">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" class="form-control bg-dark border-gaming text-light" id="buscar-producto" placeholder="Buscar productos...">
+                    <button class="btn btn-outline-secondary" type="button" id="limpiar-busqueda">
+                        <i class="bi bi-x"></i>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Dropdown de Perfil / Botones de Login/Registro a la derecha -->
+            <div class="d-flex ms-auto align-items-center">
+                <!-- Dropdown de Perfil (se muestra si el usuario está logueado) -->
+                <div class="dropdown" id="perfilDropdown" style="display: none;">
+                    <a class="btn btn-outline-light dropdown-toggle me-2" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span id="nombreUsuario"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" id="irPerfil">Ir a Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="cerrarSesion">Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+
+                <!-- Enlaces de Login/Registro (se muestran si el usuario NO está logueado) -->
+                <div id="loginLinks">
+                    <a href="assests/page/login.html" class="btn btn-outline-light me-2">Iniciar Sesión</a>
+                </div>
+                <div id="registroLinks">
+                    <a href="assests/page/registro.html" class="btn btn-primary me-2">Crear Cuenta</a>
+                </div>
+
+                <!-- Carrito (siempre visible) -->
+                <a class="nav-link" href="assests/page/carrito.html">
+                    <i class="bi bi-cart3 fs-5"></i>
+                    <span class="badge bg-primary" id="cart-count">0</span>
+                </a>
+            </div>
+
+            <!-- Botón de colapso para el menú de navegación -->
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- Formulario de búsqueda (en la parte superior) -->
-                <form class="d-flex me-auto my-2 my-lg-0" id="searchForm">
-                    <input class="form-control me-2" type="search" id="buscar-producto" placeholder="Buscar productos..." aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Buscar</button>
-                </form>
-
-                <!-- Botones de navegación (debajo del buscador) -->
-                <ul class="navbar-nav">
-                    <!-- Botón Categoría con menú desplegable -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Categoría
-                        </a>
-                        <ul class="dropdown-menu" id="categoriasDropdownMenu">
-                            <!-- Las categorías se cargarán aquí dinámicamente -->
-                            <li><a class="dropdown-item" href="#">Cargando categorías...</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="assests/page/productos.html">Productos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="assests/page/ofertas.html">Ofertas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="assests/page/nosotros.html">Nosotros</a></li>
-                    <li class="nav-item"><a class="nav-link" href="assests/page/blogs.html">Blogs</a></li>
-                </ul>
-
-                <!-- Sección derecha (carrito + perfil o login) -->
-                <ul class="navbar-nav align-items-center">
-                    <!-- Carrito -->
-                    <li class="nav-item me-3">
-                        <a class="nav-link" href="assests/page/carrito.html">
-                            <i class="bi bi-cart3 fs-5"></i>
-                            <span class="badge bg-primary" id="cart-count">0</span>
-                        </a>
-                    </li>
-
-                    <!-- Perfil dinámico -->
-                    <li class="nav-item dropdown" id="perfilDropdown" style="display: none;">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle fs-5"></i>
-                            <span id="nombreUsuario" class="ms-2"></span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#" id="irPerfil">Ir al perfil</a></li>
-                            <li><a class="dropdown-item text-danger" href="#" id="cerrarSesion">Cerrar sesión</a></li>
-                        </ul>
-                    </li>
-
-                    <!-- Enlaces login/registro -->
-                    <li class="nav-item" id="loginLinks">
-                        <a href="assests/page/login.html" class="nav-link">Iniciar sesión</a>
-                    </li>
-                    <li class="nav-item" id="registroLinks">
-                        <a href="assests/page/registro.html" class="nav-link">Registrarse</a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </nav>
 
+    <!-- Menú de Navegación Principal (fuera del header, debajo de él) -->
+    <div class="navigation-menu-container">
+        <div class="container">
+            <div class="col-12">
+                <a href="index.html" class="text-light active">Home</a> <!-- Añadido active -->
 
+                <!-- Dropdown para Categorias -->
+                <div class="dropdown-nav" id="categorias-dropdown">
+                    <a href="assests/page/productos.html" class="text-light categorias-trigger">Categorias</a>
+                    <div class="dropdown-menu-categorias">
+                        <!-- Las categorías se cargarán aquí dinámicamente -->
+                        <a href="assests/page/productos.html" class="dropdown-item-categoria">Cargando categorías...</a>
+                    </div>
+                </div>
+                <!-- Fin Dropdown -->
+
+                <!-- Enlaces normales (fuera del dropdown) -->
+                <a href="assests/page/ofertas.html" class="text-light">Ofertas</a>
+                <a href="assests/page/nosotros.html" class="text-light">Nosotros</a>
+                <a href="assests/page/blogs.html" class="text-light">Blogs</a>
+                <a href="assests/page/contacto.html" class="text-light">Contacto</a>
+            </div>
+        </div>
+    </div>
 
     <!-- Main Content -->
     <main class="pt-5">
@@ -211,7 +223,7 @@
                         <img src="assests/image/Diseño sin título (6).png" class="levelup-logo me-2" alt="Level-Up Logo">
                         <h4 class="mb-0">Level-Up Gamer</h4>
                     </div>
-                    <p>Tu tienda especializada en productos para gamers. Envíos a todo Chile.</p>
+                    <p class="text-light">Tu tienda especializada en productos para gamers. Envíos a todo Chile.</p>
                     <div class="d-flex gap-3">
                         <a href="#" class="text-light"><i class="bi bi-facebook fs-4"></i></a>
                         <a href="#" class="text-light"><i class="bi bi-twitter fs-4"></i></a>
@@ -223,8 +235,14 @@
                 <div class="col-lg-3 mb-4">
                     <h5>Contacto</h5>
                     <ul class="list-unstyled">
-                        <li><i class="bi bi-envelope me-2"></i> info@levelupgamer.cl</li>
-                        <li><i class="bi bi-phone me-2"></i> +56 9 1234 5678</li>
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i> info@levelupgamer.cl</li>
+                        <li class="mb-2"><i class="bi bi-phone me-2"></i> +56 9 1234 5678</li>
+                        <li class="mb-2">
+                            <a href="https://wa.me/56987654321?text=Hola  !%20Necesito%20información%20sobre%20productos%20gaming%20de%20Level-Up%20Gamer"
+                               target="_blank" class="text-light text-decoration-none">
+                                <i class="bi bi-whatsapp me-2"></i> +56 9 8765 4321
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
@@ -239,26 +257,80 @@
                 </div>
 
                 <div class="col-lg-3 mb-4">
-                    <h5>Medios de Pago</h5>
+                    <h5 class="text-gaming mb-3">Medios de Pago</h5>
                     <img src="assests/image/webpay.png" alt="WebPay" class="img-fluid">
                 </div>
             </div>
 
             <hr class="my-4">
-            <div class="text-center">
-                <p>&copy; 2024 Level-Up Gamer. Todos los derechos reservados.</p>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Level-Up Gamer. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="d-flex justify-content-md-end gap-2">
+                        <i class="bi bi-shield-check text-gaming fs-4" title="Pagos Seguros"></i>
+                        <i class="bi bi-credit-card text-gaming fs-4" title="Múltiples Medios de Pago"></i>
+                        <i class="bi bi-truck text-gaming fs-4" title="Envíos a Todo Chile"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
-    <script src="assests/js/carritoHeader.js"></script>
-
 
     <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Scripts propios -->
-     <script src="assests/js/perfilHeader.js"></script>
-     <script src="assests/js/carritoHeader.js"></scriptsrc></script>
-    <script src="assests/js/productos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js  "></script>
+
+    <!-- Custom JS -->
+    <script src="assests/js/perfilHeader.js"></script>
+    <!-- Carga de categorías para el dropdown (puedes usar productos.js o una función específica) -->
+    <script>
+        // Cargar categorías para el dropdown del home (ejemplo)
+        document.addEventListener("DOMContentLoaded", async function() {
+            // Inicializar Firebase si no está ya inicializado
+            if (typeof firebase === 'undefined' || !firebase.apps.length) {
+                const firebaseConfig = {
+                    apiKey: "AIzaSyCzRZxZWREqvUp9_snuvgs33DaUnU6ry6Q",
+                    authDomain: "tiendalevelup-f5867.firebaseapp.com",
+                    projectId: "tiendalevelup-f5867",
+                };
+                firebase.initializeApp(firebaseConfig);
+            }
+
+            const db = firebase.firestore();
+            const dropdownMenu = document.querySelector("#categorias-dropdown .dropdown-menu-categorias");
+            if (!dropdownMenu) return; // Salir si no existe el dropdown
+
+            try {
+                const snapshot = await db.collection("producto").get();
+                const categorias = [...new Set(snapshot.docs.map(doc => doc.data().categoria).filter(cat => cat))];
+
+                dropdownMenu.innerHTML = ''; // Limpiar "Cargando..."
+
+                // Opcional: Añadir "Ver todos"
+                const linkTodos = document.createElement("a");
+                linkTodos.href = "assests/page/productos.html";
+                linkTodos.className = "dropdown-item-categoria";
+                linkTodos.textContent = "Todos los Productos";
+                dropdownMenu.appendChild(linkTodos);
+
+                categorias.forEach(cat => {
+                    const link = document.createElement("a");
+                    link.href = `assests/page/productos.html?categoria=${encodeURIComponent(cat.toLowerCase())}`;
+                    link.className = "dropdown-item-categoria";
+                    link.textContent = cat;
+                    dropdownMenu.appendChild(link);
+                });
+
+            } catch (error) {
+                console.error("Error al cargar categorías para dropdown en index:", error);
+                dropdownMenu.innerHTML = '<a href="#" class="dropdown-item-categoria">Error al cargar categorías</a>';
+            }
+        });
+    </script>
+    <!-- Opcional: Cargar carrito si lo necesitas en el header -->
+    <script src="assests/js/carritoHeader.js"></script>
+    <!-- Opcional: Otros JS específicos de index -->
     <script src="assests/js/index.js"></script>
 </body>
 </html>

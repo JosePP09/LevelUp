@@ -100,6 +100,27 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 2px;
 }
 
+
+/* Asegurar Orbitron para elementos específicos del navbar */
+.navbar-brand,
+.navbar-brand *,
+.navbar .categorias-trigger, /* El enlace "Categorias" del dropdown */
+.navbar .categorias-trigger *,
+.navigation-menu-container a, /* Enlaces del menú debajo del navbar */
+.navigation-menu-container a * {
+    font-family: var(--font-heading) !important; /* Orbitron */
+}
+
+/* Opcional: Si quieres que el texto del dropdown de categorías también sea Orbitron */
+.dropdown-item-categoria {
+    font-family: var(--font-heading) !important; /* Orbitron */
+}
+
+/* Opcional: Si quieres que el texto del dropdown de perfil también sea Roboto */
+.dropdown-menu .dropdown-item {
+    font-family: var(--font-primary) !important; /* Roboto */
+}
+
 .producto-card {
     opacity: 0;
     transform: translateY(30px);
@@ -306,12 +327,23 @@ h1, h2, h3, h4, h5, h6 {
 /* =========================
    Navbar Personalizada
    ========================= */
+/* =========================
+   Navbar Personalizada - Aplicar fuentes correctamente
+   ========================= */
+/* Aplica Roboto a todos los elementos del navbar */
+.navbar {
+    font-family: var(--font-primary); /* Roboto */
+}
+
+/* Aplica Orbitron solo al nombre de la marca */
 .navbar-brand {
-    font-family: var(--font-heading);
+    font-family: var(--font-heading); /* Orbitron */
     font-weight: 700;
 }
 
+/* Asegura que los enlaces del navbar también usen Roboto */
 .nav-link {
+    font-family: var(--font-primary); /* Roboto */
     font-weight: 500;
     transition: color 0.3s ease;
 }
@@ -320,8 +352,22 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--accent-blue) !important;
 }
 
-.navbar {
-    background-color: #0f0f0f !important;
+/* Asegura que los botones del navbar también usen Roboto */
+.navbar .btn,
+.navbar .btn *,
+.navbar .dropdown-toggle,
+.navbar .dropdown-toggle * {
+    font-family: var(--font-primary); /* Roboto */
+}
+
+/* Asegura que el texto dentro del dropdown de perfil también use Roboto */
+.navbar .dropdown-menu .dropdown-item {
+    font-family: var(--font-primary); /* Roboto */
+}
+
+/* Asegura que el span con el nombre de usuario también use Roboto */
+#nombreUsuario {
+    font-family: var(--font-primary); /* Roboto */
 }
 
 /* =========================
@@ -1020,4 +1066,36 @@ main .container .row.mb-4:first-child {
   position: relative;
   display: inline-block;
   margin: 0 0.5rem; /* Espacio entre enlaces */
+}
+
+/* =========================
+   OVERRIDES PARA NAVBAR - Asegurar Roboto y Orbitron
+   ========================= */
+
+/* Aplicar Roboto como fuente principal al navbar */
+.navbar,
+.navbar * {
+    font-family: var(--font-primary) !important; /* !important para asegurar la prioridad */
+}
+
+
+/* Prueba: Forzar el estilo del navigation-menu-container */
+.navigation-menu-container {
+    background-color: #0f0f0f !important;
+    border-bottom: 2px solid var(--accent-blue) !important;
+    padding: 0.75rem 0 !important;
+    margin-top: 60px !important;
+}
+
+.navigation-menu-container a {
+    color: var(--text-primary) !important;
+    font-family: var(--font-heading) !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    padding: 0.5rem 1.25rem !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
 }

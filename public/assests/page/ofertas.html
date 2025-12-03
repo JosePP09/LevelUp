@@ -4,86 +4,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 🔥 Firebase SDKs SIN ESPACIOS -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js    "></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js    "></script>
     <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css    " rel="stylesheet">
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css    ">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron    :wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/estilos2.css"> <!-- Cambiado a estilos2.css -->
     <title>Ofertas - Level-Up Gamer</title>
 </head>
 <body>
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
+            <!-- Logo a la izquierda -->
             <a class="navbar-brand d-flex align-items-center" href="../../index.html">
                 <img src="../image/Diseño sin título (6).png" class="levelup-logo me-2" alt="Level-Up Logo">
                 <span class="fw-bold">Level-Up Gamer</span>
             </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+
+            <!-- Barra de búsqueda centrada -->
+            <form class="d-flex search-form mx-auto" style="max-width: 600px;">
+                <div class="input-group">
+                    <span class="input-group-text bg-dark border-gaming text-light">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" class="form-control bg-dark border-gaming text-light" id="buscar-producto" placeholder="Buscar productos...">
+                    <button class="btn btn-outline-secondary" type="button" id="limpiar-busqueda">
+                        <i class="bi bi-x"></i>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Dropdown de Perfil / Botones de Login/Registro a la derecha -->
+            <div class="d-flex ms-auto align-items-center">
+                <!-- Dropdown de Perfil (se muestra si el usuario está logueado) -->
+                <div class="dropdown" id="perfilDropdown" style="display: none;">
+                    <a class="btn btn-outline-light dropdown-toggle me-2" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span id="nombreUsuario"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" id="irPerfil">Ir a Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="cerrarSesion">Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+
+                <!-- Enlaces de Login/Registro (se muestran si el usuario NO está logueado) -->
+                <div id="loginLinks">
+                    <a href="login.html" class="btn btn-outline-light me-2">Iniciar Sesión</a>
+                </div>
+                <div id="registroLinks">
+                    <a href="registro.html" class="btn btn-primary me-2">Crear Cuenta</a>
+                </div>
+
+                <!-- Carrito (siempre visible) -->
+                <a class="nav-link" href="carrito.html">
+                    <i class="bi bi-cart3 fs-5"></i>
+                    <span class="badge bg-primary" id="cart-count">0</span>
+                </a>
+            </div>
+
+            <!-- Botón de colapso para el menú de navegación -->
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="productos.html">Productos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="ofertas.html">Ofertas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="nosotros.html">Nosotros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="blogs.html">Blogs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contacto.html">Contacto</a>
-                    </li>
-                </ul>
-                
-                <!-- Sección derecha (carrito + perfil o login) -->
-                <ul class="navbar-nav align-items-center">
-                    <!-- Carrito -->
-                    <li class="nav-item me-3">
-                        <a class="nav-link" href="carrito.html">
-                            <i class="bi bi-cart3 fs-5"></i>
-                            <span class="badge bg-primary" id="cart-count">0</span>
-                        </a>
-                    </li>
-
-                    <!-- Perfil dinámico -->
-                    <li class="nav-item dropdown" id="perfilDropdown" style="display: none;">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle fs-5"></i>
-                            <span id="nombreUsuario" class="ms-2"></span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#" id="irPerfil">Ir al perfil</a></li>
-                            <li><a class="dropdown-item text-danger" href="#" id="cerrarSesion">Cerrar sesión</a></li>
-                        </ul>
-                    </li>
-
-                    <!-- Enlaces login/registro -->
-                    <li class="nav-item" id="loginLinks">
-                        <a href="login.html" class="nav-link">Iniciar sesión</a>
-                    </li>
-                    <li class="nav-item" id="registroLinks">
-                        <a href="registro.html" class="nav-link">Registrarse</a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </nav>
+
+    <!-- Menú de Navegación Principal (fuera del header, debajo de él) -->
+    <div class="navigation-menu-container">
+        <div class="container">
+            <div class="col-12">
+                <a href="../../index.html" class="text-light">Home</a>
+
+                <!-- Dropdown para Categorias -->
+                <div class="dropdown-nav" id="categorias-dropdown">
+                    <a href="productos.html" class="text-light categorias-trigger">Categorias</a>
+                    <div class="dropdown-menu-categorias">
+                        <!-- Las categorías se cargarán aquí dinámicamente -->
+                        <a href="productos.html" class="dropdown-item-categoria">Cargando categorías...</a>
+                    </div>
+                </div>
+                <!-- Fin Dropdown -->
+
+                <!-- Enlaces normales (fuera del dropdown) -->
+                <a href="ofertas.html" class="text-light active">Ofertas</a> <!-- Añadido active -->
+                <a href="nosotros.html" class="text-light">Nosotros</a>
+                <a href="blogs.html" class="text-light">Blogs</a>
+                <a href="contacto.html" class="text-light">Contacto</a>
+            </div>
+        </div>
+    </div>
 
     <!-- Main Content -->
     <main class="pt-5">
@@ -129,7 +144,7 @@
                         <li class="mb-2"><i class="bi bi-envelope me-2"></i> info@levelupgamer.cl</li>
                         <li class="mb-2"><i class="bi bi-phone me-2"></i> +56 9 1234 5678</li>
                         <li class="mb-2">
-                            <a href="https://wa.me/56987654321?text=Hola  !%20Necesito%20información%20sobre%20productos%20gaming%20de%20Level-Up%20Gamer" 
+                            <a href="https://wa.me/56987654321?text=Hola      !%20Necesito%20información%20sobre%20productos%20gaming%20de%20Level-Up%20Gamer"
                                target="_blank" class="text-light text-decoration-none">
                                 <i class="bi bi-whatsapp me-2"></i> +56 9 8765 4321
                             </a>
@@ -150,7 +165,7 @@
                     <img src="../image/webpay.png" alt="WebPay" class="img-fluid">
                 </div>
             </div>
-            
+
             <hr class="my-4">
             <div class="row align-items-center">
                 <div class="col-md-6">
@@ -168,10 +183,55 @@
     </footer>
 
     <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js    "></script>
+
     <!-- Custom JS -->
-    <script src="../js/perfilHeader.js"></script> 
+    <script src="../js/perfilHeader.js"></script>
+    <!-- Carga de categorías para el dropdown (puedes usar productos.js o una función específica) -->
+    <script>
+        // Cargar categorías para el dropdown de ofertas (ejemplo)
+        document.addEventListener("DOMContentLoaded", async function() {
+            // Inicializar Firebase si no está ya inicializado
+            if (typeof firebase === 'undefined' || !firebase.apps.length) {
+                const firebaseConfig = {
+                    apiKey: "AIzaSyCzRZxZWREqvUp9_snuvgs33DaUnU6ry6Q",
+                    authDomain: "tiendalevelup-f5867.firebaseapp.com",
+                    projectId: "tiendalevelup-f5867",
+                };
+                firebase.initializeApp(firebaseConfig);
+            }
+
+            const db = firebase.firestore();
+            const dropdownMenu = document.querySelector("#categorias-dropdown .dropdown-menu-categorias");
+            if (!dropdownMenu) return; // Salir si no existe el dropdown
+
+            try {
+                const snapshot = await db.collection("producto").get();
+                const categorias = [...new Set(snapshot.docs.map(doc => doc.data().categoria).filter(cat => cat))];
+
+                dropdownMenu.innerHTML = ''; // Limpiar "Cargando..."
+
+                // Opcional: Añadir "Ver todos"
+                const linkTodos = document.createElement("a");
+                linkTodos.href = "productos.html";
+                linkTodos.className = "dropdown-item-categoria";
+                linkTodos.textContent = "Todos los Productos";
+                dropdownMenu.appendChild(linkTodos);
+
+                categorias.forEach(cat => {
+                    const link = document.createElement("a");
+                    link.href = `productos.html?categoria=${encodeURIComponent(cat.toLowerCase())}`;
+                    link.className = "dropdown-item-categoria";
+                    link.textContent = cat;
+                    dropdownMenu.appendChild(link);
+                });
+
+            } catch (error) {
+                console.error("Error al cargar categorías para dropdown en ofertas:", error);
+                dropdownMenu.innerHTML = '<a href="#" class="dropdown-item-categoria">Error al cargar categorías</a>';
+            }
+        });
+    </script>
     <script src="../js/ofertas.js"></script> <!-- Nuevo archivo JS -->
 </body>
 </html>
