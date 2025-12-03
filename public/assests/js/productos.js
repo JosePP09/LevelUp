@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const productosContainer = document.getElementById("productos-container");
-  const filtroBotones = document.querySelectorAll(".filtro-btn");
+  const filtroCards = document.querySelectorAll(".filtro-card"); 
   const buscarInput = document.getElementById("buscar-producto");
   const limpiarBusquedaBtn = document.getElementById("limpiar-busqueda");
   const cartCount = document.getElementById("cart-count");
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           <h5 class="text-center mb-2">${producto.nombre || "Producto sin nombre"}</h5>
           <p class="precio text-center mb-2">$${(producto.precio || 0).toLocaleString("es-CL")}</p>
-          <p class="text-light text-center small mb-2">${producto.descripcion || ""}</p>
+          
           <!-- ✅ STOCK DISPONIBLE -->
           <p class="text-center mb-3">
             <span class="badge ${producto.stock > 0 ? 'bg-success' : 'bg-danger'}">
@@ -179,12 +179,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Eventos
-  filtroBotones.forEach(btn => {
-    btn.addEventListener("click", () => {
-      filtroBotones.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      const cat = btn.dataset.categoria;
+ // Eventos de los filtros (CORREGIDO)
+  filtroCards.forEach(card => {
+    card.addEventListener("click", () => {
+      filtroCards.forEach(c => c.classList.remove("active"));
+      card.classList.add("active");
+      const cat = card.dataset.categoria;
       const filtrados = cat === "todos" 
         ? productosGlobal 
         : productosGlobal.filter(p => p.categoria?.toLowerCase() === cat);

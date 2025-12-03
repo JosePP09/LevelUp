@@ -61,7 +61,8 @@
         <div class="container">
             <div class="col-12">
                 <a href="../../index.html" class="text-light">Home</a>
-                <a href="productos.html" class="text-light active">Productos</a>
+                <a href="productos.html" class="text-light active">Categorias</a>
+                <a href="ofertas.html" class="text-light">Ofertas</a>
                 <a href="nosotros.html" class="text-light">Nosotros</a>
                 <a href="blogs.html" class="text-light">Blogs</a>
                 <a href="contacto.html" class="text-light">Contacto</a>
@@ -79,38 +80,61 @@
                 </div>
             </div>
 
-            <!-- Filtros -->
+            <!-- Filtros como Cartas -->
             <div class="row mb-4">
                 <div class="col-12">
-                    <div class="d-flex flex-wrap justify-content-center gap-2">
-                        <button class="btn btn-outline-primary filtro-btn active" data-categoria="todos">
-                            Todos
-                        </button>
-                        <button class="btn btn-outline-primary filtro-btn" data-categoria="juegos de mesa">
-                            Juegos de Mesa
-                        </button>
-                        <button class="btn btn-outline-primary filtro-btn" data-categoria="accesorios">
-                            Accesorios
-                        </button>
-                        <button class="btn btn-outline-primary filtro-btn" data-categoria="consolas">
-                            Consolas
-                        </button>
-                        <button class="btn btn-outline-primary filtro-btn" data-categoria="sillas gamers">
-                            Sillas Gamer
-                        </button>
-                        <button class="btn btn-outline-primary filtro-btn" data-categoria="computadores gamers">
-                            Computadores Gamer
-                        </button>
-                        <button class="btn btn-outline-primary filtro-btn" data-categoria="mousepad">
-                            Mousepads
-                        </button>
-                        <button class="btn btn-outline-primary filtro-btn" data-categoria="poleras personalizadas">
-                            Poleras Personalizadas
-                        </button>
+                    <h5 class="text-center text-light mb-3">Categorías de Productos</h5>
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                        <!-- Tarjeta: Todos -->
+                        <div class="filtro-card" data-categoria="todos">
+                            <img src="../items/dispositivos.png" alt="Todos los productos" class="filtro-img">
+                            <div class="filtro-text">Todos</div>
+                        </div>
+
+                        <!-- Tarjeta: Juegos de Mesa -->
+                        <div class="filtro-card" data-categoria="juegos de mesa">
+                            <img src="../items/juego-de-mesa (1).png" alt="Juegos de Mesa" class="filtro-img">
+                            <div class="filtro-text">Juegos de Mesa</div>
+                        </div>
+
+                        <!-- Tarjeta: Accesorios -->
+                        <div class="filtro-card" data-categoria="accesorios">
+                            <img src="../items/jugando-videojuegos.png" alt="Accesorios Gaming" class="filtro-img">
+                            <div class="filtro-text">Accesorios</div>
+                        </div>
+
+                        <!-- Tarjeta: Consolas -->
+                        <div class="filtro-card" data-categoria="consolas">
+                            <img src="../items/consola-de-video.png" alt="Consolas" class="filtro-img">
+                            <div class="filtro-text">Consolas</div>
+                        </div>
+
+                        <!-- Tarjeta: Sillas Gamer -->
+                        <div class="filtro-card" data-categoria="sillas gamers">
+                            <img src="../items/silla-de-gamer (1).png" alt="Sillas Gamer" class="filtro-img">
+                            <div class="filtro-text">Sillas Gamer</div>
+                        </div>
+
+                        <!-- Tarjeta: Computadores Gamer -->
+                        <div class="filtro-card" data-categoria="computadores gamers">
+                            <img src="../items/ordenador-portatil.png" alt="Computadores Gamer" class="filtro-img">
+                            <div class="filtro-text">Computadores Gamer</div>
+                        </div>
+
+                        <!-- Tarjeta: Mousepads -->
+                        <div class="filtro-card" data-categoria="mousepad">
+                            <img src="../items/mouse-pad.png" alt="Mousepads" class="filtro-img">
+                            <div class="filtro-text">Mousepads</div>
+                        </div>
+
+                        <!-- Tarjeta: Poleras Personalizadas -->
+                        <div class="filtro-card" data-categoria="poleras personalizadas">
+                            <img src="../items/camisetas.png" alt="Poleras Personalizadas" class="filtro-img">
+                            <div class="filtro-text">Poleras Personalizadas</div>
+                        </div>
                     </div>
                 </div>
             </div>
-
             <!-- Contenedor de productos -->
             <div class="row" id="productos-container">
                 <!-- Los productos se cargarán aquí desde Firebase -->
