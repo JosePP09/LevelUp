@@ -103,11 +103,20 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Asegurar Orbitron para elementos específicos del navbar */
 .navbar-brand,
-.navbar-brand *,
 .navbar .categorias-trigger, /* El enlace "Categorias" del dropdown */
 .navbar .categorias-trigger *,
 .navigation-menu-container a, /* Enlaces del menú debajo del navbar */
 .navigation-menu-container a * {
+    font-family: var(--font-heading) !important; /* Orbitron */
+}
+
+/* Asegurar que el logo tenga estilos consistentes */
+.navbar-brand {
+    font-family: var(--font-heading) !important; /* Orbitron */
+    font-weight: 700 !important;
+}
+
+.navbar-brand * {
     font-family: var(--font-heading) !important; /* Orbitron */
 }
 
@@ -432,7 +441,7 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #0f0f0f;
     border-bottom: 2px solid var(--accent-blue);
     padding: 0.75rem 0;
-    margin-top: 60px;
+    margin-top: 55px; /* Reducido para disminuir el espaciado */
 }
 
 .navigation-menu-container .container {
@@ -863,7 +872,7 @@ html {
 
     .navigation-menu-container {
         padding: 0.5rem 0;
-        margin-top: 70px;
+        margin-top: 65px; /* Reducido para disminuir el espaciado */
     }
 
     .navigation-menu-container a {
@@ -873,7 +882,7 @@ html {
     }
 
     main.pt-5 {
-        padding-top: 160px !important;
+        padding-top: 125px !important; /* Reducido para disminuir el espaciado */
     }
 
     input[type="date"] {
@@ -1012,7 +1021,8 @@ main .container .row.mb-4:first-child {
 .dropdown-nav {
   position: relative;
   display: inline-block;
-  
+  margin: 0 0.5rem; /* Espacio entre enlaces */
+  z-index: 1001; /* Asegurar que esté por encima de otros elementos */
 }
 
 .dropdown-menu-categorias {
@@ -1033,11 +1043,14 @@ main .container .row.mb-4:first-child {
   margin-top: 0.5rem;
   font-family: var(--font-heading);
   font-weight: 600;
+  pointer-events: none; /* Hace que el dropdown no interfiera cuando está oculto */
 }
 
-.dropdown-nav:hover .dropdown-menu-categorias {
+.dropdown-nav:hover .dropdown-menu-categorias,
+.dropdown-nav.show .dropdown-menu-categorias {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto; /* Habilita eventos de mouse cuando está visible */
 }
 
 .dropdown-item-categoria {
@@ -1059,13 +1072,8 @@ main .container .row.mb-4:first-child {
 
 .categorias-trigger {
   cursor: pointer; /* Indica que es interactivo */
-}
-
-/* Añade esto al final de tu CSS */
-.dropdown-nav {
-  position: relative;
-  display: inline-block;
-  margin: 0 0.5rem; /* Espacio entre enlaces */
+  position: relative; /* Agregamos posición relativa para mejor control */
+  z-index: 1002; /* Asegurar que el trigger esté encima */
 }
 
 /* =========================

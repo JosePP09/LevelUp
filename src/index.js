@@ -2,13 +2,13 @@ import { addUser } from './services/firestoreService';
 import { validarCorreo, validarRun, esMayorEdad } from './utils/formulario1';
 
 function esPaginaEstatica() {
-  return window.location.pathname.includes('.html') || 
+  return window.location.pathname.includes('.html') ||
          window.location.pathname.includes('/assets/');
 }
 
 // Espera que el DOM esté listo
 document.addEventListener("DOMContentLoaded", () => {
-  
+
 
     const form = document.getElementById("formUsuario");
     const runInput = document.getElementById("run");

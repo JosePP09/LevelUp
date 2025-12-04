@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../contexts/UserContext";
+import { UserContext } from "../../context/UserContext";
 import DashboardAPI from "../organisms/DashboardAPI";
 
 const PerfilAdmin = () => {
