@@ -524,29 +524,33 @@ section {
     accent-color: #1E90FF; /* Color del checkbox */
 }
 
-/* Modal */
 .modal {
     display: none;
     position: fixed;
-    z-index: 2000;
+    z-index: 1100;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow: auto; /* Permite scroll si el modal es muy alto */
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .modal-content {
-    background: rgba(20, 20, 30, 0.95);
-    border: 2px solid #1E90FF;
-    border-radius: 20px;
-    margin: 5% auto;
-    padding: 20px;
+    background-color: #1a1a2e;
+    color: #fff;
+    margin: 40px auto;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #1E90FF;
     width: 90%;
-    max-width: 500px;
+    max-width: 600px;
+    max-height: 80vh; /* Límite de altura */
+    overflow-y: auto; /* Scroll interno si el contenido sobrepasa */
+    box-shadow: 0 8px 24px rgba(30, 144, 255, 0.4);
     position: relative;
-    box-shadow: 0 0 40px rgba(30, 144, 255, 0.5);
-    animation: modalAppear 0.3s ease-out;
 }
 
 @keyframes modalAppear {
