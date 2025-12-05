@@ -559,7 +559,7 @@ function irATienda() {
 
 function cerrarSesion() {
     localStorage.removeItem("usuario");
-    window.location.href = '../login.html';
+    window.location.href = '../../index.html';
 }
 
 function actualizarPerfil(event) {

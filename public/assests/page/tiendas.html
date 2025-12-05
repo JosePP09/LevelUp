@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información de Tiendas - LevelUp Gamer</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/estilos2.css">
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../../../index.html">
+                <img src="../image/Diseño sin título (6).png" class="levelup-logo me-2" alt="Level-Up Logo">
+                <span class="fw-bold">Level-Up Gamer</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="productos.html">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="nosotros.html">Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blogs.html">Blogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacto.html">Contacto</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="carrito.html">
+                            <i class="bi bi-cart3"></i> Carrito <span class="badge bg-primary" id="cart-count">0</span>
+                        </a>
+                    </li>
+                    
+                    <!-- Dropdown de Perfil -->
+                    <li class="nav-item dropdown" id="perfilDropdown" style="display: none;">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> <span id="nombreUsuario"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="perfilCliente.html">Mi Perfil</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="cerrarSesion">Cerrar Sesión</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Enlaces de Login/Registro -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html" id="loginLink" style="display: none;">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="registro.html" id="registroLink" style="display: none;">Registrarse</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-5">
+        <!-- Hero Section -->
+        <section class="hero-section py-3 bg-dark text-light">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <h1 class="display-5 fw-bold">Información de Tiendas</h1>
+                        <p class="mb-0">Gestión completa de nuestras tiendas en diferentes ciudades</p>
+                    </div>
+                    <div class="col-lg-4 text-end">
+                        <button class="btn btn-primary">
+                            <i class="bi bi-plus-circle me-2"></i>Nueva Tienda
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard de Tiendas -->
+        <section class="py-3">
+            <div class="container">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <h2 class="h4 mb-3">Dashboard General</h2>
+                        <div class="row g-3">
+                            <!-- Total de Tiendas -->
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card text-center bg-primary text-white h-100">
+                                    <div class="card-body p-2">
+                                        <i class="bi bi-shop fs-4 mb-1"></i>
+                                        <h3 class="card-title mb-1">12</h3>
+                                        <p class="card-text mb-0" style="font-size: 0.8rem;">Tiendas Activas</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Total Ventas -->
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card text-center bg-success text-white h-100">
+                                    <div class="card-body p-2">
+                                        <i class="bi bi-currency-dollar fs-4 mb-1"></i>
+                                        <h3 class="card-title mb-1">$24.5M</h3>
+                                        <p class="card-text mb-0" style="font-size: 0.8rem;">Ventas Mensuales</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Satisfacción Promedio -->
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card text-center bg-warning text-dark h-100">
+                                    <div class="card-body p-2">
+                                        <i class="bi bi-star fs-4 mb-1"></i>
+                                        <h3 class="card-title mb-1">4.7</h3>
+                                        <p class="card-text mb-0" style="font-size: 0.8rem;">Satisfacción</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Total Empleados -->
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card text-center bg-info text-white h-100">
+                                    <div class="card-body p-2">
+                                        <i class="bi bi-people fs-4 mb-1"></i>
+                                        <h3 class="card-title mb-1">89</h3>
+                                        <p class="card-text mb-0" style="font-size: 0.8rem;">Vendedores</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filtros -->
+                <div class="row mb-3">
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <select class="form-select form-select-sm" id="filtroCiudad">
+                            <option value="">Todas</option>
+                            <option value="santiago">Santiago</option>
+                            <option value="valparaiso">Valparaíso</option>
+                            <option value="concepcion">Concepción</option>
+                            <option value="antofagasta">Antofagasta</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-6">
+                        <select class="form-select form-select-sm" id="filtroRango">
+                            <option value="mes">Mes</option>
+                            <option value="trimestre">Trimestre</option>
+                            <option value="anio">Año</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-8 col-md-4 col-12 d-flex flex-wrap gap-2 mt-2 mt-md-0">
+                        <button class="btn btn-outline-primary btn-sm">Ventas</button>
+                        <button class="btn btn-outline-secondary btn-sm active">Satisfacción</button>
+                        <button class="btn btn-outline-secondary btn-sm">Organización</button>
+                    </div>
+                </div>
+
+                <!-- Tabla de Tiendas -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-dark text-light py-2">
+                                <h5 class="mb-0 h6">Información Detallada de Tiendas</h5>
+                            </div>
+                            <div class="card-body p-2">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-nowrap">Nombre</th>
+                                                <th class="text-nowrap">Ciudad</th>
+                                                <th class="text-nowrap">Ventas</th>
+                                                <th class="text-nowrap">Satisfacción</th>
+                                                <th class="text-nowrap">Vend.</th>
+                                                <th class="text-nowrap">Clientes</th>
+                                                <th class="text-nowrap">Org.</th>
+                                                <th class="text-nowrap">Estado</th>
+                                                <th class="text-nowrap">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-nowrap">LevelUp Santiago Centro</td>
+                                                <td class="text-nowrap">Santiago</td>
+                                                <td class="text-nowrap">$2.4M</td>
+                                                <td class="text-nowrap">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-1">★★★★★</div>
+                                                        <span class="badge bg-success rounded-pill" style="font-size: 0.7rem;">4.8</span>
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">8</td>
+                                                <td class="text-nowrap">1,245</td>
+                                                <td class="text-nowrap">
+                                                    <div class="progress" style="height: 12px;">
+                                                        <div class="progress-bar bg-success" style="width: 92%"></div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap"><span class="badge bg-success" style="font-size: 0.7rem;">Activa</span></td>
+                                                <td class="text-nowrap">
+                                                    <button class="btn btn-sm btn-outline-primary">Ver</button>
+                                                    <button class="btn btn-sm btn-outline-secondary">Editar</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-nowrap">LevelUp Santiago Norte</td>
+                                                <td class="text-nowrap">Santiago</td>
+                                                <td class="text-nowrap">$1.8M</td>
+                                                <td class="text-nowrap">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-1">★★★★☆</div>
+                                                        <span class="badge bg-success rounded-pill" style="font-size: 0.7rem;">4.2</span>
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">6</td>
+                                                <td class="text-nowrap">892</td>
+                                                <td class="text-nowrap">
+                                                    <div class="progress" style="height: 12px;">
+                                                        <div class="progress-bar bg-warning" style="width: 78%"></div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap"><span class="badge bg-success" style="font-size: 0.7rem;">Activa</span></td>
+                                                <td class="text-nowrap">
+                                                    <button class="btn btn-sm btn-outline-primary">Ver</button>
+                                                    <button class="btn btn-sm btn-outline-secondary">Editar</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-nowrap">LevelUp Valparaíso</td>
+                                                <td class="text-nowrap">Valparaíso</td>
+                                                <td class="text-nowrap">$1.5M</td>
+                                                <td class="text-nowrap">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-1">★★★★★</div>
+                                                        <span class="badge bg-success rounded-pill" style="font-size: 0.7rem;">4.6</span>
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">5</td>
+                                                <td class="text-nowrap">678</td>
+                                                <td class="text-nowrap">
+                                                    <div class="progress" style="height: 12px;">
+                                                        <div class="progress-bar bg-success" style="width: 88%"></div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap"><span class="badge bg-success" style="font-size: 0.7rem;">Activa</span></td>
+                                                <td class="text-nowrap">
+                                                    <button class="btn btn-sm btn-outline-primary">Ver</button>
+                                                    <button class="btn btn-sm btn-outline-secondary">Editar</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-nowrap">LevelUp Concepción</td>
+                                                <td class="text-nowrap">Concepción</td>
+                                                <td class="text-nowrap">$1.2M</td>
+                                                <td class="text-nowrap">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-1">★★★★☆</div>
+                                                        <span class="badge bg-warning rounded-pill" style="font-size: 0.7rem;">4.0</span>
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">4</td>
+                                                <td class="text-nowrap">543</td>
+                                                <td class="text-nowrap">
+                                                    <div class="progress" style="height: 12px;">
+                                                        <div class="progress-bar bg-info" style="width: 82%"></div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap"><span class="badge bg-success" style="font-size: 0.7rem;">Activa</span></td>
+                                                <td class="text-nowrap">
+                                                    <button class="btn btn-sm btn-outline-primary">Ver</button>
+                                                    <button class="btn btn-sm btn-outline-secondary">Editar</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-nowrap">LevelUp Antofagasta</td>
+                                                <td class="text-nowrap">Antofagasta</td>
+                                                <td class="text-nowrap">$980K</td>
+                                                <td class="text-nowrap">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-1">★★★☆☆</div>
+                                                        <span class="badge bg-warning rounded-pill" style="font-size: 0.7rem;">3.5</span>
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap">3</td>
+                                                <td class="text-nowrap">321</td>
+                                                <td class="text-nowrap">
+                                                    <div class="progress" style="height: 12px;">
+                                                        <div class="progress-bar bg-warning" style="width: 71%"></div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-nowrap"><span class="badge bg-success" style="font-size: 0.7rem;">Activa</span></td>
+                                                <td class="text-nowrap">
+                                                    <button class="btn btn-sm btn-outline-primary">Ver</button>
+                                                    <button class="btn btn-sm btn-outline-secondary">Editar</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección de Gráficos -->
+                <div class="row mt-3">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header py-2">
+                                <h5 class="h6 mb-0">Distribución de Ventas por Ciudad</h5>
+                            </div>
+                            <div class="card-body p-2">
+                                <canvas id="ventasChart" height="150"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header py-2">
+                                <h5 class="h6 mb-0">Satisfacción por Tienda</h5>
+                            </div>
+                            <div class="card-body p-2">
+                                <canvas id="satisfaccionChart" height="150"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="../image/Diseño sin título (6).png" class="levelup-logo me-2" alt="Level-Up Logo">
+                        <h4 class="mb-0">Level-Up Gamer</h4>
+                    </div>
+                    <p class="text-light">Tu tienda especializada en productos para gamers. Envíos a todo Chile.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-light"><i class="bi bi-facebook fs-4"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-twitter fs-4"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-instagram fs-4"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-discord fs-4"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h5>Contacto</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i> info@levelupgamer.cl</li>
+                        <li class="mb-2"><i class="bi bi-phone me-2"></i> +56 9 1234 5678</li>
+                        <li class="mb-2">
+                            <a href="https://wa.me/56987654321?text=Hola! Necesito información sobre productos gaming de Level-Up Gamer"
+                               target="_blank" class="text-light text-decoration-none">
+                                <i class="bi bi-whatsapp me-2"></i> +56 9 8765 4321
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h5>Categorías</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="productos.html" class="text-light text-decoration-none">Juegos de Mesa</a></li>
+                        <li><a href="productos.html" class="text-light text-decoration-none">Accesorios</a></li>
+                        <li><a href="productos.html" class="text-light text-decoration-none">Consolas</a></li>
+                        <li><a href="productos.html" class="text-light text-decoration-none">Computadores Gamers</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h5 class="text-gaming mb-3">Medios de Pago</h5>
+                    <img src="../image/webpay.png" alt="WebPay" class="img-fluid">
+                </div>
+            </div>
+
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Level-Up Gamer. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="d-flex justify-content-md-end gap-2">
+                        <i class="bi bi-shield-check text-gaming fs-4" title="Pagos Seguros"></i>
+                        <i class="bi bi-credit-card text-gaming fs-4" title="Múltiples Medios de Pago"></i>
+                        <i class="bi bi-truck text-gaming fs-4" title="Envíos a Todo Chile"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <!-- Custom JS -->
+    <script src="../js/tiendas.js"></script>
+</body>
+</html>
