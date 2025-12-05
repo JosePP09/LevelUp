@@ -606,6 +606,7 @@ footer {
         flex-wrap: wrap;
     }
 
+
     .sidebar-section {
         margin-bottom: 10px;
         width: 100%;
@@ -658,6 +659,7 @@ footer {
     .crud-actions {
         justify-content: center;
     }
+
 
     .logout-container {
         position: static;

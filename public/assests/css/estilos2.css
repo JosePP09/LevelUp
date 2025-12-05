@@ -1077,6 +1077,26 @@ main .container .row.mb-4:first-child {
 }
 
 /* =========================
+   Precios en Ofertas - Estilos para mostrar precios con anterior y actual
+   ========================= */
+.precios-oferta {
+  margin: 12px 0;
+}
+
+.precio-anterior {
+  color: #ff6b6b; /* Rojo para destacar el precio anterior */
+  text-decoration: line-through;
+  font-size: 0.95rem;
+  margin-right: 8px;
+}
+
+.precio-actual {
+  color: var(--accent-green); /* Verde neón como otros precios */
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+/* =========================
    OVERRIDES PARA NAVBAR - Asegurar Roboto y Orbitron
    ========================= */
 

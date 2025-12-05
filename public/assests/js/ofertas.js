@@ -76,7 +76,7 @@ function renderizarProductosOferta(productos) {
                 </div>
                 <h5 class="text-center mb-2">${producto.nombre}</h5>
                 <div class="precios-oferta text-center mb-2">
-                    <span class="precio-anterior text-muted">$${(producto.precioAnterior || 0).toLocaleString('es-CL')}</span>
+                    <span class="precio-anterior">$${(producto.precioAnterior || 0).toLocaleString('es-CL')}</span>
                     <span class="precio-actual fw-bold">$${(producto.precio || 0).toLocaleString('es-CL')}</span>
                 </div>
                 <p class="text-center mb-3">

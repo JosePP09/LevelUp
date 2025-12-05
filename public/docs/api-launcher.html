@@ -88,7 +88,7 @@
     </div>
 
     <script>
-        // Contenido YAML actualizado para reflejar fielmente la arquitectura real
+        // Contenido YAML desde el archivo actualizado
         const openapiContent = `openapi: 3.0.0
 info:
   title: API Tienda Online LevelUp Gamer
@@ -99,8 +99,8 @@ info:
     email: soporte@levelupgamer.cl
 
 servers:
-  - url: https://firestore.googleapis.com/v1
-    description: Firebase Firestore API
+  - url: /api
+    description: API Local
 
 security:
   - bearerAuth: []
@@ -109,7 +109,7 @@ tags:
   - name: Autenticación
     description: Servicios de login y autenticación de usuarios
   - name: Usuarios
-    description: Gestión de usuarios (creación, edición, roles)
+    description: Gestión de usuarios (CRUD)
   - name: Productos
     description: Gestión de productos (CRUD)
   - name: Categorías
@@ -122,7 +122,7 @@ tags:
     description: Estadísticas y resumen para administradores y vendedores
 
 paths:
-  /api/auth/login:
+  /auth/login:
     post:
       tags:
         - Autenticación
@@ -169,19 +169,13 @@ paths:
               example:
                 error: "Credenciales incorrectas"
                 message: "Correo o contraseña inválidos"
-        '403':
-          description: Usuario inactivo o no encontrado
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
 
-  /api/usuarios:
+  /usuarios:
     get:
       tags:
         - Usuarios
       summary: Obtener lista de usuarios
-      description: Servicio Firebase - DashboardManager.cargarUsuarios() - Solo para admins
+      description: Servicio Firebase - DashboardManager.cargarUsuarios() / VendedorManager.cargarUsuarios()
       responses:
         '200':
           description: Lista de usuarios obtenida correctamente
@@ -224,7 +218,7 @@ paths:
       tags:
         - Usuarios
       summary: Crear nuevo usuario
-      description: Servicio Firebase - DashboardManager.guardarUsuario() - Solo para admins
+      description: Servicio Firebase - DashboardManager.guardarUsuario()
       requestBody:
         required: true
         content:
@@ -257,12 +251,12 @@ paths:
         '400':
           description: Datos de usuario inválidos
 
-  /api/usuarios/{id}:
+  /usuarios/{id}:
     get:
       tags:
         - Usuarios
       summary: Obtener usuario por ID
-      description: Servicio Firebase - Obtener detalles de usuario específico
+      description: Servicio Firebase - DashboardManager.getUsuarioById()
       parameters:
         - name: id
           in: path
@@ -295,7 +289,7 @@ paths:
       tags:
         - Usuarios
       summary: Actualizar usuario existente
-      description: Servicio Firebase - DashboardManager.guardarUsuario() - Solo para admins
+      description: Servicio Firebase - DashboardManager.guardarUsuario()
       parameters:
         - name: id
           in: path
@@ -333,7 +327,7 @@ paths:
       tags:
         - Usuarios
       summary: Eliminar usuario del sistema
-      description: Servicio Firebase - DashboardManager.eliminarUsuario() - Solo para admins
+      description: Servicio Firebase - DashboardManager.eliminarUsuario()
       parameters:
         - name: id
           in: path
@@ -352,7 +346,7 @@ paths:
         '404':
           description: Usuario no encontrado
 
-  /api/productos:
+  /productos:
     get:
       tags:
         - Productos
@@ -399,7 +393,7 @@ paths:
       tags:
         - Productos
       summary: Crear un nuevo producto
-      description: Servicio Firebase - DashboardManager.guardarProducto() - Solo para admins
+      description: Servicio Firebase - DashboardManager.guardarProducto()
       requestBody:
         required: true
         content:
@@ -430,12 +424,12 @@ paths:
         '400':
           description: Datos de producto inválidos
 
-  /api/productos/{id}:
+  /productos/{id}:
     get:
       tags:
         - Productos
       summary: Obtener producto por ID
-      description: Servicio Firebase - Obtener detalles de producto específico
+      description: Servicio Firebase - DashboardManager.getProductoById()
       parameters:
         - name: id
           in: path
@@ -467,7 +461,7 @@ paths:
       tags:
         - Productos
       summary: Actualizar producto existente
-      description: Servicio Firebase - DashboardManager.guardarProducto() - Solo para admins
+      description: Servicio Firebase - DashboardManager.guardarProducto()
       parameters:
         - name: id
           in: path
@@ -505,7 +499,7 @@ paths:
       tags:
         - Productos
       summary: Eliminar producto del sistema
-      description: Servicio Firebase - DashboardManager.eliminarProducto() - Solo para admins
+      description: Servicio Firebase - DashboardManager.eliminarProducto()
       parameters:
         - name: id
           in: path
@@ -524,7 +518,7 @@ paths:
         '404':
           description: Producto no encontrado
 
-  /api/categorias:
+  /categorias:
     get:
       tags:
         - Categorías
@@ -552,8 +546,121 @@ paths:
                   nombre: "Ropa"
                   descripcion: "Ropa y accesorios"
                   estado: "Inactiva"
+    post:
+      tags:
+        - Categorías
+      summary: Crear nueva categoría
+      description: Servicio Firebase - DashboardManager.guardarCategoria()
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoriaInput'
+            example:
+              nombre: "Deportes"
+              descripcion: "Artículos deportivos"
+              estado: "Activa"
+      responses:
+        '201':
+          description: Categoría creada correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+              example:
+                id: "nuevoIdGeneradoPorFirestore123"
+        '400':
+          description: Datos de categoría inválidos
 
-  /api/compras:
+  /categorias/{id}:
+    get:
+      tags:
+        - Categorías
+      summary: Obtener categoría por ID
+      description: Servicio Firebase - DashboardManager.getCategoriaById()
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "cat123"
+      responses:
+        '200':
+          description: Categoría encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Categoria'
+              example:
+                id: "cat123"
+                nombre: "Electrónicos"
+                descripcion: "Dispositivos electrónicos y tecnológicos"
+                estado: "Activa"
+        '404':
+          description: Categoría no encontrada
+
+    put:
+      tags:
+        - Categorías
+      summary: Actualizar categoría existente
+      description: Servicio Firebase - DashboardManager.guardarCategoria()
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "cat123"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoriaInput'
+            example:
+              nombre: "Electrónicos Actualizados"
+              descripcion: "Dispositivos electrónicos y tecnológicos actualizados"
+              estado: "Activa"
+      responses:
+        '200':
+          description: Categoría actualizada correctamente
+          content:
+            application/json:
+              example:
+                success: true
+                message: "Categoría actualizada correctamente"
+        '404':
+          description: Categoría no encontrada
+
+    delete:
+      tags:
+        - Categorías
+      summary: Eliminar categoría del sistema
+      description: Servicio Firebase - DashboardManager.eliminarCategoria()
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "cat123"
+      responses:
+        '200':
+          description: Categoría eliminada correctamente
+          content:
+            application/json:
+              example:
+                success: true
+                message: "Categoría eliminada correctamente"
+        '404':
+          description: Categoría no encontrada
+
+  /compras:
     get:
       tags:
         - Compras
@@ -581,7 +688,6 @@ paths:
                       departamento: "123"
                       indicaciones: "Piso 5, Depto. 501"
                       region: "Metropolitana"
-                      comuna: "Santiago"
                   productos:
                     - id: "prod123"
                       nombre: "Laptop Gaming"
@@ -606,7 +712,6 @@ paths:
                       departamento: "456"
                       indicaciones: "Casa, Portón Rojo"
                       region: "Valparaíso"
-                      comuna: "Valparaíso"
                   productos:
                     - id: "prod789"
                       nombre: "Teclado Mecánico"
@@ -616,12 +721,12 @@ paths:
                   estado: "procesando"
                   fecha: "2024-01-14T15:45:00Z"
 
-  /api/compras/{id}:
+  /compras/{id}:
     get:
       tags:
         - Compras
       summary: Obtener compra por ID
-      description: Servicio Firebase - Obtener detalles de compra específica
+      description: Servicio Firebase - DashboardManager.getOrdenById()
       parameters:
         - name: id
           in: path
@@ -649,7 +754,6 @@ paths:
                     departamento: "123"
                     indicaciones: "Piso 5, Depto. 501"
                     region: "Metropolitana"
-                    comuna: "Santiago"
                 productos:
                   - id: "prod123"
                     nombre: "Laptop Gaming"
@@ -661,7 +765,43 @@ paths:
         '404':
           description: Compra no encontrada
 
-  /api/resenas:
+  /compras/{id}/estado:
+    put:
+      tags:
+        - Compras
+      summary: Actualizar estado de compra
+      description: Servicio Firebase - DashboardManager.updateOrdenEstado()
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "comp123"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                estado:
+                  type: string
+                  enum: [pendiente, procesando, completado, cancelado]
+            example:
+              estado: "completado"
+      responses:
+        '200':
+          description: Estado actualizado correctamente
+          content:
+            application/json:
+              example:
+                success: true
+                message: "Estado actualizado a completado"
+        '404':
+          description: Compra no encontrada
+
+  /resenas:
     get:
       tags:
         - Reseñas
@@ -720,12 +860,12 @@ paths:
         '400':
           description: Datos de reseña inválidos
 
-  /api/resenas/{id}:
+  /resenas/{id}:
     get:
       tags:
         - Reseñas
       summary: Obtener reseña por ID
-      description: Servicio Firebase - Obtener detalles de reseña específica
+      description: Servicio Firebase - PerfilCliente.getResenaById()
       parameters:
         - name: id
           in: path
@@ -754,7 +894,7 @@ paths:
       tags:
         - Reseñas
       summary: Eliminar reseña
-      description: Servicio Firebase - Eliminar reseña específica
+      description: Servicio Firebase - PerfilCliente.eliminarResena()
       parameters:
         - name: id
           in: path
@@ -773,12 +913,12 @@ paths:
         '404':
           description: Reseña no encontrada
 
-  /api/dashboard/estadisticas:
+  /dashboard/estadisticas:
     get:
       tags:
         - Dashboard
       summary: Obtener estadísticas del dashboard
-      description: Servicio Firebase - DashboardManager.cargarEstadisticasReales() - Solo para admins y vendedores
+      description: Servicio Firebase - DashboardManager.cargarEstadisticasReales() / VendedorManager.cargarEstadisticasReales()
       responses:
         '200':
           description: Estadísticas obtenidas correctamente
@@ -1006,6 +1146,21 @@ components:
           type: string
           example: "Activa"
 
+    CategoriaInput:
+      type: object
+      required:
+        - nombre
+      properties:
+        nombre:
+          type: string
+          example: "Electrónicos"
+        descripcion:
+          type: string
+          example: "Dispositivos electrónicos y tecnológicos"
+        estado:
+          type: string
+          example: "Activa"
+
     Compra:
       type: object
       properties:
@@ -1035,8 +1190,6 @@ components:
                 indicaciones:
                   type: string
                 region:
-                  type: string
-                comuna:
                   type: string
         productos:
           type: array
@@ -1128,7 +1281,8 @@ components:
         error:
           type: string
         message:
-          type: string`;
+          type: string
+`;
 
         function launchSwaggerEditor() {
             const btn = document.getElementById('launchBtn');
@@ -1192,6 +1346,18 @@ components:
                 setTimeout(() => {
                     alert('Como falló la copia automática, aquí está el contenido para copiar manualmente:\n\n' + openapiContent.substring(0, 1000) + '...');
                 }, 500);
+            }
+        }
+
+        // Versión alternativa que intenta codificar de forma más segura
+        function encodeToBase64(str) {
+            try {
+                // Primero convertir a bytes UTF-8
+                const bytes = new TextEncoder().encode(str);
+                const binary = String.fromCharCode(...bytes);
+                return btoa(binary);
+            } catch (e) {
+                return null;
             }
         }
     </script>
