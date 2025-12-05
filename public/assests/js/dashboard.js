@@ -283,7 +283,7 @@ class DashboardManager {
                 row.innerHTML = `
                     <td>${data.run || 'N/A'}</td>
                     <td>${data.nombre || 'N/A'}</td>
-                    <td>${data.email || 'N/A'}</td>
+                    <td>${data.correo || 'N/A'}</td>
                     <td>••••••</td>
                     <td>${data.fecha || 'N/A'}</td>
                     <td>${data.telefono || 'N/A'}</td>
@@ -331,90 +331,82 @@ class DashboardManager {
 
         const run = form.querySelector('#usuarioRun')?.value?.trim() || '';
         const nombre = form.querySelector('#usuarioNombre')?.value?.trim() || '';
-        const email = form.querySelector('#usuarioEmail')?.value?.trim() || '';
+        const correo = form.querySelector('#usuarioEmail')?.value?.trim() || '';
         const fecha = form.querySelector('#usuarioFecha')?.value?.trim() || '';
         const telefono = form.querySelector('#usuarioTelefono')?.value?.trim() || '';
         const direccion = form.querySelector('#usuarioDireccion')?.value?.trim() || '';
         const rol = form.querySelector('#usuarioRol')?.value?.trim() || 'cliente';
         const activo = form.querySelector('#usuarioActivo')?.checked || false;
-        const clave = form.querySelector('#usuarioClave')?.value?.trim();
 
+        // Si es nuevo usuario, validar que se ingrese una clave
         if (!id) {
+            const clave = form.querySelector('#usuarioClave')?.value?.trim();
             if (!clave) {
                 alert("La clave es obligatoria para crear un nuevo usuario.");
                 return;
             }
+
+            const nuevoUsuario = {
+                run,
+                nombre,
+                correo,
+                fecha,
+                telefono,
+                direccion,
+                rol,
+                activo,
+                clave,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            await this.db.collection("usuario").add(nuevoUsuario);
+            alert("Usuario creado correctamente.");
+        } else {
+            // Si es edición, solo actualizar los campos específicos sin clave
+            await this.db.collection("usuario").doc(id).update({
+                run: run,
+                nombre: nombre,
+                correo: correo,
+                fecha: fecha,
+                telefono: telefono,
+                direccion: direccion,
+                rol: rol,
+                activo: activo,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            alert("Usuario actualizado correctamente.");
         }
 
-        const datos = {
-            id: id || null,
-            run,
-            nombre,
-            email,
-            fecha,
-            telefono,
-            direccion,
-            rol,
-            activo
-        };
-
-        if (!id) {
-            datos.clave = clave;
-        }
-
-        await this.guardarUsuario(datos);
+        this.cerrarModal('modalUsuario');
+        this.cargarUsuarios();
     }
 
-    async guardarUsuario(datos) {
-        if (!this.firebaseInicializado) {
-            console.error("Firebase no está inicializado para guardar usuario.");
-            return;
-        }
-        try {
-            const collection = this.db.collection("usuario");
-            if (datos.id) {
-                await collection.doc(datos.id).update({
-                    run: datos.run,
-                    nombre: datos.nombre,
-                    email: datos.email,
-                    fecha: datos.fecha,
-                    telefono: datos.telefono,
-                    direccion: datos.direccion,
-                    rol: datos.rol,
-                    activo: datos.activo,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                alert("Usuario actualizado correctamente.");
-            } else {
-                const nuevoUsuario = {
-                    ...datos,
-                    clave: datos.clave,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                };
-                await collection.add(nuevoUsuario);
-                alert("Usuario creado correctamente.");
-            }
-            this.cerrarModal('modalUsuario');
-            this.cargarUsuarios();
-        } catch (error) {
-            console.error("Error al guardar usuario:", error);
-            alert("Error al guardar usuario: " + error.message);
-        }
-    }
+    // The guardarUsuario method is now handled directly in manejarSubmitUsuario
 
     editarUsuario(id, datos) {
         document.getElementById('usuarioId').value = id;
         document.getElementById('usuarioRun').value = datos.run || '';
         document.getElementById('usuarioNombre').value = datos.nombre || '';
-        document.getElementById('usuarioEmail').value = datos.email || '';
+        document.getElementById('usuarioEmail').value = datos.correo || '';
         document.getElementById('usuarioFecha').value = datos.fecha || '';
         document.getElementById('usuarioTelefono').value = datos.telefono || '';
         document.getElementById('usuarioDireccion').value = datos.direccion || '';
         document.getElementById('usuarioRol').value = datos.rol || 'cliente';
         document.getElementById('usuarioActivo').checked = datos.activo !== false;
 
-        document.getElementById('passwordField').style.display = id ? 'none' : 'block';
+        // Mostrar u ocultar el campo de contraseña según sea edición o creación
+        const passwordField = document.getElementById('passwordField');
+        if (passwordField) {
+            if (id) {
+                // Es edición, ocultar campo de contraseña
+                passwordField.style.display = 'none';
+            } else {
+                // Es creación, mostrar campo de contraseña
+                passwordField.style.display = 'block';
+            }
+        }
+
         document.getElementById('modalUsuarioTitulo').textContent = id ? 'Editar Usuario' : 'Nuevo Usuario';
         this.mostrarModal('modalUsuario');
     }
@@ -1007,7 +999,7 @@ function irALauncher() {
 
 function cerrarSesion() {
     localStorage.removeItem("usuario");
-    window.location.href = '../login.html';
+    window.location.href = '../../index.html';
 }
 
 function guardarUsuario(event) {
