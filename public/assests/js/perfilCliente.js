@@ -58,9 +58,9 @@ class PerfilCliente {
         const usuarioStr = localStorage.getItem("usuario");
         if (usuarioStr) {
             this.usuarioActual = JSON.parse(usuarioStr);
-            // Validar que sea un cliente
-            if (this.usuarioActual.rol !== 'cliente') {
-                 console.error("Usuario no es cliente, redirigiendo...");
+            // Validar que sea un cliente o vendedor (pueden acceder a perfilCliente)
+            if (this.usuarioActual.rol !== 'cliente' && this.usuarioActual.rol !== 'vendedor') {
+                 console.error("Usuario no es cliente ni vendedor, redirigiendo...");
                  window.location.href = '../login.html'; // O a donde corresponda
                  return;
             }

@@ -23,6 +23,12 @@ class DashboardManager {
         const usuarioStr = localStorage.getItem("usuario");
         if (usuarioStr) {
             this.usuarioActual = JSON.parse(usuarioStr);
+            // Validar que sea un admin (solo admins pueden acceder al dashboard completo)
+            if (this.usuarioActual.rol !== 'admin') {
+                 console.error("Usuario no es admin, redirigiendo...");
+                 window.location.href = '../login.html'; // O a donde corresponda
+                 return;
+            }
             console.log("Usuario actual cargado:", this.usuarioActual);
         }
     }

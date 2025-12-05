@@ -58,10 +58,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Cliente: validar desde Firestore
+        // Buscar usuario en Firestore para clientes y vendedores
         try {
-            // Cambiado: Usar la colección 'usuario*'
-            const query = await db.collection("usuario") // Ajustado a 'usuario*'
+            const query = await db.collection("usuario")
                 .where("correo", "==", correo)
                 .where("clave", "==", clave)
                 .get();
@@ -71,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const userData = doc.data();
                 const nombre = userData.nombre || correo;
                 const run = userData.run; // Asumiendo que el campo se llama 'run' en Firestore
+                const rol = userData.rol || "cliente"; // Obtener el rol del usuario en Firestore
 
                 // Validar que el run exista
                 if (!run) {
@@ -81,28 +81,36 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 // Guardar usuario en localStorage con rol real y run
-                // Cambiado: Agregar el 'run' y el 'id' del documento a los datos del usuario
                 const usuario = {
                     id: doc.id, // Incluir el ID del documento de Firestore
                     nombre,
                     correo,
-                    run, // <-- Agregar el run
-                    rol: "cliente"
+                    run,
+                    rol // <-- Usar el rol del documento Firestore
                 };
                 localStorage.setItem("usuario", JSON.stringify(usuario));
 
                 mensaje.style.color = "green";
-                mensaje.innerText = "Bienvenido Cliente, redirigiendo...";
-                setTimeout(() => {
-                    // Cambiado: Ajustar la ruta si es necesario
-                    window.location.href = `../page/perfilCliente.html`;
-                }, 1000);
+
+                // Redirigir según el rol del usuario (obtenido de Firestore)
+                if (rol === "vendedor") {
+                    mensaje.innerText = "Bienvenido Vendedor, redirigiendo...";
+                    setTimeout(() => {
+                        window.location.href = "../page/perfilVendedor.html";
+                    }, 1000);
+                } else {
+                    // Por defecto, asumir que es cliente
+                    mensaje.innerText = "Bienvenido Cliente, redirigiendo...";
+                    setTimeout(() => {
+                        window.location.href = "../page/perfilCliente.html";
+                    }, 1000);
+                }
             } else {
                 mensaje.style.color = "red";
                 mensaje.innerText = "Correo o clave incorrectos";
             }
         } catch (error) {
-            console.error("Error login cliente:", error);
+            console.error("Error login usuario:", error);
             mensaje.style.color = "red";
             mensaje.innerText = "Error al verificar usuario";
         }
