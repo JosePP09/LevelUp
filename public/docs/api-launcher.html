@@ -114,8 +114,10 @@ tags:
     description: Gestión de productos (CRUD)
   - name: Categorías
     description: Gestión de categorías de productos
-  - name: Compras/Órdenes
-    description: Gestión de órdenes de compra
+  - name: Compras
+    description: Gestión de compras/órdenes
+  - name: Reseñas
+    description: Gestión de reseñas de usuarios
   - name: Dashboard
     description: Estadísticas y resumen para administradores y vendedores
 
@@ -193,7 +195,7 @@ paths:
                 - id: "user123"
                   run: "12345678-9"
                   nombre: "Juan Pérez"
-                  email: "juan@ejemplo.com"
+                  correo: "juan@ejemplo.com"
                   fecha: "1990-05-15"
                   telefono: "+56912345678"
                   direccion: "Calle Falsa 123"
@@ -203,7 +205,7 @@ paths:
                 - id: "user456"
                   run: "87654321-0"
                   nombre: "María García"
-                  email: "maria@ejemplo.com"
+                  correo: "maria@ejemplo.com"
                   fecha: "1985-10-20"
                   telefono: "+56987654321"
                   direccion: "Avenida Siempre Viva 456"
@@ -212,7 +214,7 @@ paths:
                 - id: "user789"
                   run: "11223344-5"
                   nombre: "Administrador"
-                  email: "admin@levelup.cl"
+                  correo: "admin@levelup.cl"
                   fecha: ""
                   telefono: ""
                   direccion: ""
@@ -232,7 +234,7 @@ paths:
             example:
               run: "12345678-9"
               nombre: "Nuevo Usuario"
-              email: "nuevo@ejemplo.com"
+              correo: "nuevo@ejemplo.com"
               clave: "contraseña123"
               fecha: "1990-05-15"
               telefono: "+56912345678"
@@ -279,7 +281,7 @@ paths:
                 id: "user123"
                 run: "12345678-9"
                 nombre: "Juan Pérez"
-                email: "juan@ejemplo.com"
+                correo: "juan@ejemplo.com"
                 fecha: "1990-05-15"
                 telefono: "+56912345678"
                 direccion: "Calle Falsa 123"
@@ -310,7 +312,7 @@ paths:
             example:
               run: "12345678-9"
               nombre: "Juan Pérez Actualizado"
-              email: "juan@ejemplo.com"
+              correo: "juan@ejemplo.com"
               fecha: "1990-05-15"
               telefono: "+56912345678"
               direccion: "Calle Falsa 123"
@@ -367,25 +369,32 @@ paths:
                   $ref: '#/components/schemas/Producto'
               example:
                 - id: "prod123"
+                  categoria: "Tecnología"
+                  codigo: "LAP-001"
+                  descripcion: "Laptop gaming de alta performance"
+                  imagen: "https://ejemplo.com/laptop.jpg"
                   nombre: "Laptop Gaming"
                   precio: 1299990
+                  precioAnterior: 1399990
                   stock: 15
-                  categoria: "Tecnología"
-                  imagen: "https://ejemplo.com/laptop.jpg"
-                  estado: "Activo"
                 - id: "prod456"
+                  categoria: "Accesorios"
+                  codigo: "MOU-002"
+                  descripcion: "Mouse inalámbrico ergonómico"
+                  imagen: "https://ejemplo.com/mouse.jpg"
                   nombre: "Mouse Inalámbrico"
                   precio: 49990
+                  precioAnterior: 59990
                   stock: 30
-                  categoria: "Accesorios"
-                  imagen: "https://ejemplo.com/mouse.jpg"
-                  estado: "Activo"
                 - id: "prod789"
+                  categoria: "Accesorios"
+                  codigo: "KEY-003"
+                  descripcion: "Teclado mecánico RGB"
+                  imagen: "https://ejemplo.com/teclado.jpg"
                   nombre: "Teclado Mecánico"
                   precio: 89990
+                  precioAnterior: 99990
                   stock: 25
-                  categoria: "Accesorios"
-                  estado: "Activo"
     post:
       tags:
         - Productos
@@ -398,11 +407,14 @@ paths:
             schema:
               $ref: '#/components/schemas/ProductoInput'
             example:
+              categoria: "Tecnología"
+              codigo: "TAB-004"
+              descripcion: "Tablet Android 10 pulgadas"
+              imagen: "https://ejemplo.com/tablet.jpg"
               nombre: "Tablet Android 10''"
               precio: 299990
+              precioAnterior: 349990
               stock: 25
-              categoria: "Tecnología"
-              imagen: "https://ejemplo.com/tablet.jpg"
       responses:
         '201':
           description: Producto creado correctamente
@@ -440,12 +452,14 @@ paths:
                 $ref: '#/components/schemas/Producto'
               example:
                 id: "prod123"
+                categoria: "Tecnología"
+                codigo: "LAP-001"
+                descripcion: "Laptop gaming de alta performance"
+                imagen: "https://ejemplo.com/laptop.jpg"
                 nombre: "Laptop Gaming"
                 precio: 1299990
+                precioAnterior: 1399990
                 stock: 15
-                categoria: "Tecnología"
-                imagen: "https://ejemplo.com/laptop.jpg"
-                estado: "Activo"
         '404':
           description: Producto no encontrado
 
@@ -468,11 +482,14 @@ paths:
             schema:
               $ref: '#/components/schemas/ProductoInput'
             example:
+              categoria: "Tecnología"
+              codigo: "LAP-001"
+              descripcion: "Laptop gaming de alta performance actualizada"
+              imagen: "https://ejemplo.com/laptop.jpg"
               nombre: "Laptop Gaming Pro"
               precio: 1399990
+              precioAnterior: 1499990
               stock: 10
-              categoria: "Tecnología Premium"
-              imagen: "https://ejemplo.com/laptop.jpg"
       responses:
         '200':
           description: Producto actualizado correctamente
@@ -539,12 +556,12 @@ paths:
   /api/compras:
     get:
       tags:
-        - Compras/Órdenes
-      summary: Obtener lista de órdenes
-      description: Servicio Firebase - DashboardManager.cargarOrdenes() / VendedorManager.cargarOrdenes()
+        - Compras
+      summary: Obtener lista de compras
+      description: Servicio Firebase - PerfilCliente.cargarHistorialCompras() / DashboardManager.cargarOrdenes()
       responses:
         '200':
-          description: Lista de órdenes obtenida correctamente
+          description: Lista de compras obtenida correctamente
           content:
             application/json:
               schema:
@@ -552,14 +569,19 @@ paths:
                 items:
                   $ref: '#/components/schemas/Compra'
               example:
-                - id: "orden123"
+                - id: "comp123"
                   cliente:
                     run: "12345678-9"
                     nombre: "Juan Pérez"
                     correo: "juan@ejemplo.com"
-                  total: 199990
-                  estado: "completado"
-                  fecha: "2024-01-15T10:30:00Z"
+                    telefono: "+56912345678"
+                    direccion:
+                      calle: "Calle Falsa"
+                      comuna: "Santiago"
+                      departamento: "123"
+                      indicaciones: "Piso 5, Depto. 501"
+                      region: "Metropolitana"
+                      comuna: "Santiago"
                   productos:
                     - id: "prod123"
                       nombre: "Laptop Gaming"
@@ -569,96 +591,187 @@ paths:
                       nombre: "Mouse Inalámbrico"
                       cantidad: 1
                       precio: 49990
-                - id: "orden124"
+                  total: 1349980
+                  estado: "completado"
+                  fecha: "2024-01-15T10:30:00Z"
+                - id: "comp124"
                   cliente:
                     run: "87654321-0"
                     nombre: "María García"
                     correo: "maria@ejemplo.com"
-                  total: 299990
-                  estado: "procesando"
-                  fecha: "2024-01-14T15:45:00Z"
+                    telefono: "+56987654321"
+                    direccion:
+                      calle: "Avenida Siempre Viva"
+                      comuna: "Valparaíso"
+                      departamento: "456"
+                      indicaciones: "Casa, Portón Rojo"
+                      region: "Valparaíso"
+                      comuna: "Valparaíso"
                   productos:
                     - id: "prod789"
                       nombre: "Teclado Mecánico"
                       cantidad: 2
                       precio: 89990
+                  total: 179980
+                  estado: "procesando"
+                  fecha: "2024-01-14T15:45:00Z"
 
   /api/compras/{id}:
     get:
       tags:
-        - Compras/Órdenes
-      summary: Obtener orden por ID
-      description: Servicio Firebase - Obtener detalles de orden específica
+        - Compras
+      summary: Obtener compra por ID
+      description: Servicio Firebase - Obtener detalles de compra específica
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: string
-          example: "orden123"
+          example: "comp123"
       responses:
         '200':
-          description: Orden encontrada
+          description: Compra encontrada
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Compra'
               example:
-                id: "orden123"
+                id: "comp123"
                 cliente:
                   run: "12345678-9"
                   nombre: "Juan Pérez"
                   correo: "juan@ejemplo.com"
-                total: 199990
-                estado: "completado"
-                fecha: "2024-01-15T10:30:00Z"
+                  telefono: "+56912345678"
+                  direccion:
+                    calle: "Calle Falsa"
+                    comuna: "Santiago"
+                    departamento: "123"
+                    indicaciones: "Piso 5, Depto. 501"
+                    region: "Metropolitana"
+                    comuna: "Santiago"
                 productos:
                   - id: "prod123"
                     nombre: "Laptop Gaming"
                     cantidad: 1
                     precio: 1299990
-                  - id: "prod456"
-                    nombre: "Mouse Inalámbrico"
-                    cantidad: 1
-                    precio: 49990
+                total: 1299990
+                estado: "completado"
+                fecha: "2024-01-15T10:30:00Z"
         '404':
-          description: Orden no encontrada
+          description: Compra no encontrada
 
-  /api/compras/{id}/estado:
-    put:
+  /api/resenas:
+    get:
       tags:
-        - Compras/Órdenes
-      summary: Actualizar estado de orden
-      description: Servicio Firebase - DashboardManager.guardarEstadoOrden() / VendedorManager.funcionalidad similar
+        - Reseñas
+      summary: Obtener lista de reseñas
+      description: Servicio Firebase - PerfilCliente.cargarHistorialResenas()
+      responses:
+        '200':
+          description: Lista de reseñas obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Resena'
+              example:
+                - id: "res123"
+                  run: "12345678-9"
+                  nombre: "Juan Pérez"
+                  correo: "juan@ejemplo.com"
+                  comentario: "Excelente producto, muy recomendado!"
+                  fecha: "2024-01-15T10:30:00Z"
+                - id: "res124"
+                  run: "87654321-0"
+                  nombre: "María García"
+                  correo: "maria@ejemplo.com"
+                  comentario: "Producto de buena calidad y rápido envío."
+                  fecha: "2024-01-14T15:45:00Z"
+    post:
+      tags:
+        - Reseñas
+      summary: Crear nueva reseña
+      description: Servicio Firebase - formularioContacto.js
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResenaInput'
+            example:
+              run: "12345678-9"
+              nombre: "Juan Pérez"
+              correo: "juan@ejemplo.com"
+              comentario: "Excelente producto, muy recomendado!"
+      responses:
+        '201':
+          description: Reseña creada correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+              example:
+                id: "nuevoIdGeneradoPorFirestore123"
+        '400':
+          description: Datos de reseña inválidos
+
+  /api/resenas/{id}:
+    get:
+      tags:
+        - Reseñas
+      summary: Obtener reseña por ID
+      description: Servicio Firebase - Obtener detalles de reseña específica
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: string
-          example: "orden123"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                estado:
-                  type: string
-                  enum: [pendiente, procesando, completado, cancelado]
-            example:
-              estado: "completado"
+          example: "res123"
       responses:
         '200':
-          description: Estado actualizado correctamente
+          description: Reseña encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resena'
+              example:
+                id: "res123"
+                run: "12345678-9"
+                nombre: "Juan Pérez"
+                correo: "juan@ejemplo.com"
+                comentario: "Excelente producto, muy recomendado!"
+                fecha: "2024-01-15T10:30:00Z"
+        '404':
+          description: Reseña no encontrada
+
+    delete:
+      tags:
+        - Reseñas
+      summary: Eliminar reseña
+      description: Servicio Firebase - Eliminar reseña específica
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "res123"
+      responses:
+        '200':
+          description: Reseña eliminada correctamente
           content:
             application/json:
               example:
                 success: true
-                message: "Estado actualizado a completado"
+                message: "Reseña eliminada correctamente"
         '404':
-          description: Orden no encontrada
+          description: Reseña no encontrada
 
   /api/dashboard/estadisticas:
     get:
@@ -718,7 +831,7 @@ components:
           type: string
         nombre:
           type: string
-        email:
+        correo:
           type: string
           format: email
         fecha:
@@ -745,7 +858,7 @@ components:
       required:
         - run
         - nombre
-        - email
+        - correo
         - clave
         - rol
       properties:
@@ -755,7 +868,7 @@ components:
         nombre:
           type: string
           example: "Juan Pérez"
-        email:
+        correo:
           type: string
           format: email
           example: "juan@ejemplo.com"
@@ -789,7 +902,7 @@ components:
         nombre:
           type: string
           example: "Juan Pérez"
-        email:
+        correo:
           type: string
           format: email
           example: "juan@ejemplo.com"
@@ -816,24 +929,31 @@ components:
       properties:
         id:
           type: string
+        categoria:
+          type: string
+          example: "Tecnología"
+        codigo:
+          type: string
+          example: "LAP-001"
+        descripcion:
+          type: string
+          example: "Laptop gaming de alta performance"
+        imagen:
+          type: string
+          format: uri
+          example: "https://ejemplo.com/laptop.jpg"
         nombre:
           type: string
           example: "Laptop Gaming"
         precio:
           type: integer
           example: 1299990
+        precioAnterior:
+          type: integer
+          example: 1399990
         stock:
           type: integer
           example: 15
-        categoria:
-          type: string
-          example: "Tecnología"
-        imagen:
-          type: string
-          format: uri
-        estado:
-          type: string
-          example: "Activo"
 
     ProductoInput:
       type: object
@@ -842,23 +962,34 @@ components:
         - precio
         - stock
         - categoria
+        - codigo
+        - descripcion
       properties:
+        categoria:
+          type: string
+          example: "Tecnología"
+        codigo:
+          type: string
+          example: "LAP-001"
+        descripcion:
+          type: string
+          example: "Laptop gaming de alta performance"
+        imagen:
+          type: string
+          format: uri
+          example: "https://ejemplo.com/laptop.jpg"
         nombre:
           type: string
           example: "Laptop Gaming"
         precio:
           type: integer
           example: 1299990
+        precioAnterior:
+          type: integer
+          example: 1399990
         stock:
           type: integer
           example: 15
-        categoria:
-          type: string
-          example: "Tecnología"
-        imagen:
-          type: string
-          format: uri
-          example: "https://ejemplo.com/laptop.jpg"
 
     Categoria:
       type: object
@@ -890,14 +1021,23 @@ components:
             correo:
               type: string
               format: email
-        total:
-          type: integer
-        estado:
-          type: string
-          enum: [pendiente, procesando, completado, cancelado]
-        fecha:
-          type: string
-          format: date-time
+            telefono:
+              type: string
+            direccion:
+              type: object
+              properties:
+                calle:
+                  type: string
+                comuna:
+                  type: string
+                departamento:
+                  type: string
+                indicaciones:
+                  type: string
+                region:
+                  type: string
+                comuna:
+                  type: string
         productos:
           type: array
           items:
@@ -911,6 +1051,54 @@ components:
                 type: integer
               precio:
                 type: integer
+        total:
+          type: integer
+        estado:
+          type: string
+          enum: [pendiente, procesando, completado, cancelado]
+        fecha:
+          type: string
+          format: date-time
+
+    Resena:
+      type: object
+      properties:
+        id:
+          type: string
+        run:
+          type: string
+        nombre:
+          type: string
+        correo:
+          type: string
+          format: email
+        comentario:
+          type: string
+        fecha:
+          type: string
+          format: date-time
+
+    ResenaInput:
+      type: object
+      required:
+        - run
+        - nombre
+        - correo
+        - comentario
+      properties:
+        run:
+          type: string
+          example: "12345678-9"
+        nombre:
+          type: string
+          example: "Juan Pérez"
+        correo:
+          type: string
+          format: email
+          example: "juan@ejemplo.com"
+        comentario:
+          type: string
+          example: "Excelente producto, muy recomendado!"
 
     EstadisticasDashboard:
       type: object
