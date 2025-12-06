@@ -116,6 +116,11 @@ class VendedorManager {
         } else if (seccion === 'categorias' && this.firebaseInicializado) {
             this.cargarCategorias();
         }
+
+        // Si se carga la sección de perfil, cargar los datos del formulario
+        if (seccion === 'perfil' && this.usuarioActual) {
+            this.cargarDatosPerfilForm();
+        }
     }
 
     // ==================== MÉTODOS DEL DASHBOARD ====================
@@ -521,17 +526,60 @@ class VendedorManager {
 
     // ==================== FUNCIONES GLOBALES ====================
 
+    cargarDatosPerfilForm() {
+        if (this.usuarioActual) {
+            document.getElementById('profileNombre').value = this.usuarioActual.nombre || '';
+            document.getElementById('profileCorreo').value = this.usuarioActual.correo || '';
+            document.getElementById('profileTelefono').value = this.usuarioActual.telefono || '';
+        }
+    }
+
     async manejarSubmitPerfil(event) {
         event.preventDefault();
-        const form = event.target;
-        const formData = new FormData(form);
-        const datos = {
-            profileNombre: formData.get('profileNombre'),
-            profileCorreo: formData.get('profileCorreo'),
-            profileTelefono: formData.get('profileTelefono')
-        };
+        if (!this.usuarioActual || !this.firebaseInicializado) {
+            alert("Error: Usuario no autenticado o Firebase no inicializado.");
+            return;
+        }
 
-        alert("Actualizar perfil no implementado completamente.");
+        const nuevoNombre = document.getElementById('profileNombre').value.trim();
+        const nuevoCorreo = document.getElementById('profileCorreo').value.trim();
+        const nuevoTelefono = document.getElementById('profileTelefono').value.trim();
+
+        // Validaciones básicas
+        if (!nuevoNombre || !nuevoCorreo) {
+            alert("Por favor, completa todos los campos obligatorios.");
+            return;
+        }
+
+        try {
+            const updates = {
+                nombre: nuevoNombre,
+                correo: nuevoCorreo, // Actualizar el correo en Firestore también
+            };
+
+            // Agregar telefono si está presente
+            if (nuevoTelefono) {
+                updates.telefono = nuevoTelefono;
+            }
+
+            // Actualizar datos en la colección 'usuario' de Firestore
+            await this.db.collection("usuario").doc(this.usuarioActual.id).update(updates);
+
+            // Actualizar datos en localStorage para reflejar los cambios
+            this.usuarioActual.nombre = nuevoNombre;
+            this.usuarioActual.correo = nuevoCorreo;
+            if (nuevoTelefono) {
+                this.usuarioActual.telefono = nuevoTelefono; // Opcional, si lo almacenas
+            }
+            localStorage.setItem("usuario", JSON.stringify(this.usuarioActual));
+
+            alert("Perfil actualizado correctamente.");
+            // Opcional: Recargar la página o actualizar la UI del header
+            this.actualizarBienvenida();
+        } catch (error) {
+            console.error("Error al actualizar el perfil:", error);
+            alert("Error al actualizar el perfil: " + error.message);
+        }
     }
 
     filtrarOrdenes() {
