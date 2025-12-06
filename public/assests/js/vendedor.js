@@ -554,7 +554,7 @@ function navegarA(seccion) {
 }
 
 function irATienda() {
-    window.location.href = '../../index.html';
+    window.location.href = '../../assests/page/tiendas.html';
 }
 
 function cerrarSesion() {

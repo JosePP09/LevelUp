@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (irPerfil) {
                 irPerfil.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const destino = usuario.rol === 'admin' ? 'perfilAdmin.html' : 'perfilCliente.html';
+                    const destino = usuario.rol === 'admin' ? 'assests/page/perfilAdmin.html' : 'assests/page/perfilCliente.html';
                     window.location.href = destino;
                 });
             }
