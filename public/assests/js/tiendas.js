@@ -65,13 +65,13 @@ class TiendasManager {
     }
 
     verificarAcceso() {
-        // Verificar que el usuario esté autenticado y tenga rol de admin
-        if (!this.usuarioActual || this.usuarioActual.rol !== 'admin') {
+        // Verificar que el usuario esté autenticado y tenga rol de admin o vendedor
+        if (!this.usuarioActual || (this.usuarioActual.rol !== 'admin' && this.usuarioActual.rol !== 'vendedor')) {
             console.error("Acceso no autorizado. Redirigiendo a login...");
             window.location.href = 'login.html';
             return;
         }
-        
+
         // Actualizar UI con información del usuario
         this.actualizarUIUsuario();
     }
@@ -92,6 +92,12 @@ class TiendasManager {
     }
 
     configurarEventos() {
+        // Evento para ir al perfil
+        document.getElementById('irPerfil')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.irAlPerfil();
+        });
+
         // Evento para cerrar sesión
         document.getElementById('cerrarSesion')?.addEventListener('click', (e) => {
             e.preventDefault();
@@ -110,6 +116,13 @@ class TiendasManager {
         btnVentas?.addEventListener('click', () => this.cambiarVista('ventas'));
         btnSatisfaccion?.addEventListener('click', () => this.cambiarVista('satisfaccion'));
         btnOrganizacion?.addEventListener('click', () => this.cambiarVista('organizacion'));
+    }
+
+    irAlPerfil() {
+        if (this.usuarioActual) {
+            const destino = this.usuarioActual.rol === 'admin' ? 'perfilAdmin.html' : 'perfilCliente.html';
+            window.location.href = destino;
+        }
     }
 
     aplicarFiltros() {
