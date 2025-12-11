@@ -80,21 +80,37 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
     
+        // Validación de contraseñas
+        const clave = document.getElementById("clave").value;
+        const confirmarClave = document.getElementById("confirmarClave").value;
+
+        if (clave.length < 4 || clave.length > 10) {
+            document.getElementById("clave").setCustomValidity("La contraseña debe tener entre 4 a 10 caracteres");
+            document.getElementById("clave").reportValidity();
+            return;
+        }
+
+        if (clave !== confirmarClave) {
+            document.getElementById("confirmarClave").setCustomValidity("Las contraseñas no coinciden");
+            document.getElementById("confirmarClave").reportValidity();
+            return;
+        }
+
         //Todos los datos sean correctos
         let nombreUsuario = nombre;
         mensaje.innerText = `Formulario enviado correctamente` //alt gr + tecla }]`
-    
+
        /*  //Redirección a las paginas del perfil para el Admin o Cliente
         const destino = correo.toLowerCase() === "admin@duoc.cl" ?
             `perfilAdmin.html?nombre=${encodeURIComponent(nombreUsuario)}` :
             `perfilCliente.html?nombre=${encodeURIComponent(nombreUsuario)}`;
-    
+
         //Tiempo de reacción al redirigir
         setTimeout(() => {
             window.location.href = destino;
         }, 1000);
          */
-    
+
     });
 });
 

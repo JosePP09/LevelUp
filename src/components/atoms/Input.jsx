@@ -1,8 +1,8 @@
 const Input = ({ label, ...props}) => (
-    <di>
+    <div>
         <label>{label}</label>
-        <input {...props}/>    
-    </di>
+        <input {...props}/>
+    </div>
 );
 
 export default Input;

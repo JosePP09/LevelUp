@@ -35,6 +35,7 @@ const FormUsuario = () => {
         if (!nombre) return setMsg("Nombre en blanco");
         if (!validarCorreo(correo)) return setMsg("Correo incorrecto");
         if (!clave) return setMsg("Clave en blanco");
+        if (clave.length < 4 || clave.length > 10) return setMsg("La contraseña debe tener entre 4 a 10 caracteres");
         if (!esMayorEdad(fecha)) return setMsg("Debe ser mayor de 18 años");
 
         await addUser(form);
@@ -43,7 +44,7 @@ const FormUsuario = () => {
             history.push(correo === "admin@duoc.cl" ? "/perfil-admin?nombre="+nombre : "/perfil-cliente?nombre="+nombre);
 
         }, 1000);
-            
+
     };
 
     return (

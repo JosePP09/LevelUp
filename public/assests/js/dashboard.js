@@ -109,6 +109,8 @@ class DashboardManager {
             this.cargarOrdenes();
         } else if (seccion === 'categorias' && this.firebaseInicializado) {
             this.cargarCategorias();
+        } else if (seccion === 'perfil') {
+            this.cargarDatosPerfil();
         }
     }
 
@@ -894,8 +896,12 @@ class DashboardManager {
     actualizarBienvenida() {
         if (this.usuarioActual) {
             const bienvenidoPrincipal = document.getElementById('bienvenidoPrincipal');
+            const userEmail = document.getElementById('userEmail');
             if (bienvenidoPrincipal) {
                 bienvenidoPrincipal.textContent = `Bienvenido, ${this.usuarioActual.nombre}`;
+            }
+            if (userEmail) {
+                userEmail.textContent = this.usuarioActual.correo || 'Sin correo';
             }
         }
     }
@@ -961,13 +967,123 @@ class DashboardManager {
         event.preventDefault();
         const form = event.target;
         const formData = new FormData(form);
+
+        // Validar que los elementos existen y obtener valores
+        const profileNombre = document.getElementById('profileNombre');
+        const profileCorreo = document.getElementById('profileCorreo');
+        const profileTelefono = document.getElementById('profileTelefono');
+
+        if (!profileNombre || !profileCorreo) {
+            alert("Error: No se encontraron los campos del formulario");
+            return;
+        }
+
         const datos = {
-            profileNombre: formData.get('profileNombre'),
-            profileCorreo: formData.get('profileCorreo'),
-            profileTelefono: formData.get('profileTelefono')
+            profileNombre: profileNombre.value.trim(),
+            profileCorreo: profileCorreo.value.trim(),
+            profileTelefono: profileTelefono ? profileTelefono.value.trim() : ""
         };
 
-        alert("Actualizar perfil no implementado completamente.");
+        // Validación básica
+        if (!datos.profileNombre) {
+            alert("El nombre es obligatorio");
+            return;
+        }
+
+        if (!datos.profileCorreo) {
+            alert("El correo es obligatorio");
+            return;
+        }
+
+        // Validación de formato de correo
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(datos.profileCorreo)) {
+            alert("Formato de correo electrónico inválido");
+            return;
+        }
+
+        if (!this.usuarioActual) {
+            alert("Error: Usuario no encontrado");
+            return;
+        }
+
+        try {
+            // Para el admin por defecto (admin@levelup.cl), no actualizamos en Firestore
+            // ya que se crea localmente en el login sin documento en la colección usuario
+            if (this.usuarioActual.correo !== "admin@levelup.cl") {
+                // Para usuarios regulares (clientes/vendedores) que sí tienen ID de Firestore
+                if (this.usuarioActual.id) {
+                    // Construir objeto con solo los campos que tienen valor
+                    const updateData = {};
+                    if (datos.profileNombre) updateData.nombre = datos.profileNombre;
+                    if (datos.profileCorreo) updateData.correo = datos.profileCorreo;
+                    if (datos.profileTelefono) updateData.telefono = datos.profileTelefono;
+                    updateData.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+
+                    await this.db.collection('usuario').doc(this.usuarioActual.id).update(updateData);
+                } else {
+                    // Si no tiene ID, intentamos encontrarlo por correo
+                    const querySnapshot = await this.db.collection('usuario')
+                        .where('correo', '==', this.usuarioActual.correo)
+                        .limit(1)
+                        .get();
+
+                    if (!querySnapshot.empty) {
+                        const docId = querySnapshot.docs[0].id;
+                        // Construir objeto con solo los campos que tienen valor
+                        const updateData = {};
+                        if (datos.profileNombre) updateData.nombre = datos.profileNombre;
+                        if (datos.profileCorreo) updateData.correo = datos.profileCorreo;
+                        if (datos.profileTelefono) updateData.telefono = datos.profileTelefono;
+                        updateData.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+
+                        await this.db.collection('usuario').doc(docId).update(updateData);
+                        // Actualizamos el ID en el objeto local
+                        this.usuarioActual.id = docId;
+                    } else {
+                        alert("Usuario no encontrado en la base de datos");
+                        return;
+                    }
+                }
+            } else {
+                // Para el admin por defecto, solo actualizamos localStorage y UI
+                // No intentamos actualizar en Firestore porque no existe allí
+                console.log("Actualizando perfil del admin localmente (no en Firestore)");
+            }
+
+            // Actualizar el objeto local del usuario con valores válidos
+            this.usuarioActual.nombre = datos.profileNombre || this.usuarioActual.nombre;
+            this.usuarioActual.correo = datos.profileCorreo || this.usuarioActual.correo;
+            this.usuarioActual.telefono = datos.profileTelefono; // teléfono puede ser vacío
+
+            // Actualizar localStorage
+            localStorage.setItem("usuario", JSON.stringify(this.usuarioActual));
+
+            // Actualizar la interfaz de usuario con los nuevos datos
+            this.actualizarBienvenida();
+
+            // Mostrar mensaje de éxito
+            alert("Perfil actualizado correctamente");
+
+            // Recargar la página del perfil para mostrar los nuevos valores
+            this.cargarDatosPerfil();
+        } catch (error) {
+            console.error("Error actualizando el perfil:", error);
+            alert("Error al actualizar el perfil: " + error.message);
+        }
+    }
+
+    // Cargar datos del perfil en el formulario
+    cargarDatosPerfil() {
+        if (this.usuarioActual) {
+            const profileNombre = document.getElementById('profileNombre');
+            const profileCorreo = document.getElementById('profileCorreo');
+            const profileTelefono = document.getElementById('profileTelefono');
+
+            if (profileNombre) profileNombre.value = this.usuarioActual.nombre || '';
+            if (profileCorreo) profileCorreo.value = this.usuarioActual.correo || '';
+            if (profileTelefono) profileTelefono.value = this.usuarioActual.telefono || '';
+        }
     }
 
     filtrarOrdenes() {

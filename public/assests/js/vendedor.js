@@ -107,14 +107,10 @@ class VendedorManager {
 
         if (seccion === 'dashboard' && this.firebaseInicializado) {
             this.cargarEstadisticasReales();
-        } else if (seccion === 'usuarios' && this.firebaseInicializado) {
-            this.cargarUsuarios();
         } else if (seccion === 'productos' && this.firebaseInicializado) {
             this.cargarProductos();
         } else if (seccion === 'ordenes' && this.firebaseInicializado) {
             this.cargarOrdenes();
-        } else if (seccion === 'categorias' && this.firebaseInicializado) {
-            this.cargarCategorias();
         }
 
         // Si se carga la sección de perfil, cargar los datos del formulario

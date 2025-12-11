@@ -48,18 +48,6 @@
                             Productos
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="#categorias" class="menu-link">
-                            <i class="bi bi-tags menu-icon"></i>
-                            Categorías
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="#usuarios" class="menu-link">
-                            <i class="bi bi-people menu-icon"></i>
-                            Usuarios
-                        </a>
-                    </li>
                 </ul>
             </div>
 
@@ -176,30 +164,10 @@
                                 Visualizar inventario y detalles de los productos disponibles.
                             </p>
                         </div>
-
-                        <div class="nav-button" onclick="navegarA('categorias')">
-                            <div class="nav-icon">
-                                <i class="bi bi-tags"></i>
-                            </div>
-                            <h1 class="nav-title">Categorías</h1>
-                            <p class="nav-description">
-                                Ver categorías de productos para facilitar su navegación.
-                            </p>
-                        </div>
                     </div>
 
                     <!-- Segunda Fila -->
                     <div class="navigation-row">
-                        <div class="nav-button" onclick="navegarA('usuarios')">
-                            <div class="nav-icon">
-                                <i class="bi bi-people"></i>
-                            </div>
-                            <h1 class="nav-title">Clientes</h1>
-                            <p class="nav-description">
-                                Visualizar información de usuarios registrados en el sistema.
-                            </p>
-                        </div>
-
                         <div class="nav-button" onclick="navegarA('perfil')">
                             <div class="nav-icon">
                                 <i class="bi bi-person"></i>
@@ -306,87 +274,6 @@
                 </div>
             </section>
 
-            <!-- Sección de Categorías -->
-            <section id="categorias" style="display: none;">
-                <div class="welcome-section">
-                    <h2 class="welcome-title">Visualización de Categorías</h2>
-                    <p class="="welcome-subtitle">Categorías extraídas de la colección 'categorias' en Firestore</p>
-                </div>
-                <div class="crud-container">
-                    <div class="crud-header">
-                        <h3>Categorías de Productos</h3>
-                        <div class="crud-actions">
-                            <button class="btn btn-secondary" onclick="window.vendedorManager.cargarCategorias()">
-                                <i class="bi bi-arrow-repeat"></i> Actualizar
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="crud-table">
-                            <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>Descripción</th>
-                                    <th>Estado</th>
-                                    <th>Productos</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="categorias-tbody">
-                                <tr>
-                                    <td colspan="5" class="no-data">
-                                        <i class="bi bi-inbox"></i>
-                                        <p>Haz clic en Actualizar para cargar las categorías</p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Sección de Usuarios -->
-            <section id="usuarios" style="display: none;">
-                <div class="welcome-section">
-                    <h2 class="welcome-title">Visualización de Usuarios</h2>
-                    <p class="welcome-subtitle">Visualiza información de usuarios registrados en el sistema</p>
-                </div>
-                <div class="crud-container">
-                    <div class="crud-header">
-                        <h3>Lista de Usuarios</h3>
-                        <div class="crud-actions">
-                            <button class="btn btn-secondary" onclick="window.vendedorManager.cargarUsuarios()">
-                                <i class="bi bi-arrow-repeat"></i> Actualizar
-                            </button>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="crud-table">
-                            <thead>
-                                <tr>
-                                    <th>RUN</th>
-                                    <th>Nombre</th>
-                                    <th>Email</th>
-                                    <th>Clave</th>
-                                    <th>Fecha</th>
-                                    <th>Teléfono</th>
-                                    <th>Dirección</th>
-                                    <th>Rol</th>
-                                    <th>Estado</th>
-                                    <th>Fecha Registro</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="usuarios-tbody">
-                                <tr>
-                                    <td colspan="11" class="no-data">Haz clic en Actualizar para cargar los usuarios</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
 
             <!-- Sección de Perfil -->
             <section id="perfil" style="display: none;">
