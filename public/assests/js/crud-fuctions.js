@@ -912,12 +912,12 @@ class CRUDFunctions {
     }
 
     async cambiarRolUsuario(usuarioId) {
-        const nuevoRol = prompt('Ingrese el nuevo rol (admin/cliente):');
+        const nuevoRol = prompt('Ingrese el nuevo rol (admin/cliente/vendedor):');
         if (!nuevoRol) return;
 
-        const rolesPermitidos = ['admin', 'cliente'];
+        const rolesPermitidos = ['admin', 'cliente', 'vendedor'];
         if (!rolesPermitidos.includes(nuevoRol.toLowerCase())) {
-            alert('Rol no valido. Use: admin o cliente');
+            alert('Rol no valido. Use: admin, cliente o vendedor');
             return;
         }
 
@@ -1118,7 +1118,8 @@ class CRUDFunctions {
     getRolClass(rol) {
         const roles = {
             'admin': 'admin',
-            'cliente': 'cliente', 
+            'cliente': 'cliente',
+            'vendedor': 'vendedor',
             'usuario': 'usuario'
         };
         return roles[rol] || 'usuario';

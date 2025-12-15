@@ -41,9 +41,60 @@ document.addEventListener("DOMContentLoaded", () => {
         if (correo === "admin@levelup.cl") {
             try {
                 await auth.signInWithEmailAndPassword(correo, clave);
-                // Guardar usuario en localStorage
-                const usuario = { nombre: "Administrador", correo, rol: "admin" };
-                localStorage.setItem("usuario", JSON.stringify(usuario));
+
+                // Buscar el documento de admin en Firestore
+                const adminQuery = await db.collection("usuario")
+                    .where("correo", "==", correo)
+                    .limit(1)
+                    .get();
+
+                let userData = null;
+                let run = null;
+                let rol = "admin";
+
+                if (!adminQuery.empty) {
+                    // Usuario admin encontrado en Firestore
+                    const doc = adminQuery.docs[0];
+                    userData = doc.data();
+                    run = userData.run;
+                    rol = userData.rol || "admin";
+
+                    // Guardar usuario en localStorage con el ID del documento
+                    const usuario = {
+                        id: doc.id, // Incluir el ID del documento de Firestore
+                        nombre: userData.nombre || "Administrador",
+                        correo,
+                        run,
+                        rol
+                    };
+                    localStorage.setItem("usuario", JSON.stringify(usuario));
+                } else {
+                    // Si no hay documento en Firestore, crearlo
+                    const nuevoAdmin = {
+                        run: "admin-run", // Valor por defecto para el admin
+                        nombre: "Administrador",
+                        correo,
+                        clave, // Guardar la clave temporalmente, eventualmente podría ser encriptada
+                        fecha: new Date().toISOString().split('T')[0],
+                        telefono: "",
+                        direccion: "",
+                        rol: "admin",
+                        activo: true,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+
+                    const docRef = await db.collection("usuario").add(nuevoAdmin);
+
+                    // Guardar usuario en localStorage
+                    const usuario = {
+                        id: docRef.id, // ID del nuevo documento
+                        nombre: nuevoAdmin.nombre,
+                        correo,
+                        run: nuevoAdmin.run,
+                        rol: nuevoAdmin.rol
+                    };
+                    localStorage.setItem("usuario", JSON.stringify(usuario));
+                }
 
                 mensaje.style.color = "green";
                 mensaje.innerText = "Bienvenido Administrador, redirigiendo...";

@@ -105,7 +105,7 @@
             <!-- Dashboard -->
             <section id="dashboard">
                 <h2 class="sidebar-title">Resumen General</h2>
-                
+
                 <!-- Cards de Resumen con API -->
                 <div class="dashboard-cards-row">
                     <div class="summary-card blue-card">
@@ -348,7 +348,7 @@
                             </button>
                         </div>
                     </div>
-                    
+
                     <!-- <div class="crud-info">
                         <i class="bi bi-info-circle"></i>
                         <span>Las categorías se extraen automáticamente del campo "categoria" de los productos en Firestore</span>
@@ -560,22 +560,22 @@
             <h3 id="modalUsuarioTitulo">Nuevo Usuario</h3>
             <form id="formUsuario">
                 <input type="hidden" id="usuarioId">
-                
+
                 <div class="form-group">
                     <label for="usuarioRun">RUN *</label>
                     <input type="text" id="usuarioRun" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="usuarioNombre">Nombre Completo *</label>
                     <input type="text" id="usuarioNombre" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="usuarioEmail">Email *</label>
                     <input type="email" id="usuarioEmail" required>
                 </div>
-                
+
                 <div class="form-group" id="passwordField">
                     <label for="usuarioClave">Clave *</label>
                     <input type="password" id="usuarioClave">
@@ -591,20 +591,21 @@
                     <label for="usuarioTelefono">Teléfono</label>
                     <input type="tel" id="usuarioTelefono">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="usuarioDireccion">Dirección</label>
                     <textarea id="usuarioDireccion" rows="2"></textarea>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="usuarioRol">Rol *</label>
                     <select id="usuarioRol" required>
                         <option value="cliente">Cliente</option>
+                        <option value="vendedor">Vendedor</option>
                         <option value="admin">Administrador</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="checkbox-label">
                         <input type="checkbox" id="usuarioActivo" checked>
@@ -612,7 +613,7 @@
                         Usuario activo
                     </label>
                 </div>
-                
+
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" onclick="window.dashboardManager.cerrarModal('modalUsuario')">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Guardar Usuario</button>

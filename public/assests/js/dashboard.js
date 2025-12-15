@@ -295,6 +295,7 @@ class DashboardManager {
                     <td>${data.createdAt ? data.createdAt.toDate ? data.createdAt.toDate().toLocaleDateString() : data.createdAt : 'N/A'}</td>
                     <td>
                         <button class="btn btn-sm btn-warning" onclick="window.dashboardManager.prepararEdicionUsuario('${doc.id}')">Editar</button>
+                        <button class="btn btn-sm btn-info" onclick="window.dashboardManager.cambiarRolUsuario('${doc.id}')">Cambiar Rol</button>
                         <button class="btn btn-sm btn-danger" onclick="window.dashboardManager.eliminarUsuario('${doc.id}')">Eliminar</button>
                     </td>
                 `;
@@ -411,6 +412,35 @@ class DashboardManager {
 
         document.getElementById('modalUsuarioTitulo').textContent = id ? 'Editar Usuario' : 'Nuevo Usuario';
         this.mostrarModal('modalUsuario');
+    }
+
+    async cambiarRolUsuario(id) {
+        if (!this.firebaseInicializado) {
+            console.error("Firebase no está inicializado para cambiar rol de usuario.");
+            return;
+        }
+
+        const nuevoRol = prompt('Ingrese el nuevo rol (admin/cliente/vendedor):');
+        if (!nuevoRol) return;
+
+        const rolesPermitidos = ['admin', 'cliente', 'vendedor'];
+        if (!rolesPermitidos.includes(nuevoRol.toLowerCase())) {
+            alert('Rol no valido. Use: admin, cliente o vendedor');
+            return;
+        }
+
+        try {
+            console.log('Cambiando rol del usuario:', id, 'a', nuevoRol);
+            await this.db.collection("usuario").doc(id).update({
+                rol: nuevoRol.toLowerCase(),
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            alert('Rol actualizado correctamente');
+            this.cargarUsuarios();
+        } catch (error) {
+            console.error('Error cambiando rol:', error);
+            alert('Error al cambiar el rol: ' + error.message);
+        }
     }
 
     async eliminarUsuario(id) {
@@ -1008,47 +1038,50 @@ class DashboardManager {
         }
 
         try {
-            // Para el admin por defecto (admin@levelup.cl), no actualizamos en Firestore
-            // ya que se crea localmente en el login sin documento en la colección usuario
-            if (this.usuarioActual.correo !== "admin@levelup.cl") {
-                // Para usuarios regulares (clientes/vendedores) que sí tienen ID de Firestore
-                if (this.usuarioActual.id) {
+            // Actualizar en Firestore tanto para admin como para otros usuarios
+            // Ambos ahora tienen documentos en la colección usuario
+            if (this.usuarioActual.id) {
+                // Construir objeto con solo los campos que tienen valor
+                const updateData = {};
+                if (datos.profileNombre) updateData.nombre = datos.profileNombre;
+
+                // Para el admin por defecto, no actualizamos el correo para evitar problemas de autenticación
+                if (this.usuarioActual.correo !== "admin@levelup.cl") {
+                    if (datos.profileCorreo) updateData.correo = datos.profileCorreo;
+                }
+
+                if (datos.profileTelefono) updateData.telefono = datos.profileTelefono;
+                updateData.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+
+                await this.db.collection('usuario').doc(this.usuarioActual.id).update(updateData);
+            } else {
+                // Si no tiene ID, intentamos encontrarlo por correo
+                const querySnapshot = await this.db.collection('usuario')
+                    .where('correo', '==', this.usuarioActual.correo)
+                    .limit(1)
+                    .get();
+
+                if (!querySnapshot.empty) {
+                    const docId = querySnapshot.docs[0].id;
                     // Construir objeto con solo los campos que tienen valor
                     const updateData = {};
                     if (datos.profileNombre) updateData.nombre = datos.profileNombre;
-                    if (datos.profileCorreo) updateData.correo = datos.profileCorreo;
+
+                    // Para el admin por defecto, no actualizamos el correo para evitar problemas de autenticación
+                    if (this.usuarioActual.correo !== "admin@levelup.cl") {
+                        if (datos.profileCorreo) updateData.correo = datos.profileCorreo;
+                    }
+
                     if (datos.profileTelefono) updateData.telefono = datos.profileTelefono;
                     updateData.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
 
-                    await this.db.collection('usuario').doc(this.usuarioActual.id).update(updateData);
+                    await this.db.collection('usuario').doc(docId).update(updateData);
+                    // Actualizamos el ID en el objeto local
+                    this.usuarioActual.id = docId;
                 } else {
-                    // Si no tiene ID, intentamos encontrarlo por correo
-                    const querySnapshot = await this.db.collection('usuario')
-                        .where('correo', '==', this.usuarioActual.correo)
-                        .limit(1)
-                        .get();
-
-                    if (!querySnapshot.empty) {
-                        const docId = querySnapshot.docs[0].id;
-                        // Construir objeto con solo los campos que tienen valor
-                        const updateData = {};
-                        if (datos.profileNombre) updateData.nombre = datos.profileNombre;
-                        if (datos.profileCorreo) updateData.correo = datos.profileCorreo;
-                        if (datos.profileTelefono) updateData.telefono = datos.profileTelefono;
-                        updateData.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
-
-                        await this.db.collection('usuario').doc(docId).update(updateData);
-                        // Actualizamos el ID en el objeto local
-                        this.usuarioActual.id = docId;
-                    } else {
-                        alert("Usuario no encontrado en la base de datos");
-                        return;
-                    }
+                    alert("Usuario no encontrado en la base de datos");
+                    return;
                 }
-            } else {
-                // Para el admin por defecto, solo actualizamos localStorage y UI
-                // No intentamos actualizar en Firestore porque no existe allí
-                console.log("Actualizando perfil del admin localmente (no en Firestore)");
             }
 
             // Actualizar el objeto local del usuario con valores válidos
@@ -1081,7 +1114,18 @@ class DashboardManager {
             const profileTelefono = document.getElementById('profileTelefono');
 
             if (profileNombre) profileNombre.value = this.usuarioActual.nombre || '';
-            if (profileCorreo) profileCorreo.value = this.usuarioActual.correo || '';
+            if (profileCorreo) {
+                profileCorreo.value = this.usuarioActual.correo || '';
+                // Deshabilitar el campo de correo para el admin por defecto
+                if (this.usuarioActual.correo === "admin@levelup.cl") {
+                    profileCorreo.disabled = true;
+                    // Opcional: agregar un tooltip o mensaje explicativo
+                    profileCorreo.title = "El correo del administrador no puede ser cambiado";
+                } else {
+                    profileCorreo.disabled = false;
+                    profileCorreo.title = "";
+                }
+            }
             if (profileTelefono) profileTelefono.value = this.usuarioActual.telefono || '';
         }
     }
