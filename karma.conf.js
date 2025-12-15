@@ -79,21 +79,30 @@ module.exports = function(config) {
             'karma-chrome-launcher',
             'karma-webpack',
             'karma-mocha-reporter',
-            'karma-spec-reporter',
             'karma-jasmine-html-reporter'
         ],
         
         // Configuración adicional
         autoWatch: true,
         singleRun: process.env.CI === 'true',
-        
-        // Log level más detallado
-        logLevel: config.LOG_INFO,
-        
+
+        // Log level más detallado para mostrar resultados en consola
+        logLevel: config.LOG_DEBUG,
+
         // Colores en la salida
         colors: true,
-        
+
         // Tiempo de espera
-        browserNoActivityTimeout: 30000
+        browserNoActivityTimeout: 30000,
+
+        // Configuración para mostrar resultados en la consola del navegador
+        client: {
+            captureConsole: true,  // Captura la consola del navegador para mostrar los resultados
+            clearContext: false,   // Mantiene la información en la pestaña de inspección
+            jasmine: {
+                // Configurar Jasmine para que muestre logs detallados
+                random: false
+            }
+        }
     });
 };
